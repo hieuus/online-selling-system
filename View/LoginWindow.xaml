@@ -1,6 +1,7 @@
 ﻿<Window x:Class="OnlineSellingSystem.View.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModel="clr-namespace:OnlineSellingSystem.ViewModel"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OnlineSellingSystem.View"
@@ -9,6 +10,19 @@
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         Loaded="Login_Window_Loaded">
+
+    <Window.DataContext>
+        <viewModel:LoginViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+    
+    <Window.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -74,7 +88,11 @@
                            />
                 <Label Margin="0,0,0,10">
                     <Grid>
-                        <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="email" Margin="5"/>
+                        <TextBox BorderThickness="2"  Width="500" Padding="5"
+                                 FontSize="18" FontWeight="Normal"
+                                 VerticalAlignment="Center" HorizontalAlignment="Left"
+                                 x:Name="email" Text="{Binding UserName}"
+                                 Margin="5"/>
                         <TextBlock IsHitTestVisible="False" FontSize="16" Text="Example: d2h2.advancedb@gmail.com" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -95,7 +113,11 @@
                            />
                 <Label Margin="0,0,0,10">
                     <Grid>
-                        <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="phone" Margin="5"/>
+                        <TextBox BorderThickness="2"  Width="500" Padding="5"
+                                 FontSize="18" FontWeight="Normal"
+                                 VerticalAlignment="Center" HorizontalAlignment="Left"
+                                 x:Name="phone" Text="{Binding Password}"
+                                 Margin="5"/>
                         <TextBlock IsHitTestVisible="False" FontSize="16" Text="Your phone number" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
