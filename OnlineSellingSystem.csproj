@@ -14,6 +14,8 @@
     <None Remove="Images\background.jpg" />
     <None Remove="Images\background2.jpg" />
     <None Remove="Images\background2login.jpg" />
+    <None Remove="Images\check.png" />
+    <None Remove="Images\contract.png" />
     <None Remove="Images\customer.png" />
     <None Remove="Images\data.png" />
     <None Remove="Images\delivery.png" />
@@ -21,6 +23,7 @@
     <None Remove="Images\employee.png" />
     <None Remove="Images\logo.png" />
     <None Remove="Images\logo2.png" />
+    <None Remove="Images\logout.png" />
     <None Remove="Images\menu.png" />
     <None Remove="Images\next.png" />
     <None Remove="Images\order.png" />
@@ -41,6 +44,12 @@
 
   <ItemGroup>
     <Resource Include="Images\add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\check.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\contract.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\data.png">
@@ -80,6 +89,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\logo2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\logout.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\menu.png">

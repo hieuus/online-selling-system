@@ -364,7 +364,7 @@
 
         <!--Main Section: Menu-->
         <Border Name="contentMenus"
-                Visibility="Collapsed"
+                Visibility="Visible"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -872,7 +872,7 @@
 
         <!--Main Section: Wallet-->
         <Border Name="contentWallet"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >

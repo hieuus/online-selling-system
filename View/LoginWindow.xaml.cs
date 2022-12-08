@@ -64,6 +64,20 @@ namespace OnlineSellingSystem.View
                 this.Close();
                 screen.ShowDialog();
             }
-        }     
+        }
+
+        private void login(object sender, RoutedEventArgs e)
+        {
+            selectedType = StartWindow.selectedType;
+
+            if( selectedType == "Partner")
+            {
+                //Check email, phone number
+
+                var screen = new MainWindowPartner();
+                this.Close();
+                screen.ShowDialog();
+            }
+        }
     }
 }

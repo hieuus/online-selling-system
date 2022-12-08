@@ -112,6 +112,7 @@
                 </Label>
 
                 <Button HorizontalAlignment="Left"
+                        Click="login"
                         Width="150"
                         Padding="20,10,20,10"
                         Background="#023047"
