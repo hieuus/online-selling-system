@@ -1,0 +1,1161 @@
+﻿<Window x:Class="OnlineSellingSystem.View.MainWindowPartner"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:local="clr-namespace:OnlineSellingSystem.View"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="Partner" Height="800" Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Loaded="MainWindowPartnerLoaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Navigation Menu-->
+        <Border Grid.Column="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.7" >
+                    <GradientStop Color="#023047" Offset="0"/>
+                    <GradientStop Color="#219ebc" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel Orientation="Vertical">
+                <!--Header-->
+                <StackPanel Orientation="Vertical"
+                        Margin="20,30,0,30"
+                        HorizontalAlignment="Left">
+                    <Image Source="/Images/logo2.png"
+                       Height="100"/>
+                    <TextBlock Text="Hi !" FontSize="20"
+                               Foreground="White" FontWeight="Bold"
+                               Margin="0,10,0,0"/>
+                    <TextBlock x:Name="shopOwnerName"
+                               Text="Bracnh Owner Name"
+                               FontSize="20"
+                               Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
+
+                <!--Menu Button-->
+                <!--Shop Management-->
+                <RadioButton x:Name="btnShopManagement"
+                             Click="btnShopManagementChecked"
+                             Style="{StaticResource menuButton}"
+                             Tag="#fb8500">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/shop.png"
+                               Width="20" Margin="20,0,0,0"/>
+                        <TextBlock Text="Shop Management" Style="{StaticResource menuButtonText}"
+                                   Padding="20,0,0,0"/>
+                    </StackPanel>
+
+                </RadioButton>
+                <!--Menu-->
+                <RadioButton Name="btnMenu"
+                             Style="{StaticResource menuButton}"
+                             Click="btnMenuChecked"
+                             Tag="#f35900">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/menu.png"
+                               Width="20" Margin="20,0,0,0"/>
+                        <TextBlock Text="Menu" Style="{StaticResource menuButtonText}"
+                                   Padding="20,0,0,0"/>
+                    </StackPanel>
+
+                </RadioButton>
+                <!--Orders-->
+                <RadioButton Name="btnOrders"
+                             Style="{StaticResource menuButton}"
+                             Click="btnOrdersChecked"
+                             Tag="#32a353">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/order.png"
+                               Width="20" Margin="20,0,0,0"/>
+                        <TextBlock Text="Orders" Style="{StaticResource menuButtonText}"
+                                   Padding="20,0,0,0"/>
+                    </StackPanel>
+
+                </RadioButton>
+                <!--Statistics-->
+                <RadioButton Name="btnStatistics"
+                             Style="{StaticResource menuButton}"
+                             Click="btnStatisticsChecked"
+                             Tag="#9c27b0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/data.png"
+                               Width="20" Margin="20,0,0,0"/>
+                        <TextBlock Text="Statistics" Style="{StaticResource menuButtonText}"
+                                    Padding="20,0,0,0"/>
+                    </StackPanel>
+
+                </RadioButton>
+                <!--Wallet-->
+                <RadioButton Name="btnWallet"
+                             Style="{StaticResource menuButton}"
+                             Click="btnWalletChecked"
+                             Tag="#fca120">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/wallet.png"
+                               Width="20" Margin="20,0,0,0"/>
+                        <TextBlock Text="Waller" Style="{StaticResource menuButtonText}"
+                                   Padding="20,0,0,0"/>
+                    </StackPanel>
+
+                </RadioButton>
+            </StackPanel>
+            
+        </Border>
+
+        <!--Main Section-->
+        
+        <!--Main Section: Shop Management-->
+        <Border Name="contentShopManagement"
+                Visibility="Collapsed"
+                Grid.Column="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
+                    <GradientStop Color="#219ebc" Offset="0"/>
+                    <GradientStop Color="#219ebc" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Margin="20,30,20,20">
+                <Grid.RowDefinitions>
+                    <!--Header/Caption-->
+                    <RowDefinition Height="35"/>
+                    <!--Content Section-->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--Header/Caption-->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <!--Caption-->
+                        <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                            <Image Source="/Images/shop.png"
+                               Width="40"/>
+                            <TextBlock Text="Shop Management"
+                                   FontSize="22"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   Margin="10,0,0,0"/>
+                        </StackPanel>
+
+                    </Grid>
+
+                    <!--Content Section-->
+                <ContentControl
+                                Grid.Row="1"
+                                Margin="50,30,0,0">
+                    <StackPanel Orientation="Vertical">
+                        <!--Shop Name-->
+                        <TextBlock Text="Shop"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="#A3C7D6"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="/Binding Shop Name/"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       Margin="0,10,0,0"/>
+                                <Image Source="/Images/edit.png"
+                                   Height="20"
+                                   Margin="20,0,0,0"
+                                   MouseDown="contentShopnameEdit"/>
+                            </StackPanel>
+                            <StackPanel Name="contentEditShopName"
+                                        Visibility="Collapsed"
+                                        Orientation="Horizontal">
+                                <Label>
+                                    <Grid>
+                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="newShopName" Margin="5"/>
+                                        <TextBlock IsHitTestVisible="False" FontSize="16" Text="New Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=newShopName}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Label>
+                                <Button Content="Ok"
+                                        Height="40"
+                                        Width="50"
+                                        Foreground="White" FontWeight="Bold"
+                                        Click="contentShopEditShopNameOkButton"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <!--Shop management-->
+                        <TextBlock Text="Management"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="#A3C7D6"
+                                   Margin="0,40,0,0"/>
+                        <!--Shop Status-->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Shop status:"
+                                      FontSize="20"
+                                      FontWeight="Bold"
+                                      Foreground="White"
+                                      Margin="0,10,0,0"/>
+                            <RadioButton x:Name="contentShopStatusNormal"
+                                         Click="contentShopStatusNormalClick"
+                                         Content="Normal"
+                                         FontSize="20" FontWeight="Medium" Foreground="White"
+                                         VerticalAlignment="Bottom"
+                                         Margin="30,0,15,0"/>
+                            <RadioButton x:Name="contentShopStatusStopOrder"
+                                         Click="contentShopStatusStopOrderClick"
+                                         Content="Stop Order"
+                                         FontSize="20" FontWeight="Medium" Foreground="White"
+                                         VerticalAlignment="Bottom"
+                                         Margin="15,0,15,0"/>
+                            <RadioButton x:Name="contentShopStatusStop"
+                                         Click="contentShopStatusStopClick"
+                                         Content="Stop"
+                                         FontSize="20" FontWeight="Medium" Foreground="White"
+                                         VerticalAlignment="Bottom"
+                                         Margin="15,0,15,0"/>
+                        </StackPanel>
+                        
+                        <!--Open time-->
+                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                            <TextBlock Text="Open time:"
+                                      FontSize="20"
+                                      FontWeight="Bold"
+                                      Foreground="White"
+                                      Margin="0,10,0,0"
+                                      VerticalAlignment="Center"/>
+                            <Label Margin="30,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="openTime" Margin="5"/>
+                                    <TextBlock IsHitTestVisible="False" FontSize="16" Text="binding open time here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=openTime}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                            <Button Content="Update"
+                                    Height="40"
+                                    Width="60"
+                                    Foreground="White"
+                                    FontWeight="Bold"
+                                    Click="updateOpenTime"/>
+                        </StackPanel>
+
+                        <!--Close time-->
+                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                            <TextBlock Text="Close time:"
+                                      FontSize="20"
+                                      FontWeight="Bold"
+                                      Foreground="White"
+                                      Margin="0,10,0,0"
+                                      VerticalAlignment="Center"/>
+                            <Label Margin="30,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="closeTime" Margin="5"/>
+                                    <TextBlock IsHitTestVisible="False" FontSize="16" Text="binding close time here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=closeTime}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                            <Button Content="Update"
+                                    Height="40"
+                                    Width="60"
+                                    Foreground="White"
+                                    FontWeight="Bold"
+                                    Click="updateCloseTime"/>
+                        </StackPanel>
+
+                        <!--Contract-->
+                        <TextBlock Text="Contract"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="#A3C7D6"
+                                   Margin="0,40,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Contrac Day: "
+                                      FontSize="20"
+                                      FontWeight="Bold"
+                                      Foreground="White"
+                                      VerticalAlignment="Top"/>
+                            <StackPanel Orientation="Vertical"
+                                        VerticalAlignment="Top">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Binding contract date "
+                                          FontSize="20"
+                                          FontWeight="Normal"
+                                          Foreground="White"
+                                          Margin="20,0,20,0"
+                                          VerticalAlignment="Center"/>
+                                    <Image Source="/Images/edit.png"
+                                           Height="20"
+                                           Margin="20,0,0,0"
+                                           MouseDown="showRenewContract"/>
+                                </StackPanel>
+                                
+                                <StackPanel Name="renewContractView"
+                                            Visibility="Collapsed"
+                                            Orientation="Horizontal" Margin="0,5,0,0">
+                                    <Label>
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="newContract" Margin="5"/>
+                                            <TextBlock IsHitTestVisible="False" FontSize="16" Text="New Date" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=newContract}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                    <Button Content="Renew"
+                                        Height="40"
+                                        Width="60"
+                                        Foreground="White" FontWeight="Bold"
+                                        Click="renewContractButton"/>
+                                </StackPanel>
+                            </StackPanel>
+                            
+                        </StackPanel>
+                        
+                    </StackPanel>
+
+                </ContentControl>
+
+            </Grid>
+        </Border>
+
+        <!--Main Section: Menu-->
+        <Border Name="contentMenus"
+                Visibility="Collapsed"
+                Grid.Column="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
+                    <GradientStop Color="#219ebc" Offset="0"/>
+                    <GradientStop Color="#219ebc" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Margin="20,30,40,20">
+                <Grid.RowDefinitions>
+                    <!--Header/Caption-->
+                    <RowDefinition Height="35"/>
+                    <!--Content Section-->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--Header/Caption-->
+                    <!--Caption and Add button-->
+                <DockPanel Grid.Row="0"
+                               LastChildFill="False">
+                    <StackPanel
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <Image Source="/Images/menu.png"
+                               Width="40"/>
+                        <TextBlock Text="Menu"
+                                   FontSize="22"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+                    <Border Grid.Row="0" DockPanel.Dock="Right"
+                            HorizontalAlignment="Right"
+                            BorderBrush="#dee4ec" BorderThickness="1"
+                            CornerRadius="5" Padding="5" 
+                            Background="#023047"
+                            Width="200">
+                        <Button
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            Background="#023047"
+                            Click="contentMenuAddNewProduct">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Images/add.png"
+                                       Height="20"
+                                       Margin="0,0,10,0"/>
+                                    <TextBlock Text="Add New Product"
+                                           FontSize="18"
+                                           FontWeight="Medium"
+                                           Foreground="White"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </Border>
+                </DockPanel>
+                <!--Content Section-->
+                <ContentControl Grid.Row="1"
+                                Margin="50,30,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="55"/>
+                        </Grid.RowDefinitions>
+                        <!--Data menu-->
+                        <DataGrid Grid.Row="0" Name="contentMenuDataGridProduct"
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn CanUserResize="False" Width="auto">
+                                    <DataGridCheckBoxColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <CheckBox/>
+                                        </DataTemplate>
+                                    </DataGridCheckBoxColumn.HeaderTemplate>
+                                </DataGridCheckBoxColumn>
+
+                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Name}"/>
+
+                                <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
+
+                                <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Price}"/>
+
+                                <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Status}"/>
+
+                                <DataGridTemplateColumn Header="Operation" IsReadOnly="True" CanUserResize="False" Width="auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/Images/pencil.png"
+                                                           Width="13" Margin="10,0,5,0"
+                                                           MouseDown="contentMenuEditButton"/>
+                                                    <Image Source="/Images/remove.png"
+                                                           Width="13" Margin="10,0,0,0"
+                                                           MouseDown="contentMenuRemoveButton"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <!--Pagination-->
+                        <Border Grid.Row="1"
+                                HorizontalAlignment="Right"
+                                BorderBrush="#dee4ec" BorderThickness="1"
+                                CornerRadius="5" Padding="5" Background="White"
+                                Margin="0,10,0,0">
+                            <StackPanel Orientation="Horizontal" Height="35">
+                                <Button x:Name="contentMenuPreviousButton"
+                                        Width="25" Height="25"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Click="previousButton_Click">
+                                    <Button.Content>
+                                        <Image Source="/Images/previous.png" Height="16"/>
+                                    </Button.Content>
+                                </Button>
+                                <TextBlock Name="pagingInfo" Margin="10">
+                                            <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                            / 
+                                            <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                </TextBlock>
+                                <Button x:Name="contentMenuNextButton"
+                                        Width="25" Height="25"
+                                        Click="nextButton_Click"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent">
+                                    <Button.Content>
+                                        <Image Source="/Images/next.png"
+                                               Height="16"/>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ContentControl>
+            </Grid>
+        </Border>
+
+        <!--Main Section: Orders-->
+        <Border Name="contentOrders"
+                Visibility="Collapsed"
+                Grid.Column="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
+                    <GradientStop Color="#219ebc" Offset="0"/>
+                    <GradientStop Color="#219ebc" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Margin="20,30,20,20">
+                <Grid.RowDefinitions>
+                    <!--Header/Caption-->
+                    <RowDefinition Height="35"/>
+                    <!--Content Section-->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--Header/Caption-->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <!--Caption-->
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <Image Source="/Images/order.png"
+                               Width="40"/>
+                        <TextBlock Text="Orders"
+                                   FontSize="22"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                </Grid>
+
+                <!--Content Section-->
+                <ContentControl Grid.Row="1"
+                                Margin="50,30,40,20">
+                    <DataGrid Name="contentOrdersListView" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding id}"/>
+                            <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding date}"/>
+                            <DataGridTextColumn Header="Total" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding total}"/>
+                            <DataGridTextColumn Header="Customer" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding customerName}"/>
+                            <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding status}"/>
+                            <DataGridTemplateColumn Header="Operation" IsReadOnly="True" CanUserResize="False" Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/pencil.png"
+                                                           Width="13" Margin="10,0,5,0"
+                                                           MouseDown="contentOrdersEditButton"/>
+                                                <Image Source="/Images/remove.png"
+                                                           Width="13" Margin="10,0,0,0"
+                                                           MouseDown="contentOrdersRemoveButton"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
+                </ContentControl>
+
+
+            </Grid>
+        </Border>
+
+        <!--Main Section: Statistics-->
+        <Border Name="contentStatistics"
+                Visibility="Collapsed"
+                Grid.Column="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
+                    <GradientStop Color="#219ebc" Offset="0"/>
+                    <GradientStop Color="#219ebc" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Margin="20,30,20,20">
+                <Grid.RowDefinitions>
+                    <!--Header/Caption-->
+                    <RowDefinition Height="35"/>
+                    <!--Content Section-->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--Header/Caption-->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <!--Caption-->
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <Image Source="/Images/data.png"
+                               Width="40"/>
+                        <TextBlock Text="Statistics"
+                                   FontSize="22"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                </Grid>
+
+                <!--Content Section-->
+                <ContentControl Grid.Row="1"
+                                Margin="50,30,40,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="5*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!--Reveneu-->
+                        <StackPanel Grid.Row="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
+                                            <GradientStop Color="#ffb703" Offset="0"/>
+                                            <GradientStop Color="#fb8500" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <!--Day Revenue-->
+                                    <StackPanel Orientation="Vertical">
+                                        <DockPanel LastChildFill="False">
+                                            <TextBlock Text="Day Revenue"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       VerticalAlignment="Center"
+                                                       Margin="20"/>
+                                            <DatePicker DockPanel.Dock="Right"
+                                                        Margin="0,0,20,0"
+                                                        BorderBrush="Transparent"
+                                                        VerticalAlignment="Center"></DatePicker>
+                                        </DockPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="$"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="20, 0, 10, 10"/>
+                                            <TextBlock Text="1.000.000"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 30"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Column="2">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
+                                            <GradientStop Color="#005555" Offset="0"/>
+                                            <GradientStop Color="#069A8E" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <!--Week Revenue-->
+                                    <StackPanel Orientation="Vertical">
+                                        <DockPanel LastChildFill="False">
+                                            <TextBlock Text="Week Revenue"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       VerticalAlignment="Center"
+                                                       Margin="20"/>
+                                            <DatePicker DockPanel.Dock="Right"
+                                                        BorderBrush="Transparent"
+                                                        Margin="0,0,20,0"
+                                                        VerticalAlignment="Center"></DatePicker>
+                                        </DockPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="$"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="20, 0, 10, 10"/>
+                                            <TextBlock Text="5.555.555"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 30"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Column="4">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
+                                            <GradientStop Color="#1C0C5B" Offset="0"/>
+                                            <GradientStop Color="#3D2C8D" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <!--Month Revenue-->
+                                    <StackPanel Orientation="Vertical">
+                                        <DockPanel LastChildFill="False">
+                                            <TextBlock Text="Month Revenue"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       VerticalAlignment="Center"
+                                                       Margin="20"/>
+                                            <DatePicker DockPanel.Dock="Right"
+                                                        Margin="0,0,20,0"
+                                                        BorderBrush="Transparent"
+                                                        VerticalAlignment="Center"></DatePicker>
+                                        </DockPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="$"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="20, 0, 10, 10"/>
+                                            <TextBlock Text="9.999.999"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 30"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                        
+                        <!--Total orders-->
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0"
+                                       Text="Total orders"
+                                       FontSize="18" FontWeight="Medium" Foreground="White"/>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <!--Chart Daily-->
+                                <DockPanel Grid.Column="0" LastChildFill="true">
+                                    <DockPanel  DockPanel.Dock="Top"
+                                                LastChildFill="False">
+                                        <TextBlock Text="Daily (Select month)"
+                                                   FontSize="15" Foreground="White"/>
+                                        <DatePicker DockPanel.Dock="Right"></DatePicker>
+                                    </DockPanel>
+
+                                    <lvc:CartesianChart LegendLocation="None" Margin="0 10 0 0">
+                                        <lvc:CartesianChart.DataTooltip>
+                                            <lvc:DefaultTooltip Background="#24336a" Foreground="#d5e2ff"/>
+                                        </lvc:CartesianChart.DataTooltip>
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Foreground="White" ShowLabels="True"
+                                                      Labels="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20">
+                                                <lvc:Axis.Separator>
+                                                    <lvc:Separator StrokeThickness="0" Step="1"/>
+                                                    
+                                                </lvc:Axis.Separator>
+                                            </lvc:Axis>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Foreground="White" ShowLabels="True"
+                                                      MinValue="0" MaxValue="1000">
+                                                <lvc:Axis.Separator>
+                                                    <lvc:Separator StrokeThickness="0" Step="100"/>
+                                                </lvc:Axis.Separator>
+                                            </lvc:Axis>
+                                        </lvc:CartesianChart.AxisY>
+                                        <lvc:CartesianChart.Series>
+                                            <lvc:StackedColumnSeries Fill="#023047" MaxColumnWidth="15"
+                                                                     Values="100,200,700,444,515,853,758,530,344,121,888,543,654,234,542
+                                                                                ,435,765,666,423,675"/>
+                                        </lvc:CartesianChart.Series>
+                                    </lvc:CartesianChart>
+                                </DockPanel>
+                                <!--Chart Monthly-->
+                                <DockPanel Grid.Column="2" LastChildFill="true">
+                                    <DockPanel  DockPanel.Dock="Top"
+                                                LastChildFill="False">
+                                        <TextBlock Text="Monthly (Select year)"
+                                                   FontSize="15" Foreground="White"/>
+                                        <DatePicker DockPanel.Dock="Right"></DatePicker>
+                                    </DockPanel>
+                                    <lvc:CartesianChart LegendLocation="None" Margin="0 10 0 0">
+                                        <lvc:CartesianChart.DataTooltip>
+                                            <lvc:DefaultTooltip Background="#24336a" Foreground="#d5e2ff"/>
+                                        </lvc:CartesianChart.DataTooltip>
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Foreground="White" ShowLabels="True"
+                                                      Labels="1,2,3,4,5,6,7,8,9,10,11,12">
+                                                <lvc:Axis.Separator>
+                                                    <lvc:Separator StrokeThickness="0" Step="1"/>
+
+                                                </lvc:Axis.Separator>
+                                            </lvc:Axis>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Foreground="White" ShowLabels="True"
+                                                      MinValue="0" MaxValue="10000">
+                                                <lvc:Axis.Separator>
+                                                    <lvc:Separator StrokeThickness="0" Step="1000"/>
+                                                </lvc:Axis.Separator>
+                                            </lvc:Axis>
+                                        </lvc:CartesianChart.AxisY>
+                                        <lvc:CartesianChart.Series>
+                                            <lvc:StackedColumnSeries Fill="#fb8500" MaxColumnWidth="15" Values="1600,2060,7600,4484,5159,8653,7578,5350,3444,1231,8788,5432"/>
+                                        </lvc:CartesianChart.Series>
+                                    </lvc:CartesianChart>
+                                </DockPanel>
+                            </Grid>
+                        </Grid>
+
+                        <!--Top sell-->
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--Best Selling-->
+                            <Grid Grid.Column="0">
+                                <TextBlock Text="Best Selling"
+                                           FontSize="15" Foreground="White"/>
+                                <ListView x:Name="contentStatisticBestSelling"
+                                          Background="Transparent" BorderThickness="0" BorderBrush="Transparent"
+                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                    <ListViewItem BorderThickness="0 1 0 0" BorderBrush="#2c3a54"
+                                                  Padding="0 10">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
+                            </Grid>
+
+                            <!--Least Selling-->
+                            <Grid Grid.Column="1">
+                                <TextBlock Text="Least Selling"
+                                           FontSize="15" Foreground="White"/>
+                                <ListView x:Name="contentStatisticLeastSelling"
+                                          Background="Transparent" BorderThickness="0" BorderBrush="Transparent"
+                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                    <ListViewItem BorderThickness="0 1 0 0" BorderBrush="#2c3a54"
+                                                  Padding="0 10">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ContentControl>
+
+
+            </Grid>
+        </Border>
+
+        <!--Main Section: Wallet-->
+        <Border Name="contentWallet"
+                Visibility="Visible"
+                Grid.Column="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
+                    <GradientStop Color="#219ebc" Offset="0"/>
+                    <GradientStop Color="#219ebc" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Margin="20,30,20,20">
+                <Grid.RowDefinitions>
+                    <!--Header/Caption-->
+                    <RowDefinition Height="35"/>
+                    <!--Content Section-->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--Header/Caption-->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <!--Caption-->
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <Image Source="/Images/wallet.png"
+                               Width="40"/>
+                        <TextBlock Text="Wallet"
+                                   FontSize="22"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                </Grid>
+
+                <!--Content Section-->
+                <ContentControl Grid.Row="1"
+                                Margin="50,30,0,0">
+                    <Grid>
+                        <!--Check if haven't opened wallet yet-->
+                        <Grid x:Name="contentWalletNotOpenWallet"
+                              Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0"
+                                        Orientation="Horizontal">
+                                <TextBlock Text="You haven't opened your wallet yet!"
+                                           Foreground="White" FontSize="20" FontWeight="Medium"
+                                           VerticalAlignment="Center"/>
+                                <!--Open Wallet Button-->
+                                <Button Width="150"
+                                        Background="#023047"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Cursor="Hand"
+                                        Padding="10 5 10 5" Margin="37 0 0 0"
+                                        VerticalAlignment="Center"
+                                        Click="contentWalletOpenWallet_Click">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/wallet_white.png"
+                                                   Height="18"
+                                                   Margin="0 0 10 0"/>
+                                            <TextBlock  Foreground="White"
+                                                        FontSize="15"
+                                                        FontWeight="Normal"
+                                                        Text="Open Wallet"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                            <!--Wallet Registration-->
+                            <StackPanel x:Name="contentWalletRegisterWallet"
+                                        Visibility="Collapsed"
+                                        Grid.Row="1">
+                                <!--Bank Account-->
+                                <TextBlock Text="Bank Account" Margin="10,10,0,0"
+                                           FontSize="15" FontWeight="Bold" Foreground="White"/>
+                                <StackPanel Orientation="Vertical">
+                                    <!--Bank branch-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Bank Branch"
+                                                   FontSize="15" Margin="10,10,0,0" Foreground="White"/>
+                                        <Label Margin="0,0,0,10">
+                                            <Grid>
+                                                <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="bankBranchName" Margin="5"/>
+                                                <TextBlock IsHitTestVisible="False" FontSize="16" Text="Ex: Vietcombank" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=bankBranchName}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label>
+                                    </StackPanel>
+                                    <!--Bank number-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Bank Number" Foreground="White" FontSize="15" Margin="10,0,0,0"/>
+                                        <Label Margin="0,0,0,10">
+                                            <Grid>
+                                                <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="bankNumber" Margin="5"/>
+                                                <TextBlock IsHitTestVisible="False" FontSize="16" Text="Ex: 0643234912424" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=bankNumber}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label>
+                                    </StackPanel>
+                                    <!--Fullname-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Fullname" Foreground="White" FontSize="15" Margin="10,0,0,0"/>
+                                        <Label Margin="0,0,0,10">
+                                            <Grid>
+                                                <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="bankFullname" Margin="5"/>
+                                                <TextBlock IsHitTestVisible="False" FontSize="16" Text="Ex: Nguyen Van Hieu" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=bankFullname}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Width="170"
+                                        HorizontalAlignment="Left"
+                                        Background="#fb8500"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Cursor="Hand"
+                                        Padding="10 10 10 10" Margin="10"
+                                        VerticalAlignment="Center"
+                                        Click="contentWalletConfirmOpenWallet_Click">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/wallet_white.png"
+                                                   Height="18"
+                                                   Margin="0 0 10 0"/>
+                                            <TextBlock  Foreground="White"
+                                                        FontSize="15"
+                                                        FontWeight="Normal"
+                                                        Text="Confirm &amp; Open"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                        <!--If opened wallet-->
+                        <Grid x:Name="contentWalletOpenedWallet">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="4*"/>
+                            </Grid.RowDefinitions>
+                            <!--Deposits-->
+                            <Border Grid.Row="0"
+                                    Width="300"
+                                    HorizontalAlignment="Left">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
+                                        <GradientStop Color="#ffb703" Offset="0"/>
+                                        <GradientStop Color="#fb8500" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <!--Deposits-->
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock Text="Deposits"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       VerticalAlignment="Center"
+                                                       Margin="20"/>
+                                    </DockPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="$"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="20, 0, 10, 10"/>
+                                        <TextBlock Text="9.999.999"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 30"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                            <!--Top-up-->
+                            <StackPanel Grid.Row="1" Orientation="Vertical"
+                                        HorizontalAlignment="Left"
+                                        Margin="0 30 0 0">
+                                <!--Top-up Button-->
+                                <Button Width="150"
+                                        Background="#023047"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Cursor="Hand"
+                                        Padding="10 5 10 5"
+                                        HorizontalAlignment="Left"
+                                        Click="contentWalletTopup_Click">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/top-up.png"
+                                                   Height="18"
+                                                   Margin="0 0 10 0"/>
+                                            <TextBlock  Foreground="White"
+                                                        FontSize="15"
+                                                        FontWeight="Normal"
+                                                        Text="Top-up"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <StackPanel Name="contentWalletTopupOpen"
+                                            Visibility="Collapsed"
+                                            Orientation="Vertical">
+                                    <!--Input Money-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Money"
+                                                   FontSize="15" Margin="10,10,0,0" Foreground="White"/>
+                                        <Label Margin="0,0,0,10">
+                                            <Grid>
+                                                <TextBox BorderThickness="2"  Width="290" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="moneyTopup" Margin="5"/>
+                                                <TextBlock IsHitTestVisible="False" FontSize="16" Text="Ex: 1000000" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=moneyTopup}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label>
+                                    </StackPanel>
+                                    <!--Input Money Ok Button-->
+                                    <Button Width="100"
+                                        Background="#ffb703"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Cursor="Hand"
+                                        Padding="10 5 10 5"
+                                            Margin="10 0 0 0"
+                                        HorizontalAlignment="Left"
+                                        Click="contentWalletTopupMoneyOk_Click">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/top-up.png"
+                                                   Height="18"
+                                                   Margin="0 0 10 0"/>
+                                                <TextBlock  Foreground="White"
+                                                        FontSize="15"
+                                                        FontWeight="Normal"
+                                                        Text="Ok"/>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </ContentControl>
+
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
