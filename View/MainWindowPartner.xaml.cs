@@ -57,6 +57,13 @@ namespace OnlineSellingSystem.View
             btnShopManagement.IsChecked = true;
             contentShopManagement.Visibility = Visibility.Visible;
         }
+        private void logoutButton(object sender, MouseButtonEventArgs e)
+        {
+            //log out
+            var screen = new StartWindow();
+            this.Close();
+            screen.Show();
+        }
         //Switch Content
         private void btnShopManagementChecked(object sender, RoutedEventArgs e)
         {

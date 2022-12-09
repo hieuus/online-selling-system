@@ -78,6 +78,38 @@ namespace OnlineSellingSystem.View
                 this.Close();
                 screen.ShowDialog();
             }
+            else if(selectedType == "Employee")
+            {
+                //Check email, phone number
+
+                var screen = new MainWindowEmployee();
+                this.Close();
+                screen.ShowDialog();
+            }
+            else if( selectedType == "Driver")
+            {
+                //Check email, phone number
+
+                var screen = new MainWindowDriver();
+                this.Close();
+                screen.ShowDialog();
+            }
+            else if(selectedType == "Admin")
+            {
+                //Check email, phone number
+
+                var screen = new MainWindowAdmin();
+                this.Close();
+                screen.ShowDialog();
+            }
+            else if(selectedType == "Customer")
+            {
+                //Check email, phone number
+
+                var screen = new MainWindowCustomer();
+                this.Close();
+                screen.ShowDialog();
+            }
         }
     }
 }

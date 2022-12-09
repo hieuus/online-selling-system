@@ -73,7 +73,6 @@
                 </StackPanel>
                 <!--Log out Button-->
                 <StackPanel Grid.Row="1"
-                            DockPanel.Dock="Bottom"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Orientation="Horizontal"

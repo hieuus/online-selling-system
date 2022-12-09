@@ -24,89 +24,106 @@
                     <GradientStop Color="#219ebc" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
-            <StackPanel Orientation="Vertical">
-                <!--Header-->
-                <StackPanel Orientation="Vertical"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Vertical">
+                    <!--Header-->
+                    <StackPanel Orientation="Vertical"
                         Margin="20,30,0,30"
                         HorizontalAlignment="Left">
-                    <Image Source="/Images/logo2.png"
+                        <Image Source="/Images/logo2.png"
                        Height="100"/>
-                    <TextBlock Text="Hi !" FontSize="20"
+                        <TextBlock Text="Hi !" FontSize="20"
                                Foreground="White" FontWeight="Bold"
                                Margin="0,10,0,0"/>
-                    <TextBlock x:Name="shopOwnerName"
+                        <TextBlock x:Name="shopOwnerName"
                                Text="Bracnh Owner Name"
                                FontSize="20"
                                Foreground="White" FontWeight="Bold"/>
-                </StackPanel>
+                    </StackPanel>
 
-                <!--Menu Button-->
-                <!--Shop Management-->
-                <RadioButton x:Name="btnShopManagement"
+                    <!--Menu Button-->
+                    <!--Shop Management-->
+                    <RadioButton x:Name="btnShopManagement"
                              Click="btnShopManagementChecked"
                              Style="{StaticResource menuButton}"
                              Tag="#fb8500">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Images/shop.png"
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/shop.png"
                                Width="20" Margin="20,0,0,0"/>
-                        <TextBlock Text="Shop Management" Style="{StaticResource menuButtonText}"
+                            <TextBlock Text="Shop Management" Style="{StaticResource menuButtonText}"
                                    Padding="20,0,0,0"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                </RadioButton>
-                <!--Menu-->
-                <RadioButton Name="btnMenu"
+                    </RadioButton>
+                    <!--Menu-->
+                    <RadioButton Name="btnMenu"
                              Style="{StaticResource menuButton}"
                              Click="btnMenuChecked"
                              Tag="#f35900">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Images/menu.png"
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/menu.png"
                                Width="20" Margin="20,0,0,0"/>
-                        <TextBlock Text="Menu" Style="{StaticResource menuButtonText}"
+                            <TextBlock Text="Menu" Style="{StaticResource menuButtonText}"
                                    Padding="20,0,0,0"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                </RadioButton>
-                <!--Orders-->
-                <RadioButton Name="btnOrders"
+                    </RadioButton>
+                    <!--Orders-->
+                    <RadioButton Name="btnOrders"
                              Style="{StaticResource menuButton}"
                              Click="btnOrdersChecked"
                              Tag="#32a353">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Images/order.png"
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/order.png"
                                Width="20" Margin="20,0,0,0"/>
-                        <TextBlock Text="Orders" Style="{StaticResource menuButtonText}"
+                            <TextBlock Text="Orders" Style="{StaticResource menuButtonText}"
                                    Padding="20,0,0,0"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                </RadioButton>
-                <!--Statistics-->
-                <RadioButton Name="btnStatistics"
+                    </RadioButton>
+                    <!--Statistics-->
+                    <RadioButton Name="btnStatistics"
                              Style="{StaticResource menuButton}"
                              Click="btnStatisticsChecked"
                              Tag="#9c27b0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Images/data.png"
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/data.png"
                                Width="20" Margin="20,0,0,0"/>
-                        <TextBlock Text="Statistics" Style="{StaticResource menuButtonText}"
+                            <TextBlock Text="Statistics" Style="{StaticResource menuButtonText}"
                                     Padding="20,0,0,0"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                </RadioButton>
-                <!--Wallet-->
-                <RadioButton Name="btnWallet"
+                    </RadioButton>
+                    <!--Wallet-->
+                    <RadioButton Name="btnWallet"
                              Style="{StaticResource menuButton}"
                              Click="btnWalletChecked"
                              Tag="#fca120">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Images/wallet.png"
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/wallet.png"
                                Width="20" Margin="20,0,0,0"/>
-                        <TextBlock Text="Waller" Style="{StaticResource menuButtonText}"
+                            <TextBlock Text="Waller" Style="{StaticResource menuButtonText}"
                                    Padding="20,0,0,0"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                </RadioButton>
-            </StackPanel>
+                    </RadioButton>
+                </StackPanel>
+                <!--Log out Button-->
+                <StackPanel Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            MouseDown="logoutButton">
+                    <Image Source="/Images/logout.png"
+                           Width="15"
+                           VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock VerticalAlignment="Center" Text="Log out" Foreground="White" FontSize="18" FontWeight="Medium"/>
+                </StackPanel>
+            </Grid>
             
         </Border>
 

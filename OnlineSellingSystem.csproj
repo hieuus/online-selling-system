@@ -19,6 +19,7 @@
     <None Remove="Images\customer.png" />
     <None Remove="Images\data.png" />
     <None Remove="Images\delivery.png" />
+    <None Remove="Images\down-arrow.png" />
     <None Remove="Images\edit.png" />
     <None Remove="Images\employee.png" />
     <None Remove="Images\logo.png" />
@@ -33,6 +34,8 @@
     <None Remove="Images\remove.png" />
     <None Remove="Images\shop.png" />
     <None Remove="Images\top-up.png" />
+    <None Remove="Images\tracking.png" />
+    <None Remove="Images\up-arrow.png" />
     <None Remove="Images\wallet.png" />
     <None Remove="Images\wallet_white.png" />
   </ItemGroup>
@@ -53,6 +56,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\data.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\down-arrow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\edit.png">
@@ -119,6 +125,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\top-up.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\tracking.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\up-arrow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\wallet.png">
