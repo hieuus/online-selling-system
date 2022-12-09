@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OnlineSellingSystem.View"
+        Icon="/Images/icon.ico"
         mc:Ignorable="d"
         Title="Driver Sign Up" Height="800" Width="1000"
         WindowStartupLocation="CenterScreen">

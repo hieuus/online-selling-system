@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Driver" Height="800" Width="1000"
         WindowStartupLocation="CenterScreen"
+        Icon="/Images/icon.ico"
         Loaded="MainWindowDriverLoaded">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -65,7 +66,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Images/wallet.png"
                                Width="20" Margin="20,0,0,0"/>
-                            <TextBlock Text="Contract Management" Style="{StaticResource menuButtonText}"
+                            <TextBlock Text="Revenue" Style="{StaticResource menuButtonText}"
                                    Padding="20,0,0,0"/>
                         </StackPanel>
                     </RadioButton>

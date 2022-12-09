@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:OnlineSellingSystem.View"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        Icon="/Images/icon.ico"
         Title="Online Selling" Height="800" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>

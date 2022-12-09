@@ -8,6 +8,7 @@
         Title="Login" Height="800" Width="1000"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
+        Icon="/Images/icon.ico"
         Loaded="Login_Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>

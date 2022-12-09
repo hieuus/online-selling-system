@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         Title="Partner" Height="800" Width="1000"
         WindowStartupLocation="CenterScreen"
+        Icon="/Images/icon.ico"
         Loaded="MainWindowPartnerLoaded">
     <Grid>
         <Grid.ColumnDefinitions>
