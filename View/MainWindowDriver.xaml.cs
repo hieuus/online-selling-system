@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineSellingSystem.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,8 @@ namespace OnlineSellingSystem.View
         {
             btnSelectOrders.IsChecked = true;
             contentSelectOrders.Visibility = Visibility.Visible;
+
+            driverName.Text = LoginWindow.Person.Fullname;
         }
 
         //Menu

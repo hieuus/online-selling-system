@@ -70,18 +70,18 @@
                            FontSize="15"
                            Margin="15,5,0,0"/>
                 
-                <TextBlock Text="Email"
+                <TextBlock Text="Phone Number"
                            FontSize="15" Margin="15,35,0,0"
                            />
                 <Label Margin="0,0,0,10">
                     <Grid>
-                        <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="email" Margin="5"/>
-                        <TextBlock IsHitTestVisible="False" FontSize="16" Text="Example: d2h2.advancedb@gmail.com" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                        <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="loginPhoneNumber" Margin="5"/>
+                        <TextBlock IsHitTestVisible="False" FontSize="16" Text="Ex: 0931902050" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=email}" Value="">
+                                        <DataTrigger Binding="{Binding Text, ElementName=loginPhoneNumber}" Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -91,18 +91,18 @@
                     </Grid>
                 </Label>
 
-                <TextBlock Text="Phone Number"
+                <TextBlock Text="Password"
                            FontSize="15" Margin="15,10,0,0"
                            />
                 <Label Margin="0,0,0,10">
                     <Grid>
-                        <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="phone" Margin="5"/>
-                        <TextBlock IsHitTestVisible="False" FontSize="16" Text="Your phone number" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                        <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="loginPassword" Margin="5"/>
+                        <TextBlock IsHitTestVisible="False" FontSize="16" Text="Your password" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=phone}" Value="">
+                                        <DataTrigger Binding="{Binding Text, ElementName=loginPassword}" Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -111,6 +111,15 @@
                         </TextBlock>
                     </Grid>
                 </Label>
+
+                <TextBlock  x:Name="incorrectLogin"
+                            Visibility="Hidden"
+                            Foreground="Red"
+                            FontStyle="Italic"
+                            FontWeight="Medium"
+                            FontSize="13"
+                            Margin="12 0 0 0"
+                            Text="The Phone Number or Password is Incorrect!" />
 
                 <Button HorizontalAlignment="Left"
                         Click="login"
