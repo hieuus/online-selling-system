@@ -150,10 +150,9 @@ namespace OnlineSellingSystem.View
 
         private void MainWindowAdminLoaded(object sender, RoutedEventArgs e)
         {
-            btnAdminManagement.IsChecked = true;
-            contentAdmin.Visibility = Visibility.Visible;
-
             adminName.Text = LoginWindow.Person.Fullname;
+
+            btnAdminManagementChecked(sender, e);
         }
         //Menu
         private void btnAdminManagementChecked(object sender, RoutedEventArgs e)
@@ -414,12 +413,32 @@ namespace OnlineSellingSystem.View
         //Data Grid Page Navigation
         private void contentaEmployeePreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage--;
+                employeeListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20PersonsForEmployee();
+            }
         }
 
         private void contentaEmployeeNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage == TotalPages)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage++;
+                employeeListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20PersonsForEmployee();
+            }
         }
         //Options
         private void contentEmployeeAddButton_Click(object sender, RoutedEventArgs e)
@@ -463,12 +482,32 @@ namespace OnlineSellingSystem.View
 //Customer Management=====================================================================================
         private void contentaCustomerPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage--;
+                customerListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Customer");
+            }
         }
 
         private void contentCustomerNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage == TotalPages)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage++;
+                customerListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Customer");
+            }
         }
         private void contentCustomerUpdateDoneButton_Click(object sender, RoutedEventArgs e)
         {
@@ -477,12 +516,32 @@ namespace OnlineSellingSystem.View
 //Driver Management=====================================================================================
         private void contentaDriverPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage--;
+                driverListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Driver");
+            }
         }
 
         private void contentDriverNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage == TotalPages)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage++;
+                driverListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Driver");
+            }
         }
 
         private void contentDriverUpdateDoneButton_Click(object sender, RoutedEventArgs e)
@@ -492,12 +551,32 @@ namespace OnlineSellingSystem.View
 //Partner Management=====================================================================================
         private void contentaPartnerPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage--;
+                partnerListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Partner");
+            }
         }
 
         private void contentPartnerNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage == TotalPages)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage++;
+                driverListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Driver");
+            }
         }
 
         private void contentPartnerUpdateDoneButton_Click(object sender, RoutedEventArgs e)
