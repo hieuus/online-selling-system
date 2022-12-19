@@ -56,6 +56,10 @@ namespace OnlineSellingSystem.View
 
             btnShopManagement.IsChecked = true;
             contentShopManagement.Visibility = Visibility.Visible;
+
+            shopOwnerName.Text = LoginWindow.Person.Fullname;
+
+
         }
         private void logoutButton(object sender, MouseButtonEventArgs e)
         {

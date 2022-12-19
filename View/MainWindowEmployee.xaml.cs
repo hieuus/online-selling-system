@@ -29,6 +29,8 @@ namespace OnlineSellingSystem.View
            
             btnPartnerManagement.IsChecked = true;
             contentPartnerManagement.Visibility = Visibility.Visible;
+
+            employeeName.Text = LoginWindow.Person.Fullname;
         }
 
         //===========================================================================

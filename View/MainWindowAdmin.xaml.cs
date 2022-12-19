@@ -28,6 +28,8 @@ namespace OnlineSellingSystem.View
             btnAdminManagement.IsChecked = true;
             contentAdmin.Visibility = Visibility.Visible;
 
+            adminName.Text = LoginWindow.Person.Fullname;
+
         }
 
         //Menu

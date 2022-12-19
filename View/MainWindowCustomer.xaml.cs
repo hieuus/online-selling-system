@@ -28,6 +28,8 @@ namespace OnlineSellingSystem.View
         {
             btnOrders.IsChecked = true;
             contentOrders.Visibility = Visibility.Visible;
+
+            customerName.Text = LoginWindow.Person.Fullname;
         }
 
         //Menu Navigation

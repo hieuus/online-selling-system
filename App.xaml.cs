@@ -15,6 +15,5 @@ namespace OnlineSellingSystem
     /// </summary>
     public partial class App : Application
     {
-        
     }
 }

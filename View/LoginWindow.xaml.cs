@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineSellingSystem.Model;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace OnlineSellingSystem.View
     /// </summary>
     public partial class LoginWindow : Window
     {
+        public static Person Person { get; set; }
+
         string selectedType;
 
         public LoginWindow()
@@ -70,7 +73,7 @@ namespace OnlineSellingSystem.View
             }
         }
 
-        private bool loginHandle(string table, string phoneNumber, string password, string sql)
+        private bool loginHandle(string table, string phoneNumber, string password, string sql, string sqlQueryGetInfor)
         {
             bool result = false;
 
@@ -81,9 +84,38 @@ namespace OnlineSellingSystem.View
 
             int userCount = 0;
             userCount = (int)command.ExecuteScalar();
-            if (userCount > 0 && password == "123456") { result = true; }
+            if (userCount > 0 && password == "123456")
+            {   result = true;
+                setInfor(table,_connection, sqlQueryGetInfor, command);
+            }
             
             return result;
+        }
+
+        private void setInfor(string table, SqlConnection _connection, string sqlQueryGetInfor, SqlCommand command)
+        {
+            string type = table;
+            if(type == "Admin" || type == "Employee")
+            {
+                type = "Staff";
+            }
+
+            command = new SqlCommand(sqlQueryGetInfor, _connection);
+            var reader = command.ExecuteReader();
+
+            int id = 0;
+            string fullName = "";
+            string email = "";
+            string phone = "";
+
+            while (reader.Read())
+            {
+                id = reader.GetInt32(reader.GetOrdinal($"{type}Id"));
+                fullName = reader.GetString(reader.GetOrdinal($"{type}Name"));
+                email = reader.GetString(reader.GetOrdinal($"{type}Email"));
+                phone = reader.GetString(reader.GetOrdinal($"{type}Phone"));
+            }
+            Person = new Person { Type = type, Id = id, Fullname = fullName, Email = email, PhoneNumber = phone };
         }
 
         private void login(object sender, RoutedEventArgs e)
@@ -97,8 +129,9 @@ namespace OnlineSellingSystem.View
             {
                 //Check email, phone number
                 string sql = $"SELECT COUNT(*) FROM Partner WHERE PartnerPhone={phoneNumber}";
+                string sqlQueryGetInfor = $"SELECT* FROM Partner WHERE PartnerPhone={phoneNumber}";
                 bool isLoginSuccess = false;
-                isLoginSuccess = loginHandle(selectedType, phoneNumber, password, sql);
+                isLoginSuccess = loginHandle(selectedType, phoneNumber, password, sql, sqlQueryGetInfor);
 
                 if (isLoginSuccess)
                 {
@@ -115,8 +148,9 @@ namespace OnlineSellingSystem.View
             {
                 //Check email, phone number
                 string sql = $"SELECT COUNT(*) FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin IS NULL";
+                string sqlQueryGetInfor = $"SELECT* FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin IS NULL";
                 bool isLoginSuccess = false;
-                isLoginSuccess = loginHandle(selectedType, phoneNumber, password,sql);
+                isLoginSuccess = loginHandle(selectedType, phoneNumber, password,sql, sqlQueryGetInfor);
 
                 if (isLoginSuccess)
                 {
@@ -134,7 +168,8 @@ namespace OnlineSellingSystem.View
                 //Check email, phone number
                 bool isLoginSuccess = false;
                 string sql = $"SELECT COUNT(*) FROM Driver WHERE DriverPhone={phoneNumber}";
-                isLoginSuccess = loginHandle(selectedType, phoneNumber, password, sql);
+                string sqlQueryGetInfor = $"SELECT* FROM Driver WHERE DriverPhone={phoneNumber}";
+                isLoginSuccess = loginHandle(selectedType, phoneNumber, password, sql, sqlQueryGetInfor);
 
                 if (isLoginSuccess)
                 {
@@ -152,8 +187,9 @@ namespace OnlineSellingSystem.View
             {
                 //Check email, phone number
                 string sql = $"SELECT COUNT(*) FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin IS NOT NULL";
+                string sqlQueryGetInfor = $"SELECT* FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin IS NOT NULL";
                 bool isLoginSuccess = false;
-                isLoginSuccess = loginHandle(selectedType, phoneNumber, password, sql);
+                isLoginSuccess = loginHandle(selectedType, phoneNumber, password, sql, sqlQueryGetInfor);
 
                 if (isLoginSuccess)
                 {
@@ -171,8 +207,9 @@ namespace OnlineSellingSystem.View
             {
                 //Check email, phone number
                 string sql = $"SELECT COUNT(*) FROM Customer WHERE CustomerPhone={phoneNumber}";
+                string sqlQueryGetInfor = $"SELECT* FROM Customer WHERE CustomerPhone={phoneNumber}";
                 bool isLoginSuccess = false;
-                isLoginSuccess = loginHandle(selectedType, phoneNumber, password, sql);
+                isLoginSuccess = loginHandle(selectedType, phoneNumber, password, sql, sqlQueryGetInfor);
 
                 if (isLoginSuccess)
                 {
