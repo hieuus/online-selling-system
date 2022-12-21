@@ -887,7 +887,7 @@
                         </StackPanel>
                         <!--Content Update-->
                         <StackPanel x:Name="contentEmployeeOptionsUpdate"
-                                    Visibility="Collapsed"
+                                    Visibility="Visible"
                                     Grid.Column="1" Orientation="Vertical" Margin="0,45,0,0">
                             <!--Update ID-->
                             <StackPanel Orientation="Horizontal">

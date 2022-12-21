@@ -645,13 +645,13 @@ namespace OnlineSellingSystem.View
             }
             else
             {
-                if (updateAdminName.Text != "")
+                if (updateEmployeeName.Text != "")
                     newName = updateEmployeeName.Text;
-                if (updateAdminPhone.Text != "")
+                if (updateEmployeePhone.Text != "")
                     newPhone = updateEmployeePhone.Text;
-                if (updateCustomerCitizenID.Text != "")
+                if (updateAdminCitizenID.Text != "")
                     newCitizenID = updateEmployeeCitizenID.Text;
-                if (updateAdminEmail.Text != "")
+                if (updateEmployeeEmail.Text != "")
                     newEmail = updateEmployeeEmail.Text;
 
                 // Connect Database
