@@ -48,11 +48,11 @@ namespace OnlineSellingSystem.View
             _connection.Open();
 
             //Count number of person: admin/employee/customer/driver/partner
-            int adminCount = 0;
+            int count = 0;
             var command = new SqlCommand(sqlQueryTotalPerson, _connection);
-            adminCount = (int)command.ExecuteScalar();
+            count = (int)command.ExecuteScalar();
 
-            return adminCount;
+            return count;
         }
 
         private void SelectList20PersonsForAdmin()
@@ -242,8 +242,8 @@ namespace OnlineSellingSystem.View
             //Paging
             CurrentPage = 1;
 
-            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Customer";
-            TotalItems = NumberOfPersons(sqlQueryTotalAdmin);
+            string sqlQueryTotalCustomers = "SELECT COUNT(*) FROM Customer";
+            TotalItems = NumberOfPersons(sqlQueryTotalCustomers);
 
             int isDivisible = TotalItems % RowsPerPage;
             if (isDivisible != 0)
@@ -418,6 +418,10 @@ namespace OnlineSellingSystem.View
             if (success)
             {
                 btnAdminManagementChecked(sender, e);
+                addAdminName.Text = "";
+                addAdminPhone.Text = "";
+                addAdminEmail.Text = "";
+                addAdminCitizenID.Text = "";
             }
 
         }
@@ -438,6 +442,7 @@ namespace OnlineSellingSystem.View
             if (success)
             {
                 btnAdminManagementChecked(sender, e);
+                removeAdminID.Text = "";
             }
 
         }
@@ -505,6 +510,12 @@ namespace OnlineSellingSystem.View
                 }
 
             }
+
+            updateAdminName.Text = "";
+            updateAdminPhone.Text = "";
+            updateAdminCitizenID.Text = "";
+            updateAdminEmail.Text = "";
+            updateAdminButton_Click(sender, e);
         }
 
 
@@ -563,7 +574,7 @@ namespace OnlineSellingSystem.View
 
             contentEmployeeOptionsUpdate.Visibility = Visibility.Visible;
         }
-
+        //Content
         private void contentEmployeeAddDoneButton_Click(object sender, RoutedEventArgs e)
         {
             string name = addEmployeeName.Text.ToString();
@@ -587,6 +598,11 @@ namespace OnlineSellingSystem.View
             if (success)
             {
                 btnEmployeeManagementChecked(sender, e);
+
+                addEmployeeName.Text = "";
+                addEmployeePhone.Text = "";
+                addEmployeeEmail.Text = "";
+                addEmployeeCitizenID.Text = "";
             }
         }
 
@@ -606,6 +622,7 @@ namespace OnlineSellingSystem.View
             if (success)
             {
                 btnEmployeeManagementChecked(sender, e);
+                removeEmployeeID.Text = "";
             }
         }
 
@@ -649,7 +666,7 @@ namespace OnlineSellingSystem.View
                     newName = updateEmployeeName.Text;
                 if (updateEmployeePhone.Text != "")
                     newPhone = updateEmployeePhone.Text;
-                if (updateAdminCitizenID.Text != "")
+                if (updateEmployeeCitizenID.Text != "")
                     newCitizenID = updateEmployeeCitizenID.Text;
                 if (updateEmployeeEmail.Text != "")
                     newEmail = updateEmployeeEmail.Text;
@@ -671,6 +688,13 @@ namespace OnlineSellingSystem.View
                 }
 
             }
+
+            updateEmployeeName.Text = "";
+            updateEmployeePhone.Text = "";
+            updateEmployeeCitizenID.Text = "";
+            updateEmployeeEmail.Text = "";
+            updateEmployeeID_Click(sender, e);
+
         }
 //Customer Management=====================================================================================
         private void contentaCustomerPreviousButton_Click(object sender, RoutedEventArgs e)
@@ -702,9 +726,95 @@ namespace OnlineSellingSystem.View
                 SelectList20Persons("Customer");
             }
         }
+
+        private void contentCustomerSearID_Click(object sender, RoutedEventArgs e)
+        {
+            string id = updateCustomerID.Text;
+
+            // Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            string sql = $"SELECT* FROM Customer WHERE CustomerID = '{id}'";
+            var command = new SqlCommand(sql, _connection);
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                placeholderUpdateCustomerName.Text = reader.GetString(reader.GetOrdinal("CustomerName"));
+                placeholderUpdateCustomerEmail.Text = reader.GetString(reader.GetOrdinal("CustomerEmail"));
+                placeholderUpdateCustomerPhone.Text = reader.GetString(reader.GetOrdinal("CustomerPhone"));
+                placeholderUpdateCustomerNoR.Text = reader.GetString(reader.GetOrdinal("CustomerAddressNoR"));
+                placeholderUpdateCustomerRoad.Text = reader.GetString(reader.GetOrdinal("CustomerAddressRoad"));
+                placeholderUpdateCustomerWard.Text = reader.GetString(reader.GetOrdinal("CustomerAddressWard"));
+                placeholderUpdateCustomerAddressDistrict.Text = reader.GetString(reader.GetOrdinal("CustomerAddressDistrict"));
+                placeholderUpdateCustomerCity.Text = reader.GetString(reader.GetOrdinal("CustomerAddressCity"));
+            }
+        }
+
         private void contentCustomerUpdateDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            string newName = placeholderUpdateCustomerName.Text;
+            string newPhone = placeholderUpdateCustomerPhone.Text;
+            string newEmail = placeholderUpdateCustomerEmail.Text;
+            string newNoR = placeholderUpdateCustomerNoR.Text;
+            string newRoad = placeholderUpdateCustomerRoad.Text;
+            string newWard = placeholderUpdateCustomerRoad.Text;
+            string newAddressDistrict = placeholderUpdateCustomerAddressDistrict.Text;
+            string newCity = placeholderUpdateCustomerCity.Text;
 
+            if (updateCustomerName.Text == "" && updateCustomerPhone.Text == "" && updateCustomerEmail.Text == "" &&
+                updateCustomerNoR.Text == "" && updateCustomerRoad.Text == "" && updateCustomerWard.Text == "" &&
+                updateCustomerAddressDistrict.Text == "" && updateCustomerCity.Text == "")
+            {
+                //Do nothing
+            }
+            else
+            {
+                if (updateCustomerName.Text != "")
+                    newName = updateCustomerName.Text;
+                if (updateCustomerPhone.Text != "")
+                    newPhone = updateCustomerPhone.Text;
+                if (updateCustomerEmail.Text != "")
+                    newEmail = updateCustomerEmail.Text;
+                if(updateCustomerNoR.Text != "")
+                    newNoR = updateCustomerNoR.Text;
+                if(updateCustomerRoad.Text != "")
+                    newRoad = updateCustomerRoad.Text;
+                if(updateCustomerWard.Text != "")
+                    newWard = updateCustomerWard.Text;
+                if (updateCustomerAddressDistrict.Text != "")
+                    newAddressDistrict = updateCustomerAddressDistrict.Text;
+                if (updateCustomerCity.Text != "")
+                    newCity = updateCustomerCity.Text;
+
+                // Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                string id = updateCustomerID.Text;
+                string sql = $"UPDATE Customer SET CustomerName = N'{newName}', CustomerPhone = '{newPhone}', CustomerAddressDistrict = '{newAddressDistrict}', CustomerEmail = '{newEmail}', CustomerAddressNoR = '{newNoR}', CustomerAddressRoad = '{newRoad}', CustomerAddressWard='{newWard}', CustomerAddressCity = '{newCity}'" +
+                    $"WHERE CustomerId = '{id}'";
+
+                var command = new SqlCommand(sql, _connection);
+                int count = command.ExecuteNonQuery();
+
+                bool success = count == 1;
+                if (success)
+                {
+                    btnCustomerManagementChecked(sender, e);
+                }
+            }
+
+            updateCustomerName.Text = "";
+            updateCustomerPhone.Text = "";
+            updateCustomerEmail.Text = "";
+            updateCustomerNoR.Text = "";
+            updateCustomerRoad.Text = "";
+            updateCustomerWard.Text = "";
+            updateCustomerAddressDistrict.Text = "";
+            updateCustomerCity.Text = "";
+            contentCustomerSearID_Click(sender, e);
         }
 //Driver Management=====================================================================================
         private void contentaDriverPreviousButton_Click(object sender, RoutedEventArgs e)
