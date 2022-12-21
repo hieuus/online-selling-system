@@ -122,7 +122,7 @@
             </Grid>
 
         </Border>
-        
+
         <!--Content-->
         <!--Content Admin Management-->
         <Border Name="contentAdmin"
@@ -218,7 +218,7 @@
                             </Button>
                         </StackPanel>
                     </Border>
-                    
+
                     <!--Option-->
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -286,7 +286,7 @@
                                     Visibility="Collapsed"
                                     Grid.Column="1" Orientation="Vertical" Margin="0,45,0,0">
                             <!--Add ID-->
-                            
+
                             <!--Add Name And PhoneNumber-->
                             <StackPanel Orientation="Horizontal">
                                 <!--Name-->
@@ -571,10 +571,10 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-                
+
             </Grid>
         </Border>
-        
+
         <!--Content Employee Management-->
         <Border Name="contentEmployee"
                 Visibility="Collapsed"
@@ -736,7 +736,7 @@
                         <StackPanel x:Name="contentEmployeeOptionsAdd"
                                     Visibility="Collapsed"
                                     Grid.Column="1" Orientation="Vertical" Margin="0,45,0,0">
-                            
+
                             <!--Add Name And PhoneNumber-->
                             <StackPanel Orientation="Horizontal">
                                 <!--Name-->
@@ -1022,7 +1022,7 @@
 
             </Grid>
         </Border>
-        
+
         <!--Content Customer Management-->
         <Border Name="contentCustomer"
                 Visibility="Collapsed"
@@ -1143,6 +1143,9 @@
                                     </TextBlock>
                                 </Grid>
                             </Label>
+                            <Button Content="Serach ID" Height="28" Width="100"
+                                    Margin="20 0 0 0"
+                                    Click="contentCustomerSearID_Click"/>
                         </StackPanel>
                         <!--Update Name And PhoneNumber-->
                         <StackPanel Orientation="Horizontal">
@@ -1152,7 +1155,7 @@
                             <Label>
                                 <Grid>
                                     <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateCustomerName" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBlock x:Name="placeholderUpdateCustomerName" IsHitTestVisible="False" FontSize="8" Text="Binding Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1168,11 +1171,11 @@
                             </Label>
                             <!--Phone Number-->
                             <TextBlock Text="Phone" Foreground="White" FontSize="15" FontWeight="Medium"
-                                       VerticalAlignment="Center" Margin="31,0,0,0"/>
-                            <Label>
+                                       VerticalAlignment="Center" Margin="24,0,0,0"/>
+                            <Label Margin="15,0,0,0">
                                 <Grid>
                                     <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateCustomerPhone" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Phone" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBlock x:Name="placeholderUpdateCustomerPhone" IsHitTestVisible="False" FontSize="8" Text="Binding Phone" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1195,7 +1198,7 @@
                             <Label Margin="3,0,0,0">
                                 <Grid>
                                     <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateCustomerEmail" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Email" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBlock x:Name="placeholderUpdateCustomerEmail" IsHitTestVisible="False" FontSize="8" Text="Binding Email" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1209,18 +1212,101 @@
                                     </TextBlock>
                                 </Grid>
                             </Label>
-                            <!--CitizenID-->
-                            <TextBlock Text="CitizenID" Foreground="White" FontSize="15" FontWeight="Medium"
-                                       VerticalAlignment="Center" Margin="14,0,0,0"/>
+                            <!--House number-->
+                            <TextBlock Text="No.Road" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="24,0,0,0"/>
                             <Label>
                                 <Grid>
-                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateCustomerCitizenID" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="8" Text="Biding ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateCustomerNoR" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateCustomerNoR" IsHitTestVisible="False" FontSize="8" Text="Biding house number" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=updateCustomerCitizenID}" Value="">
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateCustomerNoR}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                        </StackPanel>
+                        <!--Road, Ward, District, City-->
+                        <StackPanel Orientation="Horizontal">
+                            <!--Road-->
+                            <TextBlock Text="Road" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                            <Label Margin="3,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateCustomerRoad" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateCustomerRoad" IsHitTestVisible="False" FontSize="8" Text="Binding Road" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateCustomerRoad}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                            <!--Ward-->
+                            <TextBlock Text="Ward" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="26,0,0,0"/>
+                            <Label Margin="22,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateCustomerWard" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateCustomerWard" IsHitTestVisible="False" FontSize="8" Text="Binding Ward" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateCustomerWard}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                            <!--District-->
+                            <TextBlock Text="District" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="15,0,0,0"/>
+                            <Label Margin="3,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateCustomerAddressDistrict" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateCustomerAddressDistrict" IsHitTestVisible="False" FontSize="8" Text="Binding District" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateCustomerAddressDistrict}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                            <!--City-->
+                            <TextBlock Text="City" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="15,0,0,0"/>
+                            <Label Margin="3,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateCustomerCity" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateCustomerCity" IsHitTestVisible="False" FontSize="8" Text="Binding City" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateCustomerCity}" Value="">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -1231,7 +1317,7 @@
                             </Label>
                         </StackPanel>
                         <!--Add Done Button-->
-                        <Button HorizontalAlignment="Center"
+                        <Button HorizontalAlignment="Left"
                                 Click="contentCustomerUpdateDoneButton_Click"
                                 Width="100"
                                 Padding="5,10,5,10"
