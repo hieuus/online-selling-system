@@ -1,5 +1,10 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using OnlineSellingSystem.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,34 +12,153 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace OnlineSellingSystem.View
 {
     /// <summary>
     /// Interaction logic for MainWindowAdmin.xaml
     /// </summary>
-    public partial class MainWindowAdmin : Window
+    public partial class MainWindowAdmin : Window, INotifyCollectionChanged
     {
         public MainWindowAdmin()
         {
             InitializeComponent();
         }
-        private void MainWindowAdminLoaded(object sender, RoutedEventArgs e)
+        SqlConnection _connection = null;
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
+
+        ObservableCollection<Person> _subItems = new ObservableCollection<Person>();
+
+        public int RowsPerPage { get; set; } = 20;
+        public int TotalPages { get; set; } = 0;
+        public int CurrentPage { get; set; } = 1;
+
+        public int TotalItems { get; set; } = 0;
+
+        private int NumberOfPersons(string sqlQueryTotalPerson)
         {
-            btnAdminManagement.IsChecked = true;
-            contentAdmin.Visibility = Visibility.Visible;
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
 
-            adminName.Text = LoginWindow.Person.Fullname;
+            //Count number of person: admin/employee/customer/driver/partner
+            int adminCount = 0;
+            var command = new SqlCommand(sqlQueryTotalPerson, _connection);
+            adminCount = (int)command.ExecuteScalar();
 
+            return adminCount;
         }
 
+        private void SelectList20PersonsForAdmin()
+        {
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            int offset = (CurrentPage - 1) * RowsPerPage;
+            int fetch = RowsPerPage;
+
+            string sqlSelectList20Persons = $"SELECT* FROM Staff WHERE StaffAdmin IS NOT NULL ORDER BY StaffId OFFSET {offset} ROWS FETCH NEXT {fetch} ROWS ONLY";
+            var command = new SqlCommand(sqlSelectList20Persons, _connection);
+            var reader = command.ExecuteReader();
+
+            _subItems.Clear();
+            while(reader.Read())
+            {
+                int id = reader.GetInt32(reader.GetOrdinal("StaffId"));
+                string fullName = reader.GetString(reader.GetOrdinal("StaffName"));
+                string email = reader.GetString(reader.GetOrdinal("StaffEmail"));
+                string phone = reader.GetString(reader.GetOrdinal("StaffPhone"));
+                var _person = new Person { Type = "Admin", Id = id, Fullname = fullName, Email = email, PhoneNumber = phone };
+                _subItems.Add(_person);
+            }
+
+            contentAdminAdminDataGrid.ItemsSource = _subItems;
+        }
+        private void SelectList20PersonsForEmployee()
+        {
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            int offset = (CurrentPage - 1) * RowsPerPage;
+            int fetch = RowsPerPage;
+
+            string sqlSelectList20Persons = $"SELECT* FROM Staff WHERE StaffAdmin IS NULL ORDER BY StaffId OFFSET {offset} ROWS FETCH NEXT {RowsPerPage} ROWS ONLY";
+            var command = new SqlCommand(sqlSelectList20Persons, _connection);
+            var reader = command.ExecuteReader();
+
+            _subItems.Clear();
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(reader.GetOrdinal("StaffId"));
+                string fullName = reader.GetString(reader.GetOrdinal("StaffName"));
+                string email = reader.GetString(reader.GetOrdinal("StaffEmail"));
+                string phone = reader.GetString(reader.GetOrdinal("StaffPhone"));
+                var _person = new Person { Type = "Employee", Id = id, Fullname = fullName, Email = email, PhoneNumber = phone };
+                _subItems.Add(_person);
+            }
+
+            contentEmployeeDataGrid.ItemsSource = _subItems;
+        }
+        private void SelectList20Persons(string table)
+        {
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            int offset = (CurrentPage - 1) * RowsPerPage;
+            int fetch = RowsPerPage;
+
+            string sqlSelectList20Persons = $"SELECT* FROM {table} ORDER BY {table}Id OFFSET {offset} ROWS FETCH NEXT {RowsPerPage} ROWS ONLY";
+            var command = new SqlCommand(sqlSelectList20Persons, _connection);
+            var reader = command.ExecuteReader();
+
+            _subItems.Clear();
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(reader.GetOrdinal($"{table}Id"));
+                string fullName = reader.GetString(reader.GetOrdinal($"{table}Name"));
+                string email = reader.GetString(reader.GetOrdinal($"{table}Email"));
+                string phone = reader.GetString(reader.GetOrdinal($"{table}Phone"));
+                var _person = new Person { Type = table, Id = id, Fullname = fullName, Email = email, PhoneNumber = phone };
+                _subItems.Add(_person);
+            }
+
+            if(table == "Customer")
+            {
+                contentCustomerDataGrid.ItemsSource = _subItems;
+            }
+            else if(table == "Driver")
+            {
+                contentDriverDataGrid.ItemsSource = _subItems;
+            }
+            else if(table == "Partner")
+            {
+                contentPartnerDataGrid.ItemsSource = _subItems;
+            }
+        }
+
+        private void MainWindowAdminLoaded(object sender, RoutedEventArgs e)
+        {
+            adminName.Text = LoginWindow.Person.Fullname;
+
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            btnAdminManagementChecked(sender, e);
+        }
         //Menu
         private void btnAdminManagementChecked(object sender, RoutedEventArgs e)
         {
+            //Switch Content
             contentEmployee.Visibility = Visibility.Collapsed;
             contentCustomer.Visibility = Visibility.Collapsed;
             contentDriver.Visibility = Visibility.Collapsed;
@@ -43,6 +167,29 @@ namespace OnlineSellingSystem.View
 
             btnAdminManagement.IsChecked = true;
             contentAdmin.Visibility = Visibility.Visible;
+
+            //Data handle
+            //Paging
+            CurrentPage = 1;
+
+            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Staff WHERE StaffAdmin IS NOT NULL";
+            TotalItems = NumberOfPersons(sqlQueryTotalAdmin);
+
+            int isDivisible = TotalItems % RowsPerPage;
+            if (isDivisible != 0)
+            {
+                TotalPages = TotalItems / RowsPerPage + 1;
+            }
+            else
+            {
+                TotalPages = TotalItems / RowsPerPage;
+            }
+
+            adminListCurrentPage.Text = CurrentPage.ToString();
+            adminListTotalPage.Text = TotalPages.ToString();
+
+            //Data Grid
+            SelectList20PersonsForAdmin();
         }
 
         private void btnEmployeeManagementChecked(object sender, RoutedEventArgs e)
@@ -55,6 +202,29 @@ namespace OnlineSellingSystem.View
 
             btnEmployeeManagement.IsChecked = true;
             contentEmployee.Visibility = Visibility.Visible;
+
+            //Data handle
+            //Paging
+            CurrentPage = 1;
+
+            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Staff WHERE StaffAdmin IS NULL";
+            TotalItems = NumberOfPersons(sqlQueryTotalAdmin);
+
+            int isDivisible = TotalItems % RowsPerPage;
+            if (isDivisible != 0)
+            {
+                TotalPages = TotalItems / RowsPerPage + 1;
+            }
+            else
+            {
+                TotalPages = TotalItems / RowsPerPage;
+            }
+
+            employeeListCurrentPage.Text = CurrentPage.ToString();
+            employeeListTotalPage.Text = TotalPages.ToString();
+
+            //Data Grid
+            SelectList20PersonsForEmployee();
         }
 
         private void btnCustomerManagementChecked(object sender, RoutedEventArgs e)
@@ -67,6 +237,29 @@ namespace OnlineSellingSystem.View
 
             btnCustomerManagement.IsChecked = true;
             contentCustomer.Visibility = Visibility.Visible;
+
+            //Data handle
+            //Paging
+            CurrentPage = 1;
+
+            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Customer";
+            TotalItems = NumberOfPersons(sqlQueryTotalAdmin);
+
+            int isDivisible = TotalItems % RowsPerPage;
+            if (isDivisible != 0)
+            {
+                TotalPages = TotalItems / RowsPerPage + 1;
+            }
+            else
+            {
+                TotalPages = TotalItems / RowsPerPage;
+            }
+
+            customerListCurrentPage.Text = CurrentPage.ToString();
+            customerListTotalPage.Text = TotalPages.ToString();
+
+            //Data Grid
+            SelectList20Persons("Customer");
         }
 
         private void btnDriverManagementChecked(object sender, RoutedEventArgs e)
@@ -79,6 +272,29 @@ namespace OnlineSellingSystem.View
 
             btnDriverManagement.IsChecked = true;
             contentDriver.Visibility = Visibility.Visible;
+
+            //Data handle
+            //Paging
+            CurrentPage = 1;
+
+            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Driver";
+            TotalItems = NumberOfPersons(sqlQueryTotalAdmin);
+
+            int isDivisible = TotalItems % RowsPerPage;
+            if (isDivisible != 0)
+            {
+                TotalPages = TotalItems / RowsPerPage + 1;
+            }
+            else
+            {
+                TotalPages = TotalItems / RowsPerPage;
+            }
+
+            driverListCurrentPage.Text = CurrentPage.ToString();
+            driverListTotalPage.Text = TotalPages.ToString();
+
+            //Data Grid
+            SelectList20Persons("Driver");
         }
 
         private void btnPartnerManagementChecked(object sender, RoutedEventArgs e)
@@ -91,6 +307,29 @@ namespace OnlineSellingSystem.View
 
             btnPartnerManagement.IsChecked = true;
             contentPartner.Visibility = Visibility.Visible;
+
+            //Data handle
+            //Paging
+            CurrentPage = 1;
+
+            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Partner";
+            TotalItems = NumberOfPersons(sqlQueryTotalAdmin);
+
+            int isDivisible = TotalItems % RowsPerPage;
+            if (isDivisible != 0)
+            {
+                TotalPages = TotalItems / RowsPerPage + 1;
+            }
+            else
+            {
+                TotalPages = TotalItems / RowsPerPage;
+            }
+
+            partnerListCurrentPage.Text = CurrentPage.ToString();
+            partnerListTotalPage.Text = TotalPages.ToString();
+
+            //Data Grid
+            SelectList20Persons("Partner");
         }
 
         private void logoutButton(object sender, MouseButtonEventArgs e)
@@ -103,12 +342,32 @@ namespace OnlineSellingSystem.View
         //Admin List Page navigation
         private void contentaAdminPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if(CurrentPage <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage--;
+                adminListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20PersonsForAdmin();
+            }
         }
 
         private void contentaAdminNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage == TotalPages)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage++;
+                adminListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20PersonsForAdmin();
+            }
         }
         //Options
         private void contentAdminAddButton_Click(object sender, RoutedEventArgs e)
@@ -135,19 +394,119 @@ namespace OnlineSellingSystem.View
             contentAdminOptionsUpdate.Visibility = Visibility.Visible;
         }
 
+        private Random _random = new Random();
+
+        
         private void contentAdminAddDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            string name = addAdminName.Text.ToString();
+            string phone = addAdminPhone.Text.ToString();
+            string email = addAdminEmail.Text.ToString();
+            string citizenId = addAdminCitizenID.Text.ToString();
+
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            int StaffAdmin = _random.Next(1000, 1100);
+            string sql = "INSERT INTO[dbo].[Staff]([StaffName], [StaffPhone], [StaffEmail], [StaffCitizenId], [StaffAdmin])" +
+                         $"VALUES(N'{name}', '{phone}', '{email}', '{citizenId}', {StaffAdmin})";
+
+
+            var command = new SqlCommand(sql, _connection);
+            int count = command.ExecuteNonQuery();
+
+            bool success = count == 1;
+            if (success)
+            {
+                btnAdminManagementChecked(sender, e);
+            }
 
         }
 
         private void contentAdminRemoveDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            string idToRemove = removeAdminID.Text.ToString();
+            string sql = $"DELETE FROM Staff WHERE StaffId = '{idToRemove}'";
+
+            var command = new SqlCommand(sql, _connection);
+            int count = command.ExecuteNonQuery();
+
+            bool success = count == 1;
+            if (success)
+            {
+                btnAdminManagementChecked(sender, e);
+            }
+
+        }
+
+        private void updateAdminButton_Click(object sender, RoutedEventArgs e)
+        {
+            string id = updateAdminID.Text;
+
+            // Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            string sql = $"SELECT* FROM Staff WHERE StaffID = '{id}'";
+            var command = new SqlCommand(sql, _connection);
+
+            var reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                placeholderUpdateAdminName.Text = reader.GetString(reader.GetOrdinal("StaffName"));
+                placeholderUpdateAdminEmail.Text = reader.GetString(reader.GetOrdinal("StaffEmail"));
+                placeholderUpdateAdminPhone.Text = reader.GetString(reader.GetOrdinal("StaffPhone"));
+                placeholderUpdateAdminCitizenID.Text = reader.GetString(reader.GetOrdinal("StaffCitizenId"));
+            }
 
         }
 
         private void contentAdminUpdateDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            string newName = placeholderUpdateAdminName.Text;
+            string newPhone = placeholderUpdateAdminPhone.Text;
+            string newCitizenID = placeholderUpdateAdminCitizenID.Text;
+            string newEmail = placeholderUpdateAdminEmail.Text;
 
+
+            if(updateAdminName.Text == "" && updateAdminPhone.Text == "" &&
+                updateCustomerCitizenID.Text == "" && updateCustomerEmail.Text == "")
+            {
+                //Do nothing
+            }
+            else
+            {
+                if (updateAdminName.Text != "")
+                    newName = updateAdminName.Text;
+                if (updateAdminPhone.Text != "")
+                    newPhone = updateAdminPhone.Text;
+                if(updateCustomerCitizenID.Text != "")
+                    newCitizenID=updateCustomerCitizenID.Text;
+                if(updateAdminEmail.Text != "")
+                    newEmail = updateAdminEmail.Text;
+
+                // Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                string id = updateAdminID.Text;
+                string sql = $"UPDATE Staff SET StaffName = N'{newName}', StaffPhone = '{newPhone}', StaffCitizenId = '{newCitizenID}', StaffEmail = '{newEmail}' WHERE StaffId = '{id}'";
+
+                var command = new SqlCommand(sql, _connection);
+                int count = command.ExecuteNonQuery();
+
+                bool success = count == 1;
+                if (success)
+                {
+                    btnAdminManagementChecked(sender, e);
+                }
+
+            }
         }
 
 
@@ -155,12 +514,32 @@ namespace OnlineSellingSystem.View
         //Data Grid Page Navigation
         private void contentaEmployeePreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage--;
+                employeeListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20PersonsForEmployee();
+            }
         }
 
         private void contentaEmployeeNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage == TotalPages)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage++;
+                employeeListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20PersonsForEmployee();
+            }
         }
         //Options
         private void contentEmployeeAddButton_Click(object sender, RoutedEventArgs e)
@@ -204,12 +583,32 @@ namespace OnlineSellingSystem.View
 //Customer Management=====================================================================================
         private void contentaCustomerPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage--;
+                customerListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Customer");
+            }
         }
 
         private void contentCustomerNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage == TotalPages)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage++;
+                customerListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Customer");
+            }
         }
         private void contentCustomerUpdateDoneButton_Click(object sender, RoutedEventArgs e)
         {
@@ -218,12 +617,32 @@ namespace OnlineSellingSystem.View
 //Driver Management=====================================================================================
         private void contentaDriverPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage--;
+                driverListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Driver");
+            }
         }
 
         private void contentDriverNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage == TotalPages)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage++;
+                driverListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Driver");
+            }
         }
 
         private void contentDriverUpdateDoneButton_Click(object sender, RoutedEventArgs e)
@@ -233,12 +652,32 @@ namespace OnlineSellingSystem.View
 //Partner Management=====================================================================================
         private void contentaPartnerPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage--;
+                partnerListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Partner");
+            }
         }
 
         private void contentPartnerNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPage == TotalPages)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItems.Clear();
+                CurrentPage++;
+                driverListCurrentPage.Text = CurrentPage.ToString();
+                SelectList20Persons("Driver");
+            }
         }
 
         private void contentPartnerUpdateDoneButton_Click(object sender, RoutedEventArgs e)
@@ -246,6 +685,6 @@ namespace OnlineSellingSystem.View
 
         }
 
-        
+       
     }
 }

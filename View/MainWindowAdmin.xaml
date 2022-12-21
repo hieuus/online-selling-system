@@ -126,7 +126,7 @@
         <!--Content-->
         <!--Content Admin Management-->
         <Border Name="contentAdmin"
-                Visibility="Collapsed"
+                Visibility="Visible"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -174,12 +174,12 @@
                         <DataGrid Grid.Row="0" Name="contentAdminAdminDataGrid"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding AdminID}"/>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding AdminName}"/>
+                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Fullname}"/>
 
-                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding AdminPhoneNumber}"/>
-                                <DataGridTextColumn Header="Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding AdminAddress}"/>
+                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PhoneNumber}"/>
+                                <DataGridTextColumn Header="Email" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Email}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
@@ -201,9 +201,9 @@
                                 </Button.Content>
                             </Button>
                             <TextBlock Name="contentOrdersPartnerListPagingInfo" Margin="10">
-                                            <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                            <Run Name="adminListCurrentPage" d:Text="3"/>
                                             / 
-                                            <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                            <Run Name="adminListTotalPage"  d:Text="100"/>
                             </TextBlock>
                             <Button x:Name="contentaAdminNextButton"
                                         Width="25" Height="25"
@@ -213,7 +213,7 @@
                                         BorderBrush="Transparent">
                                 <Button.Content>
                                     <Image Source="/Images/next.png"
-                                               Height="16"/>
+                                           Height="16"/>
                                 </Button.Content>
                             </Button>
                         </StackPanel>
@@ -286,27 +286,7 @@
                                     Visibility="Collapsed"
                                     Grid.Column="1" Orientation="Vertical" Margin="0,45,0,0">
                             <!--Add ID-->
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="ID" Foreground="White" FontSize="15" FontWeight="Medium"
-                                       VerticalAlignment="Center"/>
-                                <Label Margin="25,0,0,0">
-                                    <Grid>
-                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="addAdminID" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                            <TextBlock.Style>
-                                                <Style TargetType="{x:Type TextBlock}">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=addAdminID}" Value="">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </Grid>
-                                </Label>
-                            </StackPanel>
+                            
                             <!--Add Name And PhoneNumber-->
                             <StackPanel Orientation="Horizontal">
                                 <!--Name-->
@@ -465,7 +445,8 @@
                                        VerticalAlignment="Center"/>
                                 <Label Margin="25,0,0,0">
                                     <Grid>
-                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateAdminID" Margin="5"/>
+                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                 x:Name="updateAdminID" Margin="5"/>
                                         <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding ID to here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
@@ -480,6 +461,9 @@
                                         </TextBlock>
                                     </Grid>
                                 </Label>
+                                <Button Name="updateAdminIdButton" Content="Search ID" Height="28" Width="100"
+                                        Margin="20 0 0 0"
+                                        Click="updateAdminButton_Click"/>
                             </StackPanel>
                             <!--Add Name And PhoneNumber-->
                             <StackPanel Orientation="Horizontal">
@@ -488,13 +472,13 @@
                                        VerticalAlignment="Center"/>
                                 <Label>
                                     <Grid>
-                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="removeAdminName" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateAdminName" Margin="5"/>
+                                        <TextBlock x:Name="placeholderUpdateAdminName" IsHitTestVisible="False" FontSize="8" Text="Binding Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=removeAdminName}" Value="">
+                                                        <DataTrigger Binding="{Binding Text, ElementName=updateAdminName}" Value="">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -509,7 +493,7 @@
                                 <Label>
                                     <Grid>
                                         <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateAdminPhone" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Phone" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock x:Name="placeholderUpdateAdminPhone" IsHitTestVisible="False" FontSize="8" Text="Binding Phone" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -531,13 +515,13 @@
                                        VerticalAlignment="Center"/>
                                 <Label Margin="3,0,0,0">
                                     <Grid>
-                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="removeAdminEmail" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Email" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateAdminEmail" Margin="5"/>
+                                        <TextBlock x:Name="placeholderUpdateAdminEmail" IsHitTestVisible="False" FontSize="8" Text="Binding Email" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=removeAdminEmail}" Value="">
+                                                        <DataTrigger Binding="{Binding Text, ElementName=updateAdminEmail}" Value="">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -552,7 +536,7 @@
                                 <Label>
                                     <Grid>
                                         <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateAdminCitizenID" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="Biding ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock Name="placeholderUpdateAdminCitizenID" IsHitTestVisible="False" FontSize="8" Text="Biding ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -641,12 +625,12 @@
                         <DataGrid Grid.Row="0" Name="contentEmployeeDataGrid"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding EmployeeID}"/>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding EmployeeName}"/>
+                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Fullname}"/>
 
-                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding EmployeePhoneNumber}"/>
-                                <DataGridTextColumn Header="Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding EmployeeAddress}"/>
+                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PhoneNumber}"/>
+                                <DataGridTextColumn Header="Email" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Email}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
@@ -668,9 +652,9 @@
                                 </Button.Content>
                             </Button>
                             <TextBlock Name="contentEmployeesListPagingInfo" Margin="10">
-                                            <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                            <Run Name="employeeListCurrentPage" d:Text="3"/>
                                             / 
-                                            <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                            <Run Name="employeeListTotalPage" d:Text="100"/>
                             </TextBlock>
                             <Button x:Name="contentaEmployeeNextButton"
                                         Width="25" Height="25"
@@ -1108,12 +1092,12 @@
                         <DataGrid Name="contentCustomerDataGrid"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding CustomerID}"/>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerName}"/>
+                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Fullname}"/>
 
-                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerPhoneNumber}"/>
-                                <DataGridTextColumn Header="Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerAddress}"/>
+                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PhoneNumber}"/>
+                                <DataGridTextColumn Header="Email" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Email}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
@@ -1135,9 +1119,9 @@
                                 </Button.Content>
                             </Button>
                             <TextBlock Name="contentCustomersListPagingInfo" Margin="10">
-                                    <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                    <Run Name="customerListCurrentPage" d:Text="3"/>
                                     / 
-                                    <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                    <Run Name="customerListTotalPage" d:Text="100"/>
                             </TextBlock>
                             <Button x:Name="contentaCustomerNextButton"
                                     Width="25" Height="25"
@@ -1338,12 +1322,12 @@
                         <DataGrid Name="contentDriverDataGrid"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding DriverID}"/>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DriverName}"/>
+                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Fullname}"/>
 
-                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DriverPhoneNumber}"/>
-                                <DataGridTextColumn Header="Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DriverAddress}"/>
+                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PhoneNumber}"/>
+                                <DataGridTextColumn Header="Email" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Email}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
@@ -1365,9 +1349,9 @@
                                 </Button.Content>
                             </Button>
                             <TextBlock Name="contentDriversListPagingInfo" Margin="10">
-                                    <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                    <Run Name="driverListCurrentPage" d:Text="3"/>
                                     / 
-                                    <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                    <Run Name="driverListTotalPage" Text="100"/>
                             </TextBlock>
                             <Button x:Name="contentaDriverNextButton"
                                     Width="25" Height="25"
@@ -1568,12 +1552,12 @@
                         <DataGrid Name="contentPartnerDataGrid"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding PartnerID}"/>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PartnerName}"/>
+                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Fullname}"/>
 
-                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PartnerPhoneNumber}"/>
-                                <DataGridTextColumn Header="Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PartnerAddress}"/>
+                                <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PhoneNumber}"/>
+                                <DataGridTextColumn Header="Email" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Email}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
@@ -1595,9 +1579,9 @@
                                 </Button.Content>
                             </Button>
                             <TextBlock Name="contentPartnersListPagingInfo" Margin="10">
-                                    <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                    <Run Name="partnerListCurrentPage" d:Text="3"/>
                                     / 
-                                    <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                    <Run Name="partnerListTotalPage" d:Text="100"/>
                             </TextBlock>
                             <Button x:Name="contentaPartnerNextButton"
                                     Width="25" Height="25"
