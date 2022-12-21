@@ -73,42 +73,20 @@
                 <TextBlock Text="Phone Number"
                            FontSize="15" Margin="15,35,0,0"
                            />
-                <Label Margin="0,0,0,10">
+                <Label Margin="6,0,0,10">
                     <Grid>
                         <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="loginPhoneNumber" Margin="5"/>
-                        <TextBlock IsHitTestVisible="False" FontSize="16" Text="Ex: 0931902050" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=loginPhoneNumber}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                       
                     </Grid>
                 </Label>
 
                 <TextBlock Text="Password"
                            FontSize="15" Margin="15,10,0,0"
                            />
-                <Label Margin="0,0,0,10">
+                <Label Margin="6,0,0,10">
                     <Grid>
-                        <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="loginPassword" Margin="5"/>
-                        <TextBlock IsHitTestVisible="False" FontSize="16" Text="Your password" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=loginPassword}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                        <PasswordBox PasswordChar="*" BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="loginPassword" Margin="5"/>
+                       
                     </Grid>
                 </Label>
 
@@ -133,7 +111,7 @@
                         FontSize="20"
                         FontWeight="Bold"
                         Content="Login"
-                        Margin="10,20,0,0">
+                        Margin="15,20,0,0">
                 </Button>
             </StackPanel>
         </Border>

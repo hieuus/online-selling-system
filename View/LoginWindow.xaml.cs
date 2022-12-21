@@ -77,7 +77,7 @@ namespace OnlineSellingSystem.View
         {
             bool result = false;
 
-            SqlConnection _connection = new SqlConnection("server=HIEUNGUYEN; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
             _connection.Open();
 
             var command = new SqlCommand(sql, _connection);
@@ -123,7 +123,7 @@ namespace OnlineSellingSystem.View
             selectedType = StartWindow.selectedType;
 
             phoneNumber = loginPhoneNumber.Text;
-            password = loginPassword.Text;
+            password = loginPassword.Password;
 
             if ( selectedType == "Partner")
             {
