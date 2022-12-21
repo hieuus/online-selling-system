@@ -960,6 +960,7 @@ namespace OnlineSellingSystem.View
             }
         }
 
+
         private void contentPartnerNextButton_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentPage == TotalPages)
@@ -975,11 +976,94 @@ namespace OnlineSellingSystem.View
             }
         }
 
-        private void contentPartnerUpdateDoneButton_Click(object sender, RoutedEventArgs e)
+        private void contentPartnerSearID_Click(object sender, RoutedEventArgs e)
         {
+            string id = updatePartnerID.Text;
 
+            // Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            string sql = $"SELECT* FROM Partner WHERE PartnerId = '{id}'";
+            var command = new SqlCommand(sql, _connection);
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                placeholderUpdatePartnerName.Text = reader.GetString(reader.GetOrdinal("PartnerName"));
+                placeholderUpdatePartnerEmail.Text = reader.GetString(reader.GetOrdinal("PartnerEmail"));
+                placeholderUpdatePartnerPhone.Text = reader.GetString(reader.GetOrdinal("PartnerPhone"));
+                placeholderUpdatePartnerNoR.Text = reader.GetOrdinal("PartnerAddressNoR").ToString();
+                placeholderUpdatePartnerRoad.Text = reader.GetString(reader.GetOrdinal("PartnerAddressRoad"));
+                placeholderUpdatePartnerWard.Text = reader.GetString(reader.GetOrdinal("PartnerAddressWard"));
+                placeholderUpdatePartnerAddressDistrict.Text = reader.GetString(reader.GetOrdinal("PartnerAddressDistrict"));
+                placeholderUpdatePartnerCity.Text = reader.GetString(reader.GetOrdinal("PartnerAddressCity"));
+            }
         }
 
-        
+        private void contentPartnerUpdateDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            string newName = placeholderUpdatePartnerName.Text;
+            string newPhone = placeholderUpdatePartnerPhone.Text;
+            string newEmail = placeholderUpdatePartnerEmail.Text;
+            string newNoR = placeholderUpdatePartnerNoR.Text;
+            string newRoad = placeholderUpdatePartnerRoad.Text;
+            string newWard = placeholderUpdatePartnerRoad.Text;
+            string newAddressDistrict = placeholderUpdatePartnerAddressDistrict.Text;
+            string newCity = placeholderUpdatePartnerCity.Text;
+
+            if (updatePartnerName.Text == "" && updatePartnerPhone.Text == "" && updatePartnerEmail.Text == "" &&
+                updatePartnerNoR.Text == "" && updatePartnerRoad.Text == "" && updatePartnerWard.Text == "" &&
+                updatePartnerAddressDistrict.Text == "" && updatePartnerCity.Text == "")
+            {
+                //Do nothing
+            }
+            else
+            {
+                if (updatePartnerName.Text != "")
+                    newName = updatePartnerName.Text;
+                if (updatePartnerPhone.Text != "")
+                    newPhone = updatePartnerPhone.Text;
+                if (updatePartnerEmail.Text != "")
+                    newEmail = updatePartnerEmail.Text;
+                if (updatePartnerNoR.Text != "")
+                    newNoR = updatePartnerNoR.Text;
+                if (updatePartnerRoad.Text != "")
+                    newRoad = updatePartnerRoad.Text;
+                if (updatePartnerWard.Text != "")
+                    newWard = updatePartnerWard.Text;
+                if (updatePartnerAddressDistrict.Text != "")
+                    newAddressDistrict = updatePartnerAddressDistrict.Text;
+                if (updatePartnerCity.Text != "")
+                    newCity = updatePartnerCity.Text;
+
+                // Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                string id = updatePartnerID.Text;
+                string sql = $"UPDATE Partner SET PartnerName = N'{newName}', PartnerPhone = '{newPhone}', PartnerAddressDistrict = '{newAddressDistrict}', PartnerEmail = '{newEmail}', PartnerAddressNoR = '{newNoR}', PartnerAddressRoad = '{newRoad}', PartnerAddressWard='{newWard}', PartnerAddressCity = '{newCity}'" +
+                    $"WHERE PartnerId = '{id}'";
+
+                var command = new SqlCommand(sql, _connection);
+                int count = command.ExecuteNonQuery();
+
+                bool success = count == 1;
+                if (success)
+                {
+                    btnPartnerManagementChecked(sender, e);
+                }
+            }
+
+            updatePartnerName.Text = "";
+            updatePartnerPhone.Text = "";
+            updatePartnerEmail.Text = "";
+            updatePartnerNoR.Text = "";
+            updatePartnerRoad.Text = "";
+            updatePartnerWard.Text = "";
+            updatePartnerAddressDistrict.Text = "";
+            updatePartnerCity.Text = "";
+            contentPartnerSearID_Click(sender, e);
+        }
     }
 }
