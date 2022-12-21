@@ -437,7 +437,7 @@
                         </StackPanel>
                         <!--Content Update-->
                         <StackPanel x:Name="contentAdminOptionsUpdate"
-                                    Visibility="Visible"
+                                    Visibility="Collapsed"
                                     Grid.Column="1" Orientation="Vertical" Margin="0,45,0,0">
                             <!--Update ID-->
                             <StackPanel Orientation="Horizontal">
