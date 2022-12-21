@@ -395,8 +395,6 @@ namespace OnlineSellingSystem.View
         }
 
         private Random _random = new Random();
-
-        
         private void contentAdminAddDoneButton_Click(object sender, RoutedEventArgs e)
         {
             string name = addAdminName.Text.ToString();
@@ -475,7 +473,7 @@ namespace OnlineSellingSystem.View
 
 
             if(updateAdminName.Text == "" && updateAdminPhone.Text == "" &&
-                updateCustomerCitizenID.Text == "" && updateCustomerEmail.Text == "")
+                updateAdminCitizenID.Text == "" && updateAdminEmail.Text == "")
             {
                 //Do nothing
             }
@@ -485,8 +483,8 @@ namespace OnlineSellingSystem.View
                     newName = updateAdminName.Text;
                 if (updateAdminPhone.Text != "")
                     newPhone = updateAdminPhone.Text;
-                if(updateCustomerCitizenID.Text != "")
-                    newCitizenID=updateCustomerCitizenID.Text;
+                if(updateAdminCitizenID.Text != "")
+                    newCitizenID=updateAdminCitizenID.Text;
                 if(updateAdminEmail.Text != "")
                     newEmail = updateAdminEmail.Text;
 
@@ -568,17 +566,111 @@ namespace OnlineSellingSystem.View
 
         private void contentEmployeeAddDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            string name = addEmployeeName.Text.ToString();
+            string phone = addEmployeePhone.Text.ToString();
+            string email = addEmployeeEmail.Text.ToString();
+            string citizenId = addEmployeeCitizenID.Text.ToString();
 
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            int StaffAdmin = _random.Next(1000, 1100);
+            string sql = "INSERT INTO[dbo].[Staff]([StaffName], [StaffPhone], [StaffEmail], [StaffCitizenId], [StaffAdmin])" +
+                         $"VALUES(N'{name}', '{phone}', '{email}', '{citizenId}', NULL)";
+
+
+            var command = new SqlCommand(sql, _connection);
+            int count = command.ExecuteNonQuery();
+
+            bool success = count == 1;
+            if (success)
+            {
+                btnEmployeeManagementChecked(sender, e);
+            }
         }
 
         private void contentEmployeeRemoveDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
 
+            string idToRemove = removeEmployeeID.Text.ToString();
+            string sql = $"DELETE FROM Staff WHERE StaffId = '{idToRemove}'";
+
+            var command = new SqlCommand(sql, _connection);
+            int count = command.ExecuteNonQuery();
+
+            bool success = count == 1;
+            if (success)
+            {
+                btnEmployeeManagementChecked(sender, e);
+            }
+        }
+
+        private void updateEmployeeID_Click(object sender, RoutedEventArgs e)
+        {
+            string id = updateEmployeeID.Text;
+
+            // Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            string sql = $"SELECT* FROM Staff WHERE StaffID = '{id}'";
+            var command = new SqlCommand(sql, _connection);
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                placeholderUpdateEmployeeName.Text = reader.GetString(reader.GetOrdinal("StaffName"));
+                placeholderUpdateEmployeeEmail.Text = reader.GetString(reader.GetOrdinal("StaffEmail"));
+                placeholderUpdateEmployeePhone.Text = reader.GetString(reader.GetOrdinal("StaffPhone"));
+                placeholderUpdateEmployeeCitizenId.Text = reader.GetString(reader.GetOrdinal("StaffCitizenId"));
+            }
         }
 
         private void contentEmployeeUpdateDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            string newName = placeholderUpdateEmployeeName.Text;
+            string newPhone = placeholderUpdateEmployeePhone.Text;
+            string newCitizenID = placeholderUpdateEmployeeCitizenId.Text;
+            string newEmail = placeholderUpdateEmployeeEmail.Text;
 
+
+            if (updateEmployeeName.Text == "" && updateEmployeePhone.Text == "" &&
+                updateEmployeeCitizenID.Text == "" && updateEmployeeEmail.Text == "")
+            {
+                //Do nothing
+            }
+            else
+            {
+                if (updateAdminName.Text != "")
+                    newName = updateEmployeeName.Text;
+                if (updateAdminPhone.Text != "")
+                    newPhone = updateEmployeePhone.Text;
+                if (updateCustomerCitizenID.Text != "")
+                    newCitizenID = updateEmployeeCitizenID.Text;
+                if (updateAdminEmail.Text != "")
+                    newEmail = updateEmployeeEmail.Text;
+
+                // Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                string id = updateEmployeeID.Text;
+                string sql = $"UPDATE Staff SET StaffName = N'{newName}', StaffPhone = '{newPhone}', StaffCitizenId = '{newCitizenID}', StaffEmail = '{newEmail}' WHERE StaffId = '{id}'";
+
+                var command = new SqlCommand(sql, _connection);
+                int count = command.ExecuteNonQuery();
+
+                bool success = count == 1;
+                if (success)
+                {
+                    btnEmployeeManagementChecked(sender, e);
+                }
+
+            }
         }
 //Customer Management=====================================================================================
         private void contentaCustomerPreviousButton_Click(object sender, RoutedEventArgs e)
@@ -685,6 +777,6 @@ namespace OnlineSellingSystem.View
 
         }
 
-       
+        
     }
 }

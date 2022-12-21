@@ -126,7 +126,7 @@
         <!--Content-->
         <!--Content Admin Management-->
         <Border Name="contentAdmin"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -577,7 +577,7 @@
         
         <!--Content Employee Management-->
         <Border Name="contentEmployee"
-                Visibility="Collapsed"
+                Visibility="Visible"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -736,28 +736,7 @@
                         <StackPanel x:Name="contentEmployeeOptionsAdd"
                                     Visibility="Collapsed"
                                     Grid.Column="1" Orientation="Vertical" Margin="0,45,0,0">
-                            <!--Add ID-->
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="ID" Foreground="White" FontSize="15" FontWeight="Medium"
-                                       VerticalAlignment="Center"/>
-                                <Label Margin="25,0,0,0">
-                                    <Grid>
-                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="addEmployeeID" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                            <TextBlock.Style>
-                                                <Style TargetType="{x:Type TextBlock}">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=addEmployeeID}" Value="">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </Grid>
-                                </Label>
-                            </StackPanel>
+                            
                             <!--Add Name And PhoneNumber-->
                             <StackPanel Orientation="Horizontal">
                                 <!--Name-->
@@ -931,6 +910,8 @@
                                         </TextBlock>
                                     </Grid>
                                 </Label>
+                                <Button Content="Search ID" Height="28" Width="100"
+                                        Margin="20 0 0 0" Click="updateEmployeeID_Click"/>
                             </StackPanel>
                             <!--Add Name And PhoneNumber-->
                             <StackPanel Orientation="Horizontal">
@@ -939,13 +920,13 @@
                                        VerticalAlignment="Center"/>
                                 <Label>
                                     <Grid>
-                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="removeEmployeeName" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateEmployeeName" Margin="5"/>
+                                        <TextBlock Name="placeholderUpdateEmployeeName" IsHitTestVisible="False" FontSize="8" Text="Binding Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=removeEmployeeName}" Value="">
+                                                        <DataTrigger Binding="{Binding Text, ElementName=updateEmployeeName}" Value="">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -960,7 +941,7 @@
                                 <Label>
                                     <Grid>
                                         <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateEmployeePhone" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Phone" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock x:Name="placeholderUpdateEmployeePhone" IsHitTestVisible="False" FontSize="8" Text="Binding Phone" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -982,13 +963,13 @@
                                        VerticalAlignment="Center"/>
                                 <Label Margin="3,0,0,0">
                                     <Grid>
-                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="removeEmployeeEmail" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Email" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateEmployeeEmail" Margin="5"/>
+                                        <TextBlock x:Name="placeholderUpdateEmployeeEmail" IsHitTestVisible="False" FontSize="8" Text="Binding Email" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=removeEmployeeEmail}" Value="">
+                                                        <DataTrigger Binding="{Binding Text, ElementName=updateEmployeeEmail}" Value="">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -1003,7 +984,7 @@
                                 <Label>
                                     <Grid>
                                         <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateEmployeeCitizenID" Margin="5"/>
-                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="Biding ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock x:Name="placeholderUpdateEmployeeCitizenId" IsHitTestVisible="False" FontSize="8" Text="Biding ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
