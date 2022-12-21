@@ -847,9 +847,102 @@ namespace OnlineSellingSystem.View
             }
         }
 
-        private void contentDriverUpdateDoneButton_Click(object sender, RoutedEventArgs e)
+        private void contentDriverSearhID_Click(object sender, RoutedEventArgs e)
         {
+            string id = updateDriverID.Text;
 
+            // Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            string sql = $"SELECT* FROM Driver WHERE DriverId = '{id}'";
+            var command = new SqlCommand(sql, _connection);
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                placeholderUpdateDriverName.Text = reader.GetString(reader.GetOrdinal("DriverName"));
+                placeholderUpdateDriverEmail.Text = reader.GetString(reader.GetOrdinal("DriverEmail"));
+                placeholderUpdateDriverPhone.Text = reader.GetString(reader.GetOrdinal("DriverPhone"));
+                placeholderUpdateDriverNoR.Text = reader.GetString(reader.GetOrdinal("DriverAddressNoR"));
+                placeholderUpdateDriverRoad.Text = reader.GetString(reader.GetOrdinal("DriverAddressRoad"));
+                placeholderUpdateDriverWard.Text = reader.GetString(reader.GetOrdinal("DriverAddressWard"));
+                placeholderUpdateDriverAddressDistrict.Text = reader.GetString(reader.GetOrdinal("DriverAddressDistrict"));
+                placeholderUpdateDriverCity.Text = reader.GetString(reader.GetOrdinal("DriverAddressCity"));
+                placeholderUpdateDriverLicensePlate.Text = reader.GetString(reader.GetOrdinal("DriverLicensePlates"));
+            }
+        }
+
+        private void contentDiverUpdateDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            string newName = placeholderUpdateDriverName.Text;
+            string newEmail = placeholderUpdateDriverEmail.Text;
+            string newPhone = placeholderUpdateDriverPhone.Text;
+            string newNoR = placeholderUpdateDriverNoR.Text;
+            string newRoad = placeholderUpdateDriverRoad.Text;
+            string newWard = placeholderUpdateDriverWard.Text;
+            string newDistrict = placeholderUpdateDriverAddressDistrict.Text;
+            string newCity = placeholderUpdateDriverCity.Text;
+            string newLicense = placeholderUpdateDriverLicensePlate.Text;
+
+            if (updateDriverName.Text == "" && updateDriverPhone.Text == "" && updateDriverEmail.Text == "" &&
+                updateDriverNoR.Text == "" && updateDriverRoad.Text == "" && updateDriverWard.Text == "" && updateDriverAddressDistrict.Text == "" && updateDriverCity.Text == "" &&
+                updateDriverLicensePlate.Text == "")
+            {
+                //Do nothing
+            }
+            else
+            {
+                if (updateDriverName.Text != "")
+                    newName = updateDriverName.Text;
+                if(updateDriverPhone.Text != "")
+                    newPhone = updateDriverPhone.Text;
+                if(updateDriverEmail.Text != "")
+                    newEmail = updateDriverEmail.Text;
+
+                if (updateDriverNoR.Text != "")
+                    newNoR = updateDriverNoR.Text;
+                if (updateDriverRoad.Text != "")
+                    newRoad = updateDriverRoad.Text;
+                if (updateDriverWard.Text != "")
+                    newWard = updateDriverWard.Text;
+                if (updateDriverAddressDistrict.Text != "")
+                    newDistrict = updateDriverAddressDistrict.Text;
+                if (updateDriverCity.Text != "")
+                    newCity = updateDriverCity.Text;
+
+                if (updateDriverLicensePlate.Text != "")
+                    newLicense = updateDriverLicensePlate.Text;
+
+                // Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                string id = updateDriverID.Text;
+                string sql = $"UPDATE Driver SET DriverName = N'{newName}', DriverPhone = '{newPhone}', DriverAddressDistrict = '{newDistrict}', DriverEmail = '{newEmail}', DriverAddressNoR = '{newNoR}', DriverAddressRoad = '{newRoad}', DriverAddressWard='{newWard}', DriverAddressCity = '{newCity}', DriverLicensePlates='{newLicense}'" +
+                    $"WHERE DriverId = '{id}'";
+
+                var command = new SqlCommand(sql, _connection);
+                int count = command.ExecuteNonQuery();
+
+                bool success = count == 1;
+                if (success)
+                {
+                    btnDriverManagementChecked(sender, e);
+                }
+
+            }
+
+            updateDriverName.Text = "";
+            updateDriverPhone.Text = "";
+            updateDriverEmail.Text = "";
+            updateDriverNoR.Text = "";
+            updateDriverRoad.Text = "";
+            updateDriverWard.Text = "";
+            updateDriverAddressDistrict.Text = "";
+            updateDriverCity.Text = "";
+            updateDriverLicensePlate.Text = "";
+            contentDriverSearhID_Click(sender, e);
         }
 //Partner Management=====================================================================================
         private void contentaPartnerPreviousButton_Click(object sender, RoutedEventArgs e)

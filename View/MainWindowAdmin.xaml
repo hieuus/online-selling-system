@@ -1459,6 +1459,9 @@
                                     </TextBlock>
                                 </Grid>
                             </Label>
+                            <Button Content="Serach ID" Height="28" Width="100"
+                                    Margin="20 0 0 0"
+                                    Click="contentDriverSearhID_Click"/>
                         </StackPanel>
                         <!--Update Name And PhoneNumber-->
                         <StackPanel Orientation="Horizontal">
@@ -1468,7 +1471,7 @@
                             <Label>
                                 <Grid>
                                     <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverName" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBlock x:Name="placeholderUpdateDriverName" IsHitTestVisible="False" FontSize="8" Text="Binding Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1484,11 +1487,11 @@
                             </Label>
                             <!--Phone Number-->
                             <TextBlock Text="Phone" Foreground="White" FontSize="15" FontWeight="Medium"
-                                       VerticalAlignment="Center" Margin="31,0,0,0"/>
-                            <Label>
+                                       VerticalAlignment="Center" Margin="24,0,0,0"/>
+                            <Label Margin="15,0,0,0">
                                 <Grid>
                                     <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverPhone" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Phone" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBlock x:Name="placeholderUpdateDriverPhone" IsHitTestVisible="False" FontSize="8" Text="Binding Phone" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1511,7 +1514,7 @@
                             <Label Margin="3,0,0,0">
                                 <Grid>
                                     <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverEmail" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding Email" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBlock x:Name="placeholderUpdateDriverEmail" IsHitTestVisible="False" FontSize="8" Text="Binding Email" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1525,18 +1528,121 @@
                                     </TextBlock>
                                 </Grid>
                             </Label>
-                            <!--CitizenID-->
-                            <TextBlock Text="CitizenID" Foreground="White" FontSize="15" FontWeight="Medium"
-                                       VerticalAlignment="Center" Margin="14,0,0,0"/>
+                            <!--License Plate-->
+                            <TextBlock Text="License" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="24,0,0,0"/>
                             <Label>
-                                <Grid>
-                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverCitizenID" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="8" Text="Biding ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                <Grid Margin="8,0,0,0">
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverLicensePlate" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateDriverLicensePlate" IsHitTestVisible="False" FontSize="8" Text="Biding house number" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=updateDriverCitizenID}" Value="">
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateDriverLicensePlate}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                            <!--House number-->
+                            <TextBlock Text="No.Road" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="16,0,0,0"/>
+                            <Label>
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverNoR" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateDriverNoR" IsHitTestVisible="False" FontSize="8" Text="Biding house number" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateDriverNoR}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                        </StackPanel>
+                        <!--Road, Ward, District, City-->
+                        <StackPanel Orientation="Horizontal">
+                            <!--Road-->
+                            <TextBlock Text="Road" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                            <Label Margin="3,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverRoad" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateDriverRoad" IsHitTestVisible="False" FontSize="8" Text="Binding Road" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateDriverRoad}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                            <!--Ward-->
+                            <TextBlock Text="Ward" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="26,0,0,0"/>
+                            <Label Margin="22,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverWard" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateDriverWard" IsHitTestVisible="False" FontSize="8" Text="Binding Ward" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateDriverWard}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                            <!--District-->
+                            <TextBlock Text="District" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="15,0,0,0"/>
+                            <Label Margin="3,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverAddressDistrict" Margin="12,5,5,5"/>
+                                    <TextBlock x:Name="placeholderUpdateDriverAddressDistrict" IsHitTestVisible="False" FontSize="8" Text="Binding District" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateDriverAddressDistrict}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
+                            <!--City-->
+                            <TextBlock Text="City" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="15,0,0,0"/>
+                            <Label Margin="3,0,0,0">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateDriverCity" Margin="5"/>
+                                    <TextBlock x:Name="placeholderUpdateDriverCity" IsHitTestVisible="False" FontSize="8" Text="Binding City" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=updateDriverCity}" Value="">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -1547,8 +1653,8 @@
                             </Label>
                         </StackPanel>
                         <!--Add Done Button-->
-                        <Button HorizontalAlignment="Center"
-                                Click="contentDriverUpdateDoneButton_Click"
+                        <Button HorizontalAlignment="Left"
+                                Click="contentDiverUpdateDoneButton_Click"
                                 Width="100"
                                 Padding="5,10,5,10"
                                 Background="#fb8500"
