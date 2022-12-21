@@ -1,4 +1,5 @@
-﻿using OnlineSellingSystem.Model;
+﻿using Microsoft.VisualBasic;
+using OnlineSellingSystem.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -28,15 +30,10 @@ namespace OnlineSellingSystem.View
         {
             InitializeComponent();
         }
-
+        SqlConnection _connection = null;
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
         ObservableCollection<Person> _subItems = new ObservableCollection<Person>();
-        //ObservableCollection<Person> _subItemsAdmin = new ObservableCollection<Person>();
-        //ObservableCollection<Person> _subItemsEmployee = new ObservableCollection<Person>();
-        //ObservableCollection<Person> _subItemsDriver = new ObservableCollection<Person>();
-        //ObservableCollection<Person> _subItemsPartner = new ObservableCollection<Person>();
-        //ObservableCollection<Person> _subItemsCustomer = new ObservableCollection<Person>();
 
         public int RowsPerPage { get; set; } = 20;
         public int TotalPages { get; set; } = 0;
@@ -47,7 +44,7 @@ namespace OnlineSellingSystem.View
         private int NumberOfPersons(string sqlQueryTotalPerson)
         {
             //Connect Database
-            SqlConnection _connection = new SqlConnection("server=HIEUNGUYEN; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
             _connection.Open();
 
             //Count number of person: admin/employee/customer/driver/partner
@@ -61,7 +58,7 @@ namespace OnlineSellingSystem.View
         private void SelectList20PersonsForAdmin()
         {
             //Connect Database
-            SqlConnection _connection = new SqlConnection("server=HIEUNGUYEN; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
             _connection.Open();
 
             int offset = (CurrentPage - 1) * RowsPerPage;
@@ -87,7 +84,7 @@ namespace OnlineSellingSystem.View
         private void SelectList20PersonsForEmployee()
         {
             //Connect Database
-            SqlConnection _connection = new SqlConnection("server=HIEUNGUYEN; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
             _connection.Open();
 
             int offset = (CurrentPage - 1) * RowsPerPage;
@@ -113,7 +110,7 @@ namespace OnlineSellingSystem.View
         private void SelectList20Persons(string table)
         {
             //Connect Database
-            SqlConnection _connection = new SqlConnection("server=HIEUNGUYEN; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
             _connection.Open();
 
             int offset = (CurrentPage - 1) * RowsPerPage;
@@ -151,6 +148,10 @@ namespace OnlineSellingSystem.View
         private void MainWindowAdminLoaded(object sender, RoutedEventArgs e)
         {
             adminName.Text = LoginWindow.Person.Fullname;
+
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
 
             btnAdminManagementChecked(sender, e);
         }
@@ -393,19 +394,119 @@ namespace OnlineSellingSystem.View
             contentAdminOptionsUpdate.Visibility = Visibility.Visible;
         }
 
+        private Random _random = new Random();
+
+        
         private void contentAdminAddDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            string name = addAdminName.Text.ToString();
+            string phone = addAdminPhone.Text.ToString();
+            string email = addAdminEmail.Text.ToString();
+            string citizenId = addAdminCitizenID.Text.ToString();
+
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            int StaffAdmin = _random.Next(1000, 1100);
+            string sql = "INSERT INTO[dbo].[Staff]([StaffName], [StaffPhone], [StaffEmail], [StaffCitizenId], [StaffAdmin])" +
+                         $"VALUES(N'{name}', '{phone}', '{email}', '{citizenId}', {StaffAdmin})";
+
+
+            var command = new SqlCommand(sql, _connection);
+            int count = command.ExecuteNonQuery();
+
+            bool success = count == 1;
+            if (success)
+            {
+                btnAdminManagementChecked(sender, e);
+            }
 
         }
 
         private void contentAdminRemoveDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            string idToRemove = removeAdminID.Text.ToString();
+            string sql = $"DELETE FROM Staff WHERE StaffId = '{idToRemove}'";
+
+            var command = new SqlCommand(sql, _connection);
+            int count = command.ExecuteNonQuery();
+
+            bool success = count == 1;
+            if (success)
+            {
+                btnAdminManagementChecked(sender, e);
+            }
+
+        }
+
+        private void updateAdminButton_Click(object sender, RoutedEventArgs e)
+        {
+            string id = updateAdminID.Text;
+
+            // Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            string sql = $"SELECT* FROM Staff WHERE StaffID = '{id}'";
+            var command = new SqlCommand(sql, _connection);
+
+            var reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                placeholderUpdateAdminName.Text = reader.GetString(reader.GetOrdinal("StaffName"));
+                placeholderUpdateAdminEmail.Text = reader.GetString(reader.GetOrdinal("StaffEmail"));
+                placeholderUpdateAdminPhone.Text = reader.GetString(reader.GetOrdinal("StaffPhone"));
+                placeholderUpdateAdminCitizenID.Text = reader.GetString(reader.GetOrdinal("StaffCitizenId"));
+            }
 
         }
 
         private void contentAdminUpdateDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            string newName = placeholderUpdateAdminName.Text;
+            string newPhone = placeholderUpdateAdminPhone.Text;
+            string newCitizenID = placeholderUpdateAdminCitizenID.Text;
+            string newEmail = placeholderUpdateAdminEmail.Text;
 
+
+            if(updateAdminName.Text == "" && updateAdminPhone.Text == "" &&
+                updateCustomerCitizenID.Text == "" && updateCustomerEmail.Text == "")
+            {
+                //Do nothing
+            }
+            else
+            {
+                if (updateAdminName.Text != "")
+                    newName = updateAdminName.Text;
+                if (updateAdminPhone.Text != "")
+                    newPhone = updateAdminPhone.Text;
+                if(updateCustomerCitizenID.Text != "")
+                    newCitizenID=updateCustomerCitizenID.Text;
+                if(updateAdminEmail.Text != "")
+                    newEmail = updateAdminEmail.Text;
+
+                // Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                string id = updateAdminID.Text;
+                string sql = $"UPDATE Staff SET StaffName = N'{newName}', StaffPhone = '{newPhone}', StaffCitizenId = '{newCitizenID}', StaffEmail = '{newEmail}' WHERE StaffId = '{id}'";
+
+                var command = new SqlCommand(sql, _connection);
+                int count = command.ExecuteNonQuery();
+
+                bool success = count == 1;
+                if (success)
+                {
+                    btnAdminManagementChecked(sender, e);
+                }
+
+            }
         }
 
 
@@ -584,6 +685,6 @@ namespace OnlineSellingSystem.View
 
         }
 
-        
+       
     }
 }
