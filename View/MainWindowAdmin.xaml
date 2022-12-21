@@ -577,7 +577,7 @@
         
         <!--Content Employee Management-->
         <Border Name="contentEmployee"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -887,7 +887,7 @@
                         </StackPanel>
                         <!--Content Update-->
                         <StackPanel x:Name="contentEmployeeOptionsUpdate"
-                                    Visibility="Visible"
+                                    Visibility="Collapsed"
                                     Grid.Column="1" Orientation="Vertical" Margin="0,45,0,0">
                             <!--Update ID-->
                             <StackPanel Orientation="Horizontal">
