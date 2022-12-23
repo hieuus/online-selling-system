@@ -146,41 +146,125 @@ namespace OnlineSellingSystem.View
 
         }
         
-        //chua xong
-        private void SelectSubItemsContract(string sqlQuery, int currentPage, ObservableCollection<Contract> _subItems, DataGrid dataGridName)
+        private void SelectSubItemsContract()
         {
             //Connect Database
             SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
             _connection.Open();
 
-            int offset = (currentPage - 1) * RowsPerPage;
+            int offset = (CurrentPageContract - 1) * RowsPerPage;
             int fetch = RowsPerPage;
 
-            string sqlSelectSubItems = sqlQuery + $" ORDER BY ContractId OFFSET {offset} ROWS FETCH NEXT {fetch} ROWS ONLY";
+            string sqlSelectSubItems =
+                $"""
+                    SELECT [Contract].ContractId, [Partner].PartnerId, [Partner].PartnerName, [Contract].StatusId
+                    FROM [Partner] INNER JOIN [Contract] ON [Partner].PartnerId = [Contract].PartnerId
+                    ORDER BY ContractId OFFSET {offset} ROWS FETCH NEXT {fetch} ROWS ONLY
+                """;
+
             var command = new SqlCommand(sqlSelectSubItems, _connection);
             var reader = command.ExecuteReader();
 
-            _subItems.Clear();
+            _subItemsContract.Clear();
             while (reader.Read())
             {
-                //int id = reader.GetInt32(reader.GetOrdinal("ContractId"));
-                //string fullName = reader.GetString(reader.GetOrdinal("PartnerName"));
-                //string email = reader.GetString(reader.GetOrdinal("PartnerEmail"));
-                //string phone = reader.GetString(reader.GetOrdinal("PartnerPhone"));
 
                 int contractId = reader.GetInt32(reader.GetOrdinal("ContractId"));
-                int contractPartnerId = reader.GetInt32(reader.GetOrdinal("ContractPartnerId"));
+                int contractPartnerId = reader.GetInt32(reader.GetOrdinal("PartnerId"));
                 string contractPartnerName = reader.GetString(reader.GetOrdinal("PartnerName"));
-                int contractDay = reader.GetInt32(reader.GetOrdinal("ContractDay"));
-                int contractStartDay = reader.GetInt32(reader.GetOrdinal("ContractStartDay"));
-                int contractEndDay = reader.GetInt32(reader.GetOrdinal("ContractEndDay"));
-                int contractStatus = reader.GetInt32(reader.GetOrdinal("ContractStatus"));
 
-                var _contract = new Contract {};
-                _subItems.Add(_contract);
+                int contractStatus = reader.GetInt32(reader.GetOrdinal("StatusId"));
+
+                string string_contractStatus = "";
+                if (contractStatus == -1)
+                    string_contractStatus = "Lỗi/Bị khóa";
+                else if (contractStatus == 2)
+                    string_contractStatus = "Sắp hết hạn";
+                else if (contractStatus == 3)
+                    string_contractStatus = "Hết hạn";
+                else if (contractStatus == 4)
+                    string_contractStatus = "Chờ duyệt";
+                else if (contractStatus == 6)
+                    string_contractStatus = "Còn hạn";
+
+                var _contract = new Contract {ContractId = contractId, ContractPartnerId = contractPartnerId, ContractPartnerName = contractPartnerName, ContractStatus = string_contractStatus};
+                _subItemsContract.Add(_contract);
             }
 
-            dataGridName.ItemsSource = _subItems;
+            contentContractManagementContractListView.ItemsSource = _subItemsContract;
+        }
+
+        private void SelectSubItemsContractExpire()
+        {
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            int offset = (CurrentPageContractExpire - 1) * RowsPerPage;
+            int fetch = RowsPerPage;
+
+            //Cần cập nhật lại sql
+            string sqlSelectSubItems =
+                $"""
+                    SELECT [Contract].ContractId, [Partner].PartnerId,[Partner].PartnerName, [Contract].ContractStartDay, [Contract].ContractEndDay
+                    FROM [Contract] INNER JOIN [Partner] ON [Contract].PartnerId = [Partner].PartnerId
+                    WHERE DATEDIFF(D, [Contract].ContractEndDay, GETDATE()) < 60 OR [Contract].StatusId = 2
+                    ORDER BY ContractId OFFSET {offset} ROWS FETCH NEXT {fetch} ROWS ONLY
+                """;
+
+            var command = new SqlCommand(sqlSelectSubItems, _connection);
+            var reader = command.ExecuteReader();
+
+            _subItemsContractExpire.Clear();
+            while (reader.Read())
+            {
+                int contractId = reader.GetInt32(reader.GetOrdinal("ContractId"));
+                int contractPartnerId = reader.GetInt32(reader.GetOrdinal("PartnerId"));
+                string contractPartnerName = reader.GetString(reader.GetOrdinal("PartnerName"));
+                string contractStartDay = reader.GetDateTime(reader.GetOrdinal("ContractStartDay")).ToString("dd/mm/yyyy");
+                string contractSEndDay = reader.GetDateTime(reader.GetOrdinal("ContractEndDay")).ToString("dd/mm/yyyy");
+
+                var _contract = new Contract { ContractId = contractId, ContractPartnerId = contractPartnerId, ContractPartnerName = contractPartnerName, ContractStartDay = contractStartDay, ContractEndDay = contractSEndDay };
+                _subItemsContractExpire.Add(_contract);
+            }
+
+            contentContractManagementContractDueToExpireListView.ItemsSource = _subItemsContractExpire;
+        }
+
+        private void SelectSubItemsUnapprovedContract()
+        {
+            //Connect Database
+            SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+            _connection.Open();
+
+            int offset = (CurrentPageContractUnapproved - 1) * RowsPerPage;
+            int fetch = RowsPerPage;
+
+            //Cần cập nhật lại sql
+            string sqlSelectSubItems =
+                $"""
+                    SELECT [Contract].ContractId, [Partner].PartnerId, [Partner].PartnerName, [Partner].PartnerRegisterTime
+                    FROM [Contract] INNER JOIN [Partner] ON [Contract].PartnerId = [Partner].PartnerId
+                    WHERE [Contract].StatusId = 4
+                    ORDER BY ContractId OFFSET {offset} ROWS FETCH NEXT {fetch} ROWS ONLY
+                """;
+
+            var command = new SqlCommand(sqlSelectSubItems, _connection);
+            var reader = command.ExecuteReader();
+
+            _subItemsContractUnapproved.Clear();
+            while (reader.Read())
+            {
+                int contractId = reader.GetInt32(reader.GetOrdinal("ContractId"));
+                int contractPartnerId = reader.GetInt32(reader.GetOrdinal("PartnerId"));
+                string contractPartnerName = reader.GetString(reader.GetOrdinal("PartnerName"));
+                string contractDate = reader.GetDateTime(reader.GetOrdinal("PartnerRegisterTime")).ToString("dd/mm/yyyy");
+
+                var _contract = new Contract { ContractId = contractId, ContractPartnerId = contractPartnerId, ContractPartnerName = contractPartnerName, ContractDate = contractDate };
+                _subItemsContractUnapproved.Add(_contract);
+            }
+
+            contentContractManagementUnapprovedContractListView.ItemsSource = _subItemsContractUnapproved;
         }
 
         private void MainWindowEmployeeLoaded(object sender, RoutedEventArgs e)
@@ -188,6 +272,7 @@ namespace OnlineSellingSystem.View
            
             btnPartnerManagement.IsChecked = true;
             contentPartnerManagement.Visibility = Visibility.Visible;
+            btnPartnerManagementChecked(sender, e);
 
             employeeName.Text = LoginWindow.Person.Fullname;
         }
@@ -260,26 +345,76 @@ namespace OnlineSellingSystem.View
             btnContractManagement.IsChecked=true;
             contentContractManagement.Visibility=Visibility.Visible;
 
-            ////Contract List
-            //CurrentPageContract = 1;
-            //string sqlContractList =
-            //    """
+            //Contract List
+            CurrentPageContract = 1;
+            string sqlContractList =
+                """
+                    SELECT COUNT(*)
+                    FROM [Partner] INNER JOIN [Contract] ON [Partner].PartnerId = [Contract].PartnerId
+                """;
+            TotalItemsContract = NumberOfPersons(sqlContractList);
 
-            //    """;
-            //TotalItemsContract = NumberOfPersons(sqlContractList);
+            int isDivisibleContractList = TotalItemsContract % RowsPerPage;
+            if (isDivisibleContractList != 0)
+            {
+                TotalPagesContract = TotalItemsContract / RowsPerPage + 1;
+            }
+            else
+            {
+                TotalPagesContract = TotalItemsContract / RowsPerPage;
+            }
 
-            //int isDivisibleContractList = TotalItemsContract % RowsPerPage;
-            //if (isDivisibleContractList != 0)
-            //{
-            //    TotalPagesContract = TotalItemsContract / RowsPerPage + 1;
-            //}
-            //else
-            //{
-            //    TotalPagesContract = TotalItemsContract / RowsPerPage;
-            //}
+            contractListCurrentPage.Text = CurrentPageContract.ToString();
+            contractListTotalPage.Text = TotalPagesContract.ToString();
+            SelectSubItemsContract();
 
-            //contractListCurrentPage.Text = CurrentPageContract.ToString();
-            //contractListTotalPage.Text = TotalPagesContract.ToString();
+            //Contract Expire List
+            CurrentPageContractExpire = 1;
+            string sqlContractExpireList =
+                """
+                    SELECT COUNT(*)
+                    FROM [Contract] INNER JOIN [Partner] ON [Contract].PartnerId = [Partner].PartnerId
+                    WHERE DATEDIFF(D, [Contract].ContractEndDay, GETDATE()) < 60 OR [Contract].StatusId = 2
+                """;
+            TotalItemsContractExpire = NumberOfPersons(sqlContractExpireList);
+
+            int isDivisibleContractExpireList = TotalItemsContractExpire % RowsPerPage;
+            if (isDivisibleContractExpireList != 0)
+            {
+                TotalPagesContractExpire = TotalItemsContractExpire / RowsPerPage + 1;
+            }
+            else
+            {
+                TotalPagesContractExpire = TotalItemsContractExpire / RowsPerPage;
+            }
+
+            contractExpireListCurrentPage.Text = CurrentPageContractExpire.ToString();
+            contractExpireListTotalPage.Text = TotalPagesContractExpire.ToString();
+            SelectSubItemsContractExpire();
+
+            //Contract Unapproved List
+            CurrentPageContractUnapproved = 1;
+            string sqlContractUnapprovedList =
+                """
+                    SELECT COUNT(*)
+                    FROM [Contract] INNER JOIN [Partner] ON [Contract].PartnerId = [Partner].PartnerId
+                    WHERE [Contract].StatusId = 4
+                """;
+            TotalItemsContractUnapproved = NumberOfPersons(sqlContractUnapprovedList);
+
+            int isDivisibleContractUnapprovedList = TotalItemsContractUnapproved % RowsPerPage;
+            if (isDivisibleContractUnapprovedList != 0)
+            {
+                TotalPagesContractUnapproved = TotalItemsContractUnapproved / RowsPerPage + 1;
+            }
+            else
+            {
+                TotalPagesContractUnapproved = TotalItemsContractUnapproved / RowsPerPage;
+            }
+
+            unapprovedContractListCurrentPage.Text = CurrentPageContractUnapproved.ToString();
+            unapprovedContractListTotalPage.Text = TotalPagesContractUnapproved.ToString();
+            SelectSubItemsUnapprovedContract();
 
         }
 
@@ -651,52 +786,162 @@ namespace OnlineSellingSystem.View
         }
 
 
-        //Contract management==============================================================================================
+//Contract management==============================================================================================
 
         //Send notification to partner who have contract is due to expire
         private void sendNotiToPartnerExpireContract_Click(object sender, RoutedEventArgs e)
         {
+            string partnerID = sendNotiContractID.Text;
 
+            if(partnerID != "")
+            {
+                string sql = $"UPDATE Partner SET Partner.StatusId = 5 WHERE PartnerId = {partnerID}";
+
+                //Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                var command = new SqlCommand(sql, _connection);
+                int sent = command.ExecuteNonQuery();
+                if (sent == 1)
+                {
+                    MessageBox.Show($"Sent A Notification To Partner With ID: {partnerID}");
+                    sendNotiContractID.Text = "";
+                }
+                else
+                {
+                    //Do something
+                }
+            }
+            else
+            {
+                //Do nothing
+            }
         }
         
 
         //Pagingnation Contract list
         private void contractListPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPageContract <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItemsContract.Clear();
+                CurrentPageContract--;
+                contractListCurrentPage.Text = CurrentPageContract.ToString();
+                SelectSubItemsContract();
+            }
         }
 
         private void contractListNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPageContract == TotalPagesContract)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItemsContract.Clear();
+                CurrentPageContract++;
+                contractListCurrentPage.Text = CurrentPageContract.ToString();
+                SelectSubItemsContract();
+            }
         }
 
         //Pagingnation contract expire list
         private void contractExpireListPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPageContractExpire <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItemsContractExpire.Clear();
+                CurrentPageContractExpire--;
+                contractExpireListCurrentPage.Text = CurrentPageContractExpire.ToString();
+                SelectSubItemsContractExpire();
+            }
         }
 
         private void contractExpireListNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPageContractExpire == TotalPagesContractExpire)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItemsContractExpire.Clear();
+                CurrentPageContractExpire++;
+                contractExpireListCurrentPage.Text = CurrentPageContractExpire.ToString();
+                SelectSubItemsContractExpire();
+            }
         }
 
         //Pagingnation unpproved contract list
         private void unapprovedContractListPreviousButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPageContractUnapproved <= 1)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItemsContractUnapproved.Clear();
+                CurrentPageContractUnapproved--;
+                unapprovedContractListCurrentPage.Text = CurrentPageContractUnapproved.ToString();
+                SelectSubItemsUnapprovedContract();
+            }
         }
 
         private void unapprovedContractListNextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (CurrentPageContractUnapproved == TotalPagesContractUnapproved)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItemsContractUnapproved.Clear();
+                CurrentPageContractUnapproved++;
+                unapprovedContractListCurrentPage.Text = CurrentPageContractUnapproved.ToString();
+                SelectSubItemsUnapprovedContract();
+            }
         }
 
         //Options: Approve or remove unapproved contracts
         private void unapprovedContractApproveButton_Click(object sender, RoutedEventArgs e)
         {
+            string contractID = removeUnapprovedContract.Text;
 
+            if (contractID != "")
+            {
+                string sql = $"UPDATE Contract SET Contract.StatusId = 6 WHERE ContractId = {contractID}";
+
+                //Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                var command = new SqlCommand(sql, _connection);
+                int sent = command.ExecuteNonQuery();
+                if (sent == 1)
+                {
+                    MessageBox.Show($"Approved Contract With ID: {contractID}");
+                    removeUnapprovedContract.Text = "";
+                }
+                else
+                {
+                    //Do something
+                }
+            }
+            else
+            {
+                //Do nothing
+            }
         }
 
         private void unapprovedContractRemoveButton_Click(object sender, RoutedEventArgs e)

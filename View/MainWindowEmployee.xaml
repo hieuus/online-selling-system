@@ -672,34 +672,42 @@
                         </Grid>
                         
                         <!--Send noti to partner who have contract is due to expire-->
-                        <WrapPanel Grid.Row="2" Orientation="Horizontal">
-                            <TextBlock Text="Send noti to partner who have contract is due to expire"
+                        
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <WrapPanel Grid.Column="2" Orientation="Horizontal">
+                                <TextBlock Text="Send noti to partner who have contract is due to expire"
                                        FontSize="16" FontWeight="Medium" Foreground="White"
                                        VerticalAlignment="Center"/>
-                            <Label>
-                                <Grid>
-                                    <TextBox BorderThickness="2"  Width="60" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sendNotiContractID" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="16" Text="ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=sendNotiContractID}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
-                            </Label>
+                                <Label>
+                                    <Grid>
+                                        <TextBox BorderThickness="2"  Width="60" Padding="5" FontSize="14" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sendNotiContractID" Margin="5"/>
+                                        <TextBlock IsHitTestVisible="False" FontSize="12" Text="ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=sendNotiContractID}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Label>
 
-                            <Button x:Name="sendNotiToPartnerExpireContract"
+                                <Button x:Name="sendNotiToPartnerExpireContract"
                                     Click="sendNotiToPartnerExpireContract_Click"
                                     Content="Send"
                                     Height="30" Width="40"
                                     Background="#fb8500" Foreground="White"/>
-                        </WrapPanel>
+                            </WrapPanel>
+                        </Grid>
 
                         <!--List of unapproved contracts-->
                         <DockPanel Grid.Row="3" LastChildFill="True">
@@ -753,6 +761,7 @@
                                             Background="#023047" Foreground="White"/>
                                         <!--Remove Button-->
                                         <Button x:Name="unapprovedContractRemoveButton"
+                                                Visibility="Collapsed"
                                             Click="unapprovedContractRemoveButton_Click"
                                             Content="Remove"
                                             Height="30" Width="100"
