@@ -131,6 +131,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"/>
+                            <RowDefinition Height="50"/>
                             <RowDefinition Height="3*"/>
                         </Grid.RowDefinitions>
                         <!--Partner List-->
@@ -147,30 +148,109 @@
                                            FontSize="18" FontWeight="Medium" Foreground="White" Margin="0,0,0,5"/>
                                 <DataGrid Name="contentPartnerManagementPartnerListView" AutoGenerateColumns="False">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding PartnerId}"/>
-                                        <DataGridTextColumn Header="Partner Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PartnerName}"/>
-                                        <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PartnerPhoneNumber}"/>
+                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding Id}"/>
+                                        <DataGridTextColumn Header="Partner Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Fullname}"/>
+                                        <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PhoneNumber}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DockPanel>
-                            <!--Partners With Lowest Rating-->
+                            <!--Branchs With Lowest Rating-->
                             <DockPanel Grid.Column="2" LastChildFill="True">
                                 <TextBlock DockPanel.Dock="Top"
-                                           Text="Partners With Lowest Rating"
+                                           Text="Branchs With Lowest Rating"
                                            FontSize="18" FontWeight="Medium" Foreground="White" Margin="0,0,0,5"/>
                                 <DataGrid Name="contentPartnerManagementPartnerLowestRatingListView" AutoGenerateColumns="False">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding PartnerLowestId}"/>
-                                        <DataGridTextColumn Header="Partner Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PartnerLowestName}"/>
-                                        <DataGridTextColumn Header="Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PartnerLowestPhoneNumber}"/>
+                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding BranchId}"/>
+                                        <DataGridTextColumn Header="Branch Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding BranchName}"/>
+                                        <DataGridTextColumn Header="Partner ID" IsReadOnly="True" CanUserResize="False" Width="70" Binding="{Binding BranchPartnerId}"/>
+                                        <DataGridTextColumn Header="Partner Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding BranchPartnerName}"/>
+                                        <DataGridTextColumn Header="Star" IsReadOnly="True" CanUserResize="False" Width="40" Binding="{Binding BranchStar}"/>
                                     </DataGrid.Columns>
 
                                 </DataGrid>
                             </DockPanel>
                         </Grid>
-
-                        <!--Statistics-->
+                        <!--Pagination-->
                         <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--Pagination of partner list-->
+                            <Border Grid.Column="0"
+                                HorizontalAlignment="Right"
+                                BorderBrush="#dee4ec" BorderThickness="1"
+                                CornerRadius="5" Padding="5" Background="White"
+                                Margin="0,10,0,0">
+                                <StackPanel Orientation="Horizontal" Height="35">
+                                    <Button x:Name="contentaEmployeePartnerListPreviousButton"
+                                        Width="25" Height="25"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Click="contentaEmployeePartnerListPreviousButton_Click">
+                                        <Button.Content>
+                                            <Image Source="/Images/previous.png" Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                    <TextBlock Name="contentaEmployeePartnerListPaginInfo" Margin="10">
+                                            <Run Name="partnerListCurrentPage" d:Text="3"/>
+                                            / 
+                                            <Run Name="partnerListTotalPage"  d:Text="100"/>
+                                    </TextBlock>
+                                    <Button x:Name="contentaEmployeePartnerListNextButton"
+                                        Width="25" Height="25"
+                                        Click="contentaEmployeePartnerListNextButton_Click"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent">
+                                        <Button.Content>
+                                            <Image Source="/Images/next.png"
+                                           Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                            <!--pagination of lowest rating-->
+                            <Border Grid.Column="2"
+                                HorizontalAlignment="Right"
+                                BorderBrush="#dee4ec" BorderThickness="1"
+                                CornerRadius="5" Padding="5" Background="White"
+                                Margin="0,10,0,0">
+                                <StackPanel Orientation="Horizontal" Height="35">
+                                    <Button x:Name="contentaEmployeeLowestRatingPreviousButton"
+                                        Width="25" Height="25"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Click="contentaEmployeeLowestRatingPreviousButton_Click">
+                                        <Button.Content>
+                                            <Image Source="/Images/previous.png" Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                    <TextBlock Name="contentLowestRatingListPagingInfo" Margin="10">
+                                            <Run Name="lowestRatingListCurrentPage" d:Text="3"/>
+                                            / 
+                                            <Run Name="lowestRatingListTotalPage"  d:Text="100"/>
+                                    </TextBlock>
+                                    <Button x:Name="contentaEmployeeLowestRatingNextButton"
+                                        Width="25" Height="25"
+                                        Click="contentaEmployeeLowestRatingNextButton_Click"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent">
+                                        <Button.Content>
+                                            <Image Source="/Images/next.png"
+                                           Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <!--Statistics-->
+                        <Grid Grid.Row="2">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="Statistics"
                                        FontSize="18" FontWeight="Medium" Foreground="White" Margin="0,20,0,0"/>
@@ -193,6 +273,9 @@
                                             </TextBlock>
                                         </Grid>
                                     </Label>
+                                    <DatePicker Name="partnerStatisticsDatePicker"
+                                                FontSize="18" Width="200" VerticalAlignment="Center" Margin="10,0,10,0"
+                                                SelectedDate="2022-12-26"></DatePicker>
                                     <Button x:Name="contentPartnerManagementSeeStatistics"
                                             Click="contentPartnerManagementSeeStatistics_Click"
                                             Content="Ok"
@@ -213,9 +296,9 @@
                                     <Grid Grid.Row="0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <!--Per Day-->
@@ -230,17 +313,17 @@
                                             </Border.Background>
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
-                                                    <TextBlock Text="Amount Of Customers/Day"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                    <TextBlock Text="Customers / Day"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
                                                        Margin="20"/>
                                                 </DockPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="$"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
+                                                    <TextBlock Text="#"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock Text="9.999.999"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                    <TextBlock x:Name="customerPerDay" Text="0"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                                 </StackPanel>
                                             </StackPanel>
@@ -257,17 +340,17 @@
                                             </Border.Background>
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
-                                                    <TextBlock Text="Amount Of Customers/Month"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                    <TextBlock Text="Customers / Month"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
                                                        Margin="20"/>
                                                 </DockPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="$"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
+                                                    <TextBlock Text="#"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock Text="9.999.999"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                    <TextBlock x:Name="customerPerMonth" Text="0"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                                 </StackPanel>
                                             </StackPanel>
@@ -284,17 +367,17 @@
                                             </Border.Background>
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
-                                                    <TextBlock Text="Amount Of Customers/Year"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                    <TextBlock Text="Customers / Year"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
                                                        Margin="20"/>
                                                 </DockPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="$"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
+                                                    <TextBlock Text="#"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock Text="9.999.999"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                    <TextBlock x:Name="customersPerYear" Text="0"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                                 </StackPanel>
                                             </StackPanel>
@@ -305,7 +388,7 @@
                                     <Grid Grid.Row="2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <!--Revenue Of Partner-->
@@ -321,17 +404,45 @@
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
                                                     <TextBlock Text="Revenue Of Partner"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
-                                                       Margin="20"/>
+                                                       Margin="20,10,20,10"/>
                                                 </DockPanel>
-                                                <StackPanel Orientation="Horizontal">
+                                                <!--Day-->
+                                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                                                    <TextBlock Text="Day"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
                                                     <TextBlock Text="$"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="44,0,10,10"/>
+                                                    <TextBlock x:Name="revenueOfPartnerDay" Text="0"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 10"/>
+                                                </StackPanel>
+                                                <!--Month-->
+                                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                                                    <TextBlock Text="Month"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
+                                                    <TextBlock Text="$"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock Text="9.999.999"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
-                                                       Margin="0, 0, 10, 30"/>
+                                                    <TextBlock x:Name="revenueOfPartnerMonth" Text="0"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 10"/>
+                                                </StackPanel>
+                                                <!--Year-->
+                                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                                                    <TextBlock Text="Year"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
+                                                    <TextBlock Text="$"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="39,0,10,10"/>
+                                                    <TextBlock x:Name="revenueOfPartnerYear" Text="0"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 10"/>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Border>
@@ -348,17 +459,45 @@
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
                                                     <TextBlock Text="Commission From Partner"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
-                                                       Margin="20"/>
+                                                       Margin="20,10,20,10"/>
                                                 </DockPanel>
-                                                <StackPanel Orientation="Horizontal">
+                                                <!--Day-->
+                                                <StackPanel Orientation="Horizontal" Margin="16,0,0,0">
+                                                    <TextBlock Text="Day"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
                                                     <TextBlock Text="$"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="48,0,10,10"/>
+                                                    <TextBlock x:Name="commissionFromPartnerDay" Text="0"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 10"/>
+                                                </StackPanel>
+                                                <!--Month-->
+                                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                                                    <TextBlock Text="Month"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
+                                                    <TextBlock Text="$"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock Text="9.999.999"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
-                                                       Margin="0, 0, 10, 30"/>
+                                                    <TextBlock x:Name="commissionFromPartnerMonth" Text="0"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 10"/>
+                                                </StackPanel>
+                                                <!--Year-->
+                                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                                                    <TextBlock Text="Year"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
+                                                    <TextBlock Text="$"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="39,0,10,10"/>
+                                                    <TextBlock x:Name="commissionFromPartnerYear" Text="0"
+                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       Margin="0, 0, 10, 10"/>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Border>
@@ -415,7 +554,9 @@
                         <Grid.RowDefinitions>
                                  <RowDefinition Height="*"/>
                                  <RowDefinition Height="50"/>
+                                 <RowDefinition Height="50"/>
                                  <RowDefinition Height="*"/>
+                                 <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <!--Contracts List And List of contracts due to expire-->
                         <Grid Grid.Row="0">
@@ -431,8 +572,9 @@
                                 <DataGrid Name="contentContractManagementContractListView" AutoGenerateColumns="False">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding ContractId}"/>
-                                        <DataGridTextColumn Header="Belong To Partner" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractPartnerName}"/>
-                                        <DataGridTextColumn Header="Partner Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractPartnerPhoneNumber}"/>
+                                        <DataGridTextColumn Header="Partner ID" IsReadOnly="True" CanUserResize="False" Width="70" Binding="{Binding ContractPartnerId}"/>
+                                        <DataGridTextColumn Header="Partner Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractPartnerName}"/>
+                                        <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractStatus}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DockPanel>
@@ -442,72 +584,239 @@
                                            FontSize="18" FontWeight="Medium" Foreground="White" Margin="0,0,0,5"/>
                                 <DataGrid Name="contentContractManagementContractDueToExpireListView" AutoGenerateColumns="False">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding ContractExpireId}"/>
-                                        <DataGridTextColumn Header="Belong To Partner" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractExpirePartnerName}"/>
-                                        <DataGridTextColumn Header="Partner Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractExpirePartnerPhoneNumber}"/>
+                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding ContractId}"/>
+                                        <DataGridTextColumn Header="Partner ID" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractPartnerId}"/>
+                                        <DataGridTextColumn Header="Start Day" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractStartDay}"/>
+                                        <DataGridTextColumn Header="End Day" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractEndDay}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DockPanel>
                         </Grid>
+                        <!--Pagingnation-->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--Pagination of contract list-->
+                            <Border Grid.Column="0"
+                                HorizontalAlignment="Right"
+                                BorderBrush="#dee4ec" BorderThickness="1"
+                                CornerRadius="5" Padding="5" Background="White"
+                                Margin="0,10,0,0">
+                                <StackPanel Orientation="Horizontal" Height="35">
+                                    <Button x:Name="contractListPreviousButton"
+                                        Width="25" Height="25"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Click="contractListPreviousButton_Click">
+                                        <Button.Content>
+                                            <Image Source="/Images/previous.png" Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                    <TextBlock Name="contractListPaginInfo" Margin="10">
+                                            <Run Name="contractListCurrentPage" d:Text="3"/>
+                                            / 
+                                            <Run Name="contractListTotalPage"  d:Text="100"/>
+                                    </TextBlock>
+                                    <Button x:Name="contractListNextButton"
+                                        Width="25" Height="25"
+                                        Click="contractListNextButton_Click"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent">
+                                        <Button.Content>
+                                            <Image Source="/Images/next.png"
+                                           Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                            <!--Pagination of contract due to expire-->
+                            <Border Grid.Column="2"
+                                HorizontalAlignment="Right"
+                                BorderBrush="#dee4ec" BorderThickness="1"
+                                CornerRadius="5" Padding="5" Background="White"
+                                Margin="0,10,0,0">
+                                <StackPanel Orientation="Horizontal" Height="35">
+                                    <Button x:Name="contractExpireListPreviousButton"
+                                        Width="25" Height="25"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Click="contractExpireListPreviousButton_Click">
+                                        <Button.Content>
+                                            <Image Source="/Images/previous.png" Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                    <TextBlock Name="contractExpireListPaginInfo" Margin="10">
+                                            <Run Name="contractExpireListCurrentPage" d:Text="3"/>
+                                            / 
+                                            <Run Name="contractExpireListTotalPage"  d:Text="100"/>
+                                    </TextBlock>
+                                    <Button x:Name="contractExpireListNextButton"
+                                        Width="25" Height="25"
+                                        Click="contractExpireListNextButton_Click"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent">
+                                        <Button.Content>
+                                            <Image Source="/Images/next.png"
+                                           Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                         
                         <!--Send noti to partner who have contract is due to expire-->
-                        <WrapPanel Grid.Row="1" Orientation="Horizontal">
-                            <TextBlock Text="Send noti to partner who have contract is due to expire"
-                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                        
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <WrapPanel Grid.Column="2" Orientation="Horizontal">
+                                <TextBlock Text="Send noti to partner who have contract is due to expire"
+                                       FontSize="16" FontWeight="Medium" Foreground="White"
                                        VerticalAlignment="Center"/>
-                            <Label>
-                                <Grid>
-                                    <TextBox BorderThickness="2"  Width="60" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sendNotiContractID" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="16" Text="ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=sendNotiContractID}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
-                            </Label>
+                                <Label>
+                                    <Grid>
+                                        <TextBox BorderThickness="2"  Width="60" Padding="5" FontSize="14" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sendNotiContractID" Margin="5"/>
+                                        <TextBlock IsHitTestVisible="False" FontSize="12" Text="ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=sendNotiContractID}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Label>
 
-                            <Button x:Name="sendNotiToPartnerExpireContract"
+                                <Button x:Name="sendNotiToPartnerExpireContract"
                                     Click="sendNotiToPartnerExpireContract_Click"
                                     Content="Send"
                                     Height="30" Width="40"
                                     Background="#fb8500" Foreground="White"/>
-                        </WrapPanel>
+                            </WrapPanel>
+                        </Grid>
 
                         <!--List of unapproved contracts-->
-                        <DockPanel Grid.Row="2" LastChildFill="True">
+                        <DockPanel Grid.Row="3" LastChildFill="True">
                             <TextBlock Text="List of unapproved contracts" DockPanel.Dock="Top"
                                        FontSize="18" Foreground="White" FontWeight="Medium" Margin="0,0,0,5"/>
-                            <DataGrid Name="contentContractManagementUnapprovedContractListView" AutoGenerateColumns="False">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding UnapprovedContractId}"/>
-                                    <DataGridTextColumn Header="Belong To Partner" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding UnapprovedContractPartnerName}"/>
-                                    <DataGridTextColumn Header="Partner Phone Number" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding UnapprovedContractPartnerPhoneNumber}"/>
-                                    <DataGridTemplateColumn Header="Operation" IsReadOnly="True" CanUserResize="False" Width="auto">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Image Source="/Images/check.png"
-                                                           Width="13" Margin="10,0,5,0"
-                                                           MouseDown="contentContractManagementUnApprovedContractCheckButton"/>
-                                                        <Image Source="/Images/remove.png"
-                                                           Width="13" Margin="10,0,0,0"
-                                                           MouseDown="contentContractManagementUnApprovedContractRemvoeButton"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <!--Unapproved List-->
+                                <DataGrid Grid.Column="0" Name="contentContractManagementUnapprovedContractListView" AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding ContractId}"/>
+                                        <DataGridTextColumn Header="Partner ID" IsReadOnly="True" CanUserResize="False" Width="70" Binding="{Binding ContractPartnerId}"/>
+                                        <DataGridTextColumn Header="Partner Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractPartnerName}"/>
+                                        <DataGridTextColumn Header="Registration Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ContractDate}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <!--Operation-->
+                                <StackPanel Grid.Column="2" Orientation="Vertical">
+                                    <TextBlock Text="Options" DockPanel.Dock="Top"
+                                       FontSize="16" Foreground="White" FontWeight="Medium" Margin="0,0,0,15"/>
+                                    <!--Contract ID-->
+                                    <TextBlock Text="Input Contract ID" Foreground="White" FontSize="15" FontWeight="Normal"
+                                       VerticalAlignment="Center" Margin="9,0,0,0"/>
+                                    <Label>
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="219" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="removeUnapprovedContract" Margin="5"/>
+                                            <TextBlock IsHitTestVisible="False" FontSize="8" Text="Contract ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=removeUnapprovedContract}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                    <StackPanel Orientation="Horizontal" Margin="9,11,0,0">
+                                        <!--Approve Button-->
+                                        <Button x:Name="unapprovedContractApproveButton"
+                                            Click="unapprovedContractApproveButton_Click"
+                                            Content="Approve"
+                                            Height="30" Width="100"
+                                            Background="#023047" Foreground="White"/>
+                                        <!--Remove Button-->
+                                        <Button x:Name="unapprovedContractRemoveButton"
+                                                Visibility="Collapsed"
+                                            Click="unapprovedContractRemoveButton_Click"
+                                            Content="Remove"
+                                            Height="30" Width="100"
+                                            Background="#fb8500" Foreground="White" Margin="20,0,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
                         </DockPanel>
+                        
+                        <!--Pagingnation of unapproved list-->
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--Pagingnation-->
+                            <Grid Grid.Column="0">
+                                <!--Pagination of unapproved contract -->
+                                <Border Grid.Column="0"
+                                HorizontalAlignment="Right"
+                                BorderBrush="#dee4ec" BorderThickness="1"
+                                CornerRadius="5" Padding="5" Background="White"
+                                Margin="0,10,0,0">
+                                    <StackPanel Orientation="Horizontal" Height="35">
+                                        <Button x:Name="unapprovedContractListPreviousButton"
+                                        Width="25" Height="25"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Click="unapprovedContractListPreviousButton_Click">
+                                            <Button.Content>
+                                                <Image Source="/Images/previous.png" Height="16"/>
+                                            </Button.Content>
+                                        </Button>
+                                        <TextBlock Name="unapprovedContractListPaginInfo" Margin="10">
+                                            <Run Name="unapprovedContractListCurrentPage" d:Text="3"/>
+                                            / 
+                                            <Run Name="unapprovedContractListTotalPage"  d:Text="100"/>
+                                        </TextBlock>
+                                        <Button x:Name="unapprovedContractListNextButton"
+                                        Width="25" Height="25"
+                                        Click="unapprovedContractListNextButton_Click"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent">
+                                            <Button.Content>
+                                                <Image Source="/Images/next.png"
+                                           Height="16"/>
+                                            </Button.Content>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </ContentControl>
             </Grid>

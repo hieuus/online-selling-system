@@ -64,7 +64,7 @@ namespace OnlineSellingSystem.View
             int offset = (CurrentPage - 1) * RowsPerPage;
             int fetch = RowsPerPage;
 
-            string sqlSelectList20Persons = $"SELECT* FROM Staff WHERE StaffAdmin IS NOT NULL ORDER BY StaffId OFFSET {offset} ROWS FETCH NEXT {fetch} ROWS ONLY";
+            string sqlSelectList20Persons = $"SELECT* FROM Staff WHERE StaffAdmin = '1' ORDER BY StaffId OFFSET {offset} ROWS FETCH NEXT {fetch} ROWS ONLY";
             var command = new SqlCommand(sqlSelectList20Persons, _connection);
             var reader = command.ExecuteReader();
 
@@ -90,7 +90,7 @@ namespace OnlineSellingSystem.View
             int offset = (CurrentPage - 1) * RowsPerPage;
             int fetch = RowsPerPage;
 
-            string sqlSelectList20Persons = $"SELECT* FROM Staff WHERE StaffAdmin IS NULL ORDER BY StaffId OFFSET {offset} ROWS FETCH NEXT {RowsPerPage} ROWS ONLY";
+            string sqlSelectList20Persons = $"SELECT* FROM Staff WHERE StaffAdmin = '0' ORDER BY StaffId OFFSET {offset} ROWS FETCH NEXT {RowsPerPage} ROWS ONLY";
             var command = new SqlCommand(sqlSelectList20Persons, _connection);
             var reader = command.ExecuteReader();
 
@@ -172,7 +172,7 @@ namespace OnlineSellingSystem.View
             //Paging
             CurrentPage = 1;
 
-            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Staff WHERE StaffAdmin IS NOT NULL";
+            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Staff WHERE StaffAdmin = '1'";
             TotalItems = NumberOfPersons(sqlQueryTotalAdmin);
 
             int isDivisible = TotalItems % RowsPerPage;
@@ -207,7 +207,7 @@ namespace OnlineSellingSystem.View
             //Paging
             CurrentPage = 1;
 
-            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Staff WHERE StaffAdmin IS NULL";
+            string sqlQueryTotalAdmin = "SELECT COUNT(*) FROM Staff WHERE StaffAdmin = '0' ";
             TotalItems = NumberOfPersons(sqlQueryTotalAdmin);
 
             int isDivisible = TotalItems % RowsPerPage;
@@ -406,9 +406,8 @@ namespace OnlineSellingSystem.View
             SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
             _connection.Open();
 
-            int StaffAdmin = _random.Next(1000, 1100);
             string sql = "INSERT INTO[dbo].[Staff]([StaffName], [StaffPhone], [StaffEmail], [StaffCitizenId], [StaffAdmin])" +
-                         $"VALUES(N'{name}', '{phone}', '{email}', '{citizenId}', {StaffAdmin})";
+                         $"VALUES(N'{name}', '{phone}', '{email}', '{citizenId}', '1')";
 
 
             var command = new SqlCommand(sql, _connection);
@@ -586,9 +585,8 @@ namespace OnlineSellingSystem.View
             SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
             _connection.Open();
 
-            int StaffAdmin = _random.Next(1000, 1100);
             string sql = "INSERT INTO[dbo].[Staff]([StaffName], [StaffPhone], [StaffEmail], [StaffCitizenId], [StaffAdmin])" +
-                         $"VALUES(N'{name}', '{phone}', '{email}', '{citizenId}', NULL)";
+                         $"VALUES(N'{name}', '{phone}', '{email}', '{citizenId}', '0')";
 
 
             var command = new SqlCommand(sql, _connection);

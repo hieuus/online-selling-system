@@ -147,8 +147,8 @@ namespace OnlineSellingSystem.View
             else if(selectedType == "Employee")
             {
                 //Check email, phone number
-                string sql = $"SELECT COUNT(*) FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin IS NULL";
-                string sqlQueryGetInfor = $"SELECT* FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin IS NULL";
+                string sql = $"SELECT COUNT(*) FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin = '0'";
+                string sqlQueryGetInfor = $"SELECT* FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin = '0'";
                 bool isLoginSuccess = false;
                 isLoginSuccess = loginHandle(selectedType, phoneNumber, password,sql, sqlQueryGetInfor);
 
@@ -186,8 +186,8 @@ namespace OnlineSellingSystem.View
             else if(selectedType == "Admin")
             {
                 //Check email, phone number
-                string sql = $"SELECT COUNT(*) FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin IS NOT NULL";
-                string sqlQueryGetInfor = $"SELECT* FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin IS NOT NULL";
+                string sql = $"SELECT COUNT(*) FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin = '1'";
+                string sqlQueryGetInfor = $"SELECT* FROM Staff WHERE StaffPhone={phoneNumber} AND StaffAdmin = '1'";
                 bool isLoginSuccess = false;
                 isLoginSuccess = loginHandle(selectedType, phoneNumber, password, sql, sqlQueryGetInfor);
 
