@@ -69,7 +69,7 @@ namespace OnlineSellingSystem.View
         {
             //Connect Database
             SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
-            _connection.Open();
+            _connection.Open(); 
 
             //Count number of person: admin/employee/customer/driver/partner
             var command = new SqlCommand(sqlQueryTotalPerson, _connection);
@@ -433,7 +433,7 @@ namespace OnlineSellingSystem.View
                 returnParameterCustomersPerMonth.Direction = ParameterDirection.ReturnValue;
 
                 command.ExecuteNonQuery();
-                var resultPerMonth = returnParameterCustomersPerDay.Value;
+                var resultPerMonth = returnParameterCustomersPerMonth.Value;
                 customerPerMonth.Text = resultPerMonth.ToString();
 
                 //Number of customers/year
@@ -457,13 +457,190 @@ namespace OnlineSellingSystem.View
                 returnParameterCustomersPerYear.Direction = ParameterDirection.ReturnValue;
 
                 command.ExecuteNonQuery();
-                var resultPerYear = returnParameterCustomersPerDay.Value;
+                var resultPerYear = returnParameterCustomersPerYear.Value;
                 customersPerYear.Text = resultPerYear.ToString();
 
                 //Revenue
+                //Revenue Day
+                string sp_revenueDay = "sp_CalculatePartnerTotalRevenueInDay_Partner";
+                command = new SqlCommand(sp_revenueDay, _connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter()
+                                    {
+                                        ParameterName = "@PartnerId",
+                                        SqlDbType = SqlDbType.Int,
+                                        Value = partnerID,
+                                    });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Day",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = day,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Month",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = month,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Year",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = year,
+                });
 
+                var returnParameterRevenueDay = command.Parameters.Add("@Return", SqlDbType.Money);
+                returnParameterRevenueDay.Direction = ParameterDirection.ReturnValue;
+
+                command.ExecuteNonQuery();
+                var resultRevenueDay = returnParameterRevenueDay.Value;
+                revenueOfPartnerDay.Text = resultRevenueDay.ToString();
+
+                //Revenue Month
+                string sp_revenueMonth = "sp_CalculatePartnerTotalRevenueInMonth_Partner";
+                command = new SqlCommand(sp_revenueMonth, _connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@PartnerId",
+                    SqlDbType = SqlDbType.Int,
+                    Value = partnerID,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Month",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = month,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Year",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = year,
+                });
+
+                var returnParameterRevenueMonth = command.Parameters.Add("@Return", SqlDbType.Money);
+                returnParameterRevenueMonth.Direction = ParameterDirection.ReturnValue;
+
+                command.ExecuteNonQuery();
+                var resultRevenueMonth = returnParameterRevenueMonth.Value;
+                revenueOfPartnerMonth.Text = resultRevenueMonth.ToString();
+
+                //Revenue Year
+                string sp_revenueYear = "sp_CalculatePartnerTotalRevenueInYear_Partner";
+                command = new SqlCommand(sp_revenueYear, _connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@PartnerId",
+                    SqlDbType = SqlDbType.Int,
+                    Value = partnerID,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Year",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = year,
+                });
+
+                var returnParameterRevenueYear = command.Parameters.Add("@Return", SqlDbType.Money);
+                returnParameterRevenueYear.Direction = ParameterDirection.ReturnValue;
+
+                command.ExecuteNonQuery();
+                var resultRevenueYear = returnParameterRevenueYear.Value;
+                revenueOfPartnerYear.Text = resultRevenueYear.ToString();
 
                 //Commmission
+                //Commission Day
+                var sp_commissionDay = "sp_CalculatePartnerCommissionInDay_Partner";
+                command = new SqlCommand(sp_commissionDay, _connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@PartnerId",
+                    SqlDbType = SqlDbType.Int,
+                    Value = partnerID,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Day",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = day,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Month",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = month,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Year",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = year,
+                });
+
+                var returnParameterCommissionDay = command.Parameters.Add("@Return", SqlDbType.Money);
+                returnParameterCommissionDay.Direction = ParameterDirection.ReturnValue;
+
+                command.ExecuteNonQuery();
+                var resultCommissionDay = returnParameterCommissionDay.Value;
+                commissionFromPartnerDay.Text = resultCommissionDay.ToString();
+
+                //Commission Month
+                string sp_commissionMonth = "sp_CalculatePartnerCommissionInMonth_Partner";
+                command = new SqlCommand(sp_commissionMonth, _connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@PartnerId",
+                    SqlDbType = SqlDbType.Int,
+                    Value = partnerID,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Month",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = month,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Year",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = year,
+                });
+
+                var returnParameterCommissionMonth = command.Parameters.Add("@Return", SqlDbType.Money);
+                returnParameterCommissionMonth.Direction = ParameterDirection.ReturnValue;
+
+                command.ExecuteNonQuery();
+                var resultCommissionMonth = returnParameterCommissionMonth.Value;
+                commissionFromPartnerMonth.Text = resultCommissionMonth.ToString();
+
+                //Commission Year
+                string sp_commissionYear = "sp_CalculatePartnerCommissionInYear_Partner";
+                command = new SqlCommand(sp_commissionYear, _connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@PartnerId",
+                    SqlDbType = SqlDbType.Int,
+                    Value = partnerID,
+                });
+                command.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Year",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = year,
+                });
+
+                var returnParameterCommissionYear = command.Parameters.Add("@Return", SqlDbType.Money);
+                returnParameterCommissionYear.Direction = ParameterDirection.ReturnValue;
+
+                command.ExecuteNonQuery();
+                var resultCommissionYear = returnParameterCommissionYear.Value;
+                commissionFromPartnerYear.Text = resultCommissionYear.ToString();
             }
             else
             {

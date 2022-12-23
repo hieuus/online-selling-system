@@ -90,7 +90,7 @@
         <!--Main Section-->
         <!--Main Section: Partner Management-->
         <Border Name="contentPartnerManagement"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -296,9 +296,9 @@
                                     <Grid Grid.Row="0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <!--Per Day-->
@@ -314,15 +314,15 @@
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
                                                     <TextBlock Text="Customers / Day"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
                                                        Margin="20"/>
                                                 </DockPanel>
-                                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                                                <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
                                                     <TextBlock Text="#"
                                                        FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock x:Name="customerPerDay" Text="9.999.999"
+                                                    <TextBlock x:Name="customerPerDay" Text="0"
                                                        FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                                 </StackPanel>
@@ -341,16 +341,16 @@
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
                                                     <TextBlock Text="Customers / Month"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
                                                        Margin="20"/>
                                                 </DockPanel>
-                                                <StackPanel Orientation="Horizontal">
+                                                <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
                                                     <TextBlock Text="#"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock x:Name="customerPerMonth" Text="9.999.999"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                    <TextBlock x:Name="customerPerMonth" Text="0"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                                 </StackPanel>
                                             </StackPanel>
@@ -368,16 +368,16 @@
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
                                                     <TextBlock Text="Customers / Year"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
                                                        Margin="20"/>
                                                 </DockPanel>
-                                                <StackPanel Orientation="Horizontal">
+                                                <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
                                                     <TextBlock Text="#"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock x:Name="customersPerYear" Text="9.999.999"
-                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                    <TextBlock x:Name="customersPerYear" Text="0"
+                                                       FontSize="20" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                                 </StackPanel>
                                             </StackPanel>
@@ -388,7 +388,7 @@
                                     <Grid Grid.Row="2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="20"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <!--Revenue Of Partner-->
@@ -404,43 +404,43 @@
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
                                                     <TextBlock Text="Revenue Of Partner"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
                                                        Margin="20,10,20,10"/>
                                                 </DockPanel>
                                                 <!--Day-->
                                                 <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                                     <TextBlock Text="Day"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20,0,10,10"/>
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
                                                     <TextBlock Text="$"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20, 0, 10, 10"/>
-                                                    <TextBlock x:Name="revenueOfPartnerDay" Text="9.999.999"
+                                                       Margin="44,0,10,10"/>
+                                                    <TextBlock x:Name="revenueOfPartnerDay" Text="0"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 10"/>
                                                 </StackPanel>
                                                 <!--Month-->
                                                 <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                                     <TextBlock Text="Month"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20, 0, 10, 10"/>
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
                                                     <TextBlock Text="$"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock x:Name="revenueOfPartnerMonth" Text="9.999.999"
+                                                    <TextBlock x:Name="revenueOfPartnerMonth" Text="0"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 10"/>
                                                 </StackPanel>
                                                 <!--Year-->
                                                 <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                                     <TextBlock Text="Year"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20, 0, 10, 10"/>
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
                                                     <TextBlock Text="$"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20, 0, 10, 10"/>
-                                                    <TextBlock x:Name="revenueOfPartnerYear" Text="9.999.999"
+                                                       Margin="39,0,10,10"/>
+                                                    <TextBlock x:Name="revenueOfPartnerYear" Text="0"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 10"/>
                                                 </StackPanel>
@@ -459,43 +459,43 @@
                                             <StackPanel Orientation="Vertical">
                                                 <DockPanel LastChildFill="False">
                                                     <TextBlock Text="Commission From Partner"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
                                                        VerticalAlignment="Center"
                                                        Margin="20,10,20,10"/>
                                                 </DockPanel>
                                                 <!--Day-->
                                                 <StackPanel Orientation="Horizontal" Margin="16,0,0,0">
                                                     <TextBlock Text="Day"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20, 0, 10, 10"/>
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
                                                     <TextBlock Text="$"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20, 0, 10, 10"/>
-                                                    <TextBlock x:Name="commissionFromPartnerDay" Text="9.999.999"
+                                                       Margin="48,0,10,10"/>
+                                                    <TextBlock x:Name="commissionFromPartnerDay" Text="0"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 10"/>
                                                 </StackPanel>
                                                 <!--Month-->
                                                 <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                                     <TextBlock Text="Month"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20, 0, 10, 10"/>
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
                                                     <TextBlock Text="$"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                    <TextBlock x:Name="commissionFromPartnerMonth" Text="9.999.999"
+                                                    <TextBlock x:Name="commissionFromPartnerMonth" Text="0"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 10"/>
                                                 </StackPanel>
                                                 <!--Year-->
                                                 <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                                                     <TextBlock Text="Year"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20, 0, 10, 10"/>
+                                                       FontSize="18" FontWeight="Normal" Foreground="White"
+                                                       Margin="40,0,10,10"/>
                                                     <TextBlock Text="$"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       Margin="20, 0, 10, 10"/>
-                                                    <TextBlock x:Name="commissionFromPartnerYear" Text="9.999.999"
+                                                       Margin="39,0,10,10"/>
+                                                    <TextBlock x:Name="commissionFromPartnerYear" Text="0"
                                                        FontSize="18" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 10"/>
                                                 </StackPanel>
