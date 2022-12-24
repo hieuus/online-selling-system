@@ -145,14 +145,14 @@
                             <DockPanel Grid.Column="0" LastChildFill="True">
                                 <TextBlock DockPanel.Dock="Top" Text="Partners List" Foreground="White"
                                            FontSize="18" FontWeight="Medium" Margin="0,0,0,5"/>
-                                <DataGrid Grid.Row="0" Name="contentOrdersDataGrid"
+                                <DataGrid Grid.Row="0" Name="contentOrdersPartner"
                                   AutoGenerateColumns="False">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding OrdersPartnerListID}"/>
+                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                        <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrdersPartnerListName}"/>
+                                        <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Fullname}"/>
 
-                                        <DataGridTextColumn Header="Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrdersPartnerListAddress}"/>
+                                        <DataGridTextColumn Header="Phone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding PhoneNumber}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DockPanel>
@@ -229,12 +229,12 @@
                                 <DataGrid Grid.Row="0" Name="contentOrdersProductDataGrid"
                                   AutoGenerateColumns="False">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding OrdersProductID}"/>
+                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                        <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrdersProductName}"/>
+                                        <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding Name}"/>
 
-                                        <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrdersProductPrice}"/>
-                                        <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrdersProductDescription}"/>
+                                        <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Price}"/>
+                                        <DataGridTextColumn Header="Sold" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Sold}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DockPanel>
@@ -265,9 +265,9 @@
                                         </Button.Content>
                                     </Button>
                                     <TextBlock Name="contentOrdersPartnerListPagingInfo" Margin="10">
-                                            <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                            <Run Name="contentOrderPartnerListCurrentPage" d:Text="3"/>
                                             / 
-                                            <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                            <Run Name="contentOrderPartnerListTotalPage" d:Text="100"/>
                                     </TextBlock>
                                     <Button x:Name="contentOrdersPartnerListNextButton"
                                         Width="25" Height="25"
@@ -300,9 +300,9 @@
                                         </Button.Content>
                                     </Button>
                                     <TextBlock Name="contentOrdersProductPagingInfo" Margin="10">
-                                            <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                            <Run Name="contentOrdersProductCurrentPage" d:Text="3"/>
                                             / 
-                                            <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                            <Run Name="contentOrdersProductTotalPage" d:Text="100"/>
                                     </TextBlock>
                                     <Button x:Name="contentOrdersProductNextButton"
                                         Width="25" Height="25"
@@ -378,65 +378,40 @@
                                 <DataGrid Grid.Row="0" Name="contentOrdersSelectedProductDataGrid"
                                   AutoGenerateColumns="False">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding OrdersSelectedProductID}"/>
+                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                        <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrdersSelectedProductName}"/>
-                                        <DataGridTextColumn Header="Quantity" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrdersSelectedProductQuantity}"/>
+                                        <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding Name}"/>
+                                        <DataGridTextColumn Header="Quantity" IsReadOnly="True" CanUserResize="False" Width="60" Binding="{Binding Quantity}"/>
 
-                                        <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrdersSelectedProductPrice}"/>
+                                        <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Price}"/>
+                                        <DataGridTextColumn Header="Total" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Total}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DockPanel>
                             
                             <!--Payment-->
-                            <StackPanel Orientation="Vertical" Grid.Column="2">
+                            <StackPanel Orientation="Vertical" Grid.Column="2" Margin="10,0,0,0">
                                 <TextBlock Text="Payment" Foreground="White"
                                            FontSize="18" FontWeight="Medium" Margin="0,8.8,0,5"/>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                     <TextBlock Text="Total" Foreground="#fb8500" VerticalAlignment="Center"
                                            FontSize="15" FontWeight="Medium" Margin="0,0,0,5"/>
-                                    <TextBlock Text="{Binding total}" Foreground="White" VerticalAlignment="Center"
-                                           FontSize="15" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <TextBlock x:Name="orderTotalOrder" Text="0" Foreground="White" VerticalAlignment="Center"
+                                           FontSize="15" FontWeight="Bold" Margin="62,0,0,5"/>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                     <TextBlock Text="Ship Cost" Foreground="#fb8500" VerticalAlignment="Center"
                                            FontSize="15" FontWeight="Medium" Margin="0,0,0,5"/>
-                                    <TextBlock Text="{Binding shipCost}" Foreground="White" VerticalAlignment="Center"
-                                           FontSize="15" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <TextBlock Name="orderShipCost" Text="0" Foreground="White" VerticalAlignment="Center"
+                                           FontSize="15" FontWeight="Bold" Margin="30,0,0,5"/>
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Your Orders" Foreground="#fb8500" VerticalAlignment="Center"
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,16">
+                                    <TextBlock Text="Final Total" Foreground="#fb8500" VerticalAlignment="Center"
                                            FontSize="15" FontWeight="Bold" Margin="0,0,0,5"/>
-                                    <TextBlock Text="{Binding totalOrders}" Foreground="White" VerticalAlignment="Center"
-                                           FontSize="15" FontWeight="Bold" Margin="0,0,0,5"/>
-                                </StackPanel>
-
-                                <TextBlock Text="Address" Foreground="White"
-                                           FontSize="15" FontWeight="Medium" Margin="0,8.8,0,5"/>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Margin="-11,0,0,0">
-                                        <Grid>
-                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ordersAddress" Margin="5"/>
-                                            <TextBlock IsHitTestVisible="False" FontSize="10" Text="Enter Address" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=ordersAddress}" Value="">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Label>
-                                    <Button x:Name="contentOrdersPaymentAddress"
-                                            Click="contentOrdersPaymentAddress_Click"
-                                            Content="Ok" Height="29" Width="40"/>
+                                    <TextBlock x:Name="orderFinalTotalOrder" Text="0" Foreground="White" VerticalAlignment="Center"
+                                           FontSize="15" FontWeight="Bold" Margin="22,0,0,5"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal">
@@ -520,12 +495,12 @@
                             <DataGrid Grid.Row="0" Name="contentTrackingYourOrdersDataGrid"
                                   AutoGenerateColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding YourOrdersID}"/>
+                                    <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                    <DataGridTextColumn Header="Products" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding YourOrdersProducts}"/>
+                                    <DataGridTextColumn Header="Date Time" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding DateTime}"/>
 
-                                    <DataGridTextColumn Header="Total" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding YourOrdersTotal}"/>
-                                    <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding YourOrdersStatus}"/>
+                                    <DataGridTextColumn Header="Total" IsReadOnly="True" CanUserResize="False" Width="150" Binding="{Binding Total}"/>
+                                    <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Status}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DockPanel>
@@ -547,9 +522,9 @@
                                     </Button.Content>
                                 </Button>
                                 <TextBlock Name="contentYourOrdersListPagingInfo" Margin="10">
-                                            <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                            <Run Name="orderCurrentPage" d:Text="3"/>
                                             / 
-                                            <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                            <Run Name="orderTotalPage" d:Text="100"/>
                                 </TextBlock>
                                 <Button x:Name="contentTrackingYourOrdersNextButton"
                                         Width="25" Height="25"
@@ -565,58 +540,96 @@
                             </StackPanel>
                         </Border>
                         <!--Rating-->
-                        <StackPanel Orientation="Vertical" Grid.Row="2">
-                            <TextBlock Text="Rating" FontSize="18" Foreground="White" FontWeight="Bold"/>
-                            <!--Order ID-->
-                            <TextBlock Text="Order ID" FontSize="15" Foreground="White" Margin="0,15,0,0" />
-                            <Label Margin="-11,0,0,0">
-                                <Grid>
-                                    <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingOrderID" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="10" Text="Your Order ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=ratingOrderID}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
-                            </Label>
-                            <!--Comment-->
-                            <TextBlock Text="Comment" FontSize="15" Foreground="White" Margin="0,5,0,0" />
-                            <Label Margin="-11,0,0,0">
-                                <Grid>
-                                    <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingOrderComment" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="10" Text="Your Comment" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=ratingOrderComment}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
-                            </Label>
-                            <!--Rating Score-->
-                            <TextBlock Text="Rating Score" FontSize="15" Foreground="White" Margin="0,5,0,0" />
-                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <RadioButton x:Name="contentTrackingRatingScoreOne" Content="1" Foreground="White" FontSize="15" FontWeight="Bold"/>
-                                <RadioButton x:Name="contentTrackingRatingScoreTwo" Content="2" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
-                                <RadioButton x:Name="contentTrackingRatingScoreThree" Content="3" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
-                                <RadioButton x:Name="contentTrackingRatingScoreFour" Content="4" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
-                                <RadioButton x:Name="contentTrackingRatingScoreFive" Content="5" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
-                            </StackPanel>
-                            
-                            <!--Button Send-->
-                            <Button HorizontalAlignment="Left"
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Vertical" Grid.Column="0">
+                                <TextBlock Text="Rating" FontSize="18" Foreground="White" FontWeight="Bold"/>
+                                <!--Order ID-->
+                                <TextBlock Text="Order ID" FontSize="15" Foreground="White" Margin="0,15,0,0" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Margin="-11,0,0,0">
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingOrderID" Margin="5"/>
+                                            <TextBlock IsHitTestVisible="False" FontSize="10" Text="Your Order ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=ratingOrderID}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                    <Button Content="Search Products"
+                                            Height="30" Width="100"
+                                            Click="searchProductOfOrder_Click"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <!--Product ID-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Product ID" FontSize="15" Foreground="White" Margin="0,5,0,0" />
+                                        <Label Margin="-11,0,0,0">
+                                            <Grid>
+                                                <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingProductID" Margin="5"/>
+                                                <TextBlock IsHitTestVisible="False" FontSize="10" Text="Product ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=ratingProductID}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label>
+                                    </StackPanel>
+                                    <!--Rating Score-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Rating Score" FontSize="15" Foreground="White" Margin="0,5,0,0" />
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                            <RadioButton x:Name="contentTrackingRatingScoreOne" Content="1" Foreground="White" FontSize="15" FontWeight="Bold"/>
+                                            <RadioButton x:Name="contentTrackingRatingScoreTwo" Content="2" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
+                                            <RadioButton x:Name="contentTrackingRatingScoreThree" Content="3" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
+                                            <RadioButton x:Name="contentTrackingRatingScoreFour" Content="4" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
+                                            <RadioButton x:Name="contentTrackingRatingScoreFive" IsChecked="True" Content="5" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <!--Comment-->
+                                <TextBlock Text="Comment" FontSize="15" Foreground="White" Margin="0,5,0,0" />
+                                <Label Margin="-11,0,0,0">
+                                    <Grid>
+                                        <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingOrderComment" Margin="5"/>
+                                        <TextBlock IsHitTestVisible="False" FontSize="10" Text="Your Comment" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=ratingOrderComment}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Label>
+                                
+                                
+
+                                <!--Button Send-->
+                                <Button HorizontalAlignment="Left"
                                         Click="contentTrackingRating_Click"
                                         Width="100"
                                         Padding="5,5,5,9"
@@ -629,8 +642,27 @@
                                         FontWeight="Bold"
                                         Content="Send"
                                         Margin="0,20,0,0">
-                            </Button>
-                        </StackPanel>
+                                </Button>
+                            </StackPanel>
+                            <DockPanel Grid.Column="2" LastChildFill="True">
+                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,5">
+                                    <TextBlock Text="Product Of OrderId: " FontSize="18" Foreground="White" FontWeight="Bold"/>
+                                    <TextBlock Name="productOfOrderId" FontSize="18" Foreground="White" FontWeight="Bold"/>
+                                </StackPanel>
+                                <DataGrid Grid.Row="0" Name="productOfOrder"
+                                  AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
+
+                                        <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding Name}"/>
+
+                                        <DataGridTextColumn Header="Quantity" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Quantity}"/>
+                                        <DataGridTextColumn Header="Total" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Total}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </DockPanel>
+                        </Grid>
+                        
                     </Grid>
                 </ContentControl>
             </Grid>
