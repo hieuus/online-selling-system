@@ -208,6 +208,7 @@ namespace OnlineSellingSystem.View
             contentOrders.Visibility = Visibility.Visible;
 
             customerName.Text = LoginWindow.Person.Fullname;
+            btnOrdersChecked(sender, e);
         }
 
         //Menu Navigation
