@@ -90,7 +90,7 @@
         <!--Content-->
         <!--Select orders content-->
         <Border Name="contentSelectOrders"
-                Visibility="Collapsed"
+                Visibility="Visible"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -138,20 +138,17 @@
                         <DataGrid Grid.Row="0" Name="contentSelectOrdersDataGrid"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding OrderID}"/>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrderPrice}"/>
+                                <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Total}"/>
 
-                                <DataGridTextColumn Header="Shop Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrderShopName}"/>
+                                <DataGridTextColumn Header="Branch Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding BranchName}"/>
 
-                                <DataGridTextColumn Header="Shop Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrderShopAddress}"/>
+                                <DataGridTextColumn Header="Branch Phone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding BranchPhone}"/>
 
-                                <DataGridTextColumn Header="Customer Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrderCustomerName}"/>
+                                <DataGridTextColumn Header="Customer Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerName}"/>
 
-                                <DataGridTextColumn Header="Customer Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrderCustomerAddress}"/>
-
-                                <DataGridTextColumn Header="Customer Phone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding OrderCustomerPhone}"/>
-
+                                <DataGridTextColumn Header="Customer Phone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerPhone}"/>
                             </DataGrid.Columns>
                         </DataGrid>
 
@@ -173,9 +170,9 @@
                                     </Button.Content>
                                 </Button>
                                 <TextBlock Name="pagingInfo" Margin="10">
-                                            <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                            <Run Name="ordersListCurrentPage" d:Text="3"/>
                                             / 
-                                            <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                            <Run Name="ordersListTotalPage" d:Text="100"/>
                                 </TextBlock>
                                 <Button x:Name="contentSelectOrdersNextButton"
                                         Width="25" Height="25"
@@ -198,8 +195,8 @@
                                        VerticalAlignment="Center" Margin="0,0,10,0"/>
                             <Label>
                                 <Grid>
-                                    <TextBox BorderThickness="2"  Width="150" Padding="5" FontSize="16" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="selectOrderID" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="16" Text="Order ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBox BorderThickness="2"  Width="150" Padding="5" FontSize="14" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="selectOrderID" Margin="5"/>
+                                    <TextBlock IsHitTestVisible="False" FontSize="12" Text="Order ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -275,19 +272,16 @@
                         <DataGrid Grid.Row="0" Name="contentDeliveredOrdersDataGrid"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding DeliveredOrderID}"/>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DeliveredOrderPrice}"/>
+                                <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Total}"/>
 
-                                <DataGridTextColumn Header="Shop Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DeliveredOrderShopName}"/>
+                                <DataGridTextColumn Header="Branch Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding BranchName}"/>
 
-                                <DataGridTextColumn Header="Shop Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DeliveredOrderShopAddress}"/>
+                                <DataGridTextColumn Header="Customer Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerName}"/>
 
-                                <DataGridTextColumn Header="Customer Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DeliveredOrderCustomerName}"/>
-
-                                <DataGridTextColumn Header="Customer Address" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DeliveredOrderCustomerAddress}"/>
-
-                                <DataGridTextColumn Header="Customer Phone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DeliveredOrderCustomerPhone}"/>
+                                <DataGridTextColumn Header="Customer Phone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerPhone}"/>
+                                <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Status}"/>
 
                             </DataGrid.Columns>
                         </DataGrid>
@@ -310,9 +304,9 @@
                                     </Button.Content>
                                 </Button>
                                 <TextBlock Name="pagingDeliveredInfo" Margin="10">
-                                            <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                            <Run Name="deliveredCurrentPage" d:Text="3"/>
                                             / 
-                                            <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                            <Run Name="deliveredTotalPage" d:Text="100"/>
                                 </TextBlock>
                                 <Button x:Name="contentRevenueNextButton"
                                         Width="25" Height="25"
@@ -340,20 +334,22 @@
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="20"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
-                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="10"/>
                                         <RowDefinition Height="*"/>
-                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="10"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
                                         <TextBlock VerticalAlignment="Center" Text="Day" Foreground="White" FontSize="18" FontWeight="Medium" Padding="0,0,10,0"/>
-                                        <DatePicker VerticalAlignment="Center" BorderBrush="Transparent" Padding="2"></DatePicker>
+                                        <DatePicker Name="driverStatisticsDayDatePicker" SelectedDate="2022-12-26" VerticalAlignment="Center" BorderBrush="Transparent" Padding="2"></DatePicker>
+                                        <Button Content="See" Width="50" Height="21" Margin="10,0,0,0"
+                                                Click="driverSeeStatisticsDay_Click"/>
                                     </StackPanel>
                                     <!--Amount of orders-->
                                     <Border Grid.Row="2"
@@ -373,7 +369,7 @@
                                                        Margin="20"/>
                                             </DockPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="99"
+                                                <TextBlock Text="0" Name="tbl_amountOfOrdersDay"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="42,0,10,30"/>
                                             </StackPanel>
@@ -400,7 +396,8 @@
                                                 <TextBlock Text="$"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                <TextBlock Text="1.000.000"
+                                                <TextBlock Text="0"
+                                                           Name="tbl_revenueDay"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                             </StackPanel>
@@ -410,14 +407,16 @@
                                 <Grid Grid.Column="2">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
-                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="10"/>
                                         <RowDefinition Height="*"/>
-                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="10"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
                                         <TextBlock VerticalAlignment="Center" Text="Month" Foreground="White" FontSize="18" FontWeight="Medium" Padding="0,0,10,0"/>
-                                        <DatePicker VerticalAlignment="Center" BorderBrush="Transparent" Padding="2"></DatePicker>
+                                        <DatePicker Name="driverStatisticsMonthDatePicker" SelectedDate="2022-12-26" VerticalAlignment="Center" BorderBrush="Transparent" Padding="2"></DatePicker>
+                                        <Button Content="See" Width="50" Height="21" Margin="10,0,0,0"
+                                                Click="driverSeeStatisticsMonth_Click"/>
                                     </StackPanel>
                                     <!--Amount of orders-->
                                     <Border Grid.Row="2"
@@ -437,7 +436,8 @@
                                                        Margin="20"/>
                                             </DockPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="99"
+                                                <TextBlock Text="0"
+                                                           Name="tbl_amountOfOrdersMonth"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="42,0,10,30"/>
                                             </StackPanel>
@@ -464,7 +464,8 @@
                                                 <TextBlock Text="$"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                                <TextBlock Text="1.000.000"
+                                                <TextBlock Text="0"
+                                                           Name="tbl_revenueMonth"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                             </StackPanel>
