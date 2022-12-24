@@ -382,7 +382,7 @@
 
         <!--Main Section: Menu-->
         <Border Name="contentMenus"
-                Visibility="Collapsed"
+                Visibility="Visible"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -412,51 +412,23 @@
                                    FontWeight="Bold"
                                    Margin="10,0,0,0"/>
                     </StackPanel>
-                    <Border Grid.Row="0" DockPanel.Dock="Right"
-                            HorizontalAlignment="Right"
-                            BorderBrush="#dee4ec" BorderThickness="1"
-                            CornerRadius="5" Padding="5" 
-                            Background="#023047"
-                            Width="200">
-                        <Button
-                            BorderBrush="Transparent"
-                            BorderThickness="0"
-                            Background="#023047"
-                            Click="contentMenuAddNewProduct">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="/Images/add.png"
-                                       Height="20"
-                                       Margin="0,0,10,0"/>
-                                    <TextBlock Text="Add New Product"
-                                           FontSize="18"
-                                           FontWeight="Medium"
-                                           Foreground="White"/>
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-                    </Border>
+                    
                 </DockPanel>
                 <!--Content Section-->
                 <ContentControl Grid.Row="1"
                                 Margin="50,30,0,0">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="2*"/>
                             <RowDefinition Height="55"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <!--Data menu-->
                         <DataGrid Grid.Row="0" Name="contentMenuDataGridProduct"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn CanUserResize="False" Width="auto">
-                                    <DataGridCheckBoxColumn.HeaderTemplate>
-                                        <DataTemplate>
-                                            <CheckBox/>
-                                        </DataTemplate>
-                                    </DataGridCheckBoxColumn.HeaderTemplate>
-                                </DataGridCheckBoxColumn>
 
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
                                 <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Name}"/>
 
                                 <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
@@ -465,22 +437,7 @@
 
                                 <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Status}"/>
 
-                                <DataGridTemplateColumn Header="Operation" IsReadOnly="True" CanUserResize="False" Width="auto">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="/Images/pencil.png"
-                                                           Width="13" Margin="10,0,5,0"
-                                                           MouseDown="contentMenuEditButton"/>
-                                                    <Image Source="/Images/remove.png"
-                                                           Width="13" Margin="10,0,0,0"
-                                                           MouseDown="contentMenuRemoveButton"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                
                             </DataGrid.Columns>
                         </DataGrid>
                         <!--Pagination-->
@@ -518,6 +475,339 @@
                                 </Button>
                             </StackPanel>
                         </Border>
+                        
+                        <!--Product Add, Update, Remove-->
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--Options-->
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Options" FontSize="18" Foreground="White" FontWeight="Medium" Margin="0,10,0,5"/>
+                                <!--Add-->
+                                <Button HorizontalAlignment="Left"
+                                Click="addProductButton_Click"
+                                Width="150"
+                                Padding="5,10,5,10"
+                                Background="#023047"
+                                BorderThickness="0"
+                                BorderBrush="Transparent"
+                                Cursor="Hand"
+                                Margin="0,20,0,0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/add.png"  Height="15" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Add" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <!--Remove-->
+                                <Button HorizontalAlignment="Left"
+                                Click="removeProductButton_Click"
+                                Width="150"
+                                Padding="5,10,5,10"
+                                Background="#ffb703"
+                                BorderThickness="0"
+                                BorderBrush="Transparent"
+                                Cursor="Hand"
+                                Margin="0,20,0,0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/trash.png"  Height="15" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Remove" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <!--Update-->
+                                <Button HorizontalAlignment="Left"
+                                Click="updateProductButton_Click"
+                                Width="150"
+                                Padding="5,10,5,10"
+                                Background="#fb8500"
+                                BorderThickness="0"
+                                BorderBrush="Transparent"
+                                Cursor="Hand"
+                                Margin="0,20,0,0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/update.png"  Height="15" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Update" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                            
+                            <!--Content-->
+                            <!--Content Add-->
+                            <StackPanel Orientation="Vertical" Grid.Column="2"
+                                        Name="contentAddProduct" Visibility="Collapsed">
+                                <TextBlock Text="Add A Product" FontSize="18" Foreground="White" FontWeight="Medium" Margin="0,10,0,5"/>
+                                <StackPanel Orientation="Horizontal">
+                                     <!--Name-->
+                                     <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Name" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                                    <Label Margin="-10,0,0,0">
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="addProductName" Margin="5"/>
+                                            <TextBlock IsHitTestVisible="False" FontSize="8" Text="Cacao" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=addProductName}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                </StackPanel>
+                                    <!--Price-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Price" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                                        <Label Margin="-10,0,0,0">
+                                            <Grid>
+                                                <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="addProductPrice" Margin="5"/>
+                                                <TextBlock IsHitTestVisible="False" FontSize="8" Text="50000" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=addProductPrice}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label>
+                                    </StackPanel>
+                                </StackPanel>
+                                <!--Description-->
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Description" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                                    <Label Margin="-10,0,0,0">
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="410" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="addProductDescription" Margin="5"/>
+                                            <TextBlock IsHitTestVisible="False" FontSize="8" Text="Cacao nóng/ lạnh tùy ý" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=addProductDescription}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                </StackPanel>
+                                <!--Add Done Button-->
+                                <Button HorizontalAlignment="Left"
+                                        Click="addProductDoneButton_Click"
+                                        Width="100"
+                                        Padding="5,10,5,10"
+                                        Background="#023047"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Cursor="Hand"
+                                        Margin="0,20,0,0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/add.png"  Height="15" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Done" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                            
+                            <!--Content Remove-->
+                            <StackPanel x:Name="contentRemoveProduct" Visibility="Collapsed"
+                                        Orientation="Vertical" Grid.Column="2">
+                                <TextBlock Text="Remove Product" FontSize="18" Foreground="White" FontWeight="Medium" Margin="0,10,0,5"/>
+                                <TextBlock Text="Product ID" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                                <Label Margin="-10,0,0,0">
+                                    <Grid>
+                                        <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="removeProductId" Margin="5"/>
+                                        <TextBlock IsHitTestVisible="False" FontSize="8" Text="Cacao" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=removeProductId}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Label>
+                                <!--Remove Done Button-->
+                                <Button HorizontalAlignment="Left"
+                                        Click="removeProductDoneButton_Click"
+                                        Width="100"
+                                        Padding="5,10,5,10"
+                                        Background="#023047"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Cursor="Hand"
+                                        Margin="0,20,0,0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/remove.png"  Height="15" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Done" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                            
+                            <!--Content Update-->
+                            <StackPanel x:Name="contentUpdateProduct" Visibility="Collapsed" Grid.Column="2" Orientation="Vertical">
+                                <TextBlock Text="Update A Product" FontSize="18" Foreground="White" FontWeight="Medium" Margin="0,10,0,5"/>
+                                <!--Update ID-->
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="ID" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                                    <Label Margin="25,0,0,0">
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                 x:Name="updateProductID" Margin="5"/>
+                                            <TextBlock IsHitTestVisible="False" FontSize="8" Text="Binding ID to here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=updateProductID}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                    <Button Name="updateAdminIdButton" Content="Search ID" Height="28" Width="100"
+                                        Margin="20 0 0 0"
+                                        Click="updateProductButton_Click"/>
+                                </StackPanel>
+                                <!--Name And Price-->
+                                <StackPanel Orientation="Horizontal">
+                                    <!--Name-->
+                                    <TextBlock Text="Name" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                                    <Label>
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateProductName" Margin="5"/>
+                                            <TextBlock x:Name="placeholderUpdateProductName" IsHitTestVisible="False" FontSize="8" Text="Binding Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=updateProductName}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                    <!--Price-->
+                                    <TextBlock Text="Price " Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="31,0,0,0"/>
+                                    <Label>
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateProductPrice" Margin="5"/>
+                                            <TextBlock x:Name="placeholderUpdateProductPrice" IsHitTestVisible="False" FontSize="8" Text="Binding Phone" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=updateProductPrice}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                </StackPanel>
+                                <!--Desc And Status-->
+                                <StackPanel Orientation="Horizontal">
+                                    <!--Email-->
+                                    <TextBlock Text="Desc " Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                                    <Label Margin="3,0,0,0">
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateProductDesc" Margin="5"/>
+                                            <TextBlock x:Name="placeholderUpdateProductDesc" IsHitTestVisible="False" FontSize="8" Text="Binding Desc" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=updateProductDesc}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                    <!--Status-->
+                                    <TextBlock Text="Status   " Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="14,0,0,0"/>
+                                    <Label>
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateProductStatus" Margin="5"/>
+                                            <TextBlock Name="placeholderUpdateProductStatus" IsHitTestVisible="False" FontSize="8" Text="Biding Status" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=updateProductStatus}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                </StackPanel>
+                                <!--Add Done Button-->
+                                <Button HorizontalAlignment="Left"
+                                Click="contentProductUpdateDoneButton_Click"
+                                Width="100"
+                                Padding="5,10,5,10"
+                                Background="#fb8500"
+                                BorderThickness="0"
+                                BorderBrush="Transparent"
+                                Cursor="Hand"
+                                Margin="0,20,0,0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/update.png"  Height="15" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Done" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                            
+                        </Grid>
                     </Grid>
                 </ContentControl>
             </Grid>

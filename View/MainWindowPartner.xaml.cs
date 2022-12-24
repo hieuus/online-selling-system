@@ -208,9 +208,41 @@ namespace OnlineSellingSystem.View
 
         }
         //================================Content Menu End=========================================
+        private void addProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            contentAddProduct.Visibility = Visibility.Visible;
+            contentUpdateProduct.Visibility = Visibility.Collapsed;
+            contentRemoveProduct.Visibility = Visibility.Collapsed;
+        }
 
+        private void removeProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            contentAddProduct.Visibility = Visibility.Collapsed;
+            contentUpdateProduct.Visibility = Visibility.Collapsed;
+            contentRemoveProduct.Visibility = Visibility.Visible;
+        }
 
+        private void updateProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            contentAddProduct.Visibility = Visibility.Collapsed;
+            contentUpdateProduct.Visibility = Visibility.Visible;
+            contentRemoveProduct.Visibility = Visibility.Collapsed;
+        }
 
+        private void addProductDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void removeProductDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void contentProductUpdateDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         //================================Content Orders Begin=========================================
         public class Order
         {
@@ -260,6 +292,10 @@ namespace OnlineSellingSystem.View
         {
 
         }
+
+       
+
+
         //================================Content Wallet End=========================================
     }
 }

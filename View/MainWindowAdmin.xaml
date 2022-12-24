@@ -283,7 +283,7 @@
                         <!--Content Options-->
                         <!--Content Add-->
                         <StackPanel x:Name="contentAdminOptionsAdd"
-                                    Visibility="Collapsed"
+                                    Visibility="Visible"
                                     Grid.Column="1" Orientation="Vertical" Margin="0,45,0,0">
                             <!--Add ID-->
 
