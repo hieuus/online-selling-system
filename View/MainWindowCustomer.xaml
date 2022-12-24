@@ -445,7 +445,7 @@
 
         <!--Tracking-->
         <Border Name="contentTracking"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -540,58 +540,96 @@
                             </StackPanel>
                         </Border>
                         <!--Rating-->
-                        <StackPanel Orientation="Vertical" Grid.Row="2">
-                            <TextBlock Text="Rating" FontSize="18" Foreground="White" FontWeight="Bold"/>
-                            <!--Order ID-->
-                            <TextBlock Text="Order ID" FontSize="15" Foreground="White" Margin="0,15,0,0" />
-                            <Label Margin="-11,0,0,0">
-                                <Grid>
-                                    <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingOrderID" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="10" Text="Your Order ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=ratingOrderID}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
-                            </Label>
-                            <!--Comment-->
-                            <TextBlock Text="Comment" FontSize="15" Foreground="White" Margin="0,5,0,0" />
-                            <Label Margin="-11,0,0,0">
-                                <Grid>
-                                    <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingOrderComment" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="10" Text="Your Comment" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=ratingOrderComment}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
-                            </Label>
-                            <!--Rating Score-->
-                            <TextBlock Text="Rating Score" FontSize="15" Foreground="White" Margin="0,5,0,0" />
-                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <RadioButton x:Name="contentTrackingRatingScoreOne" Content="1" Foreground="White" FontSize="15" FontWeight="Bold"/>
-                                <RadioButton x:Name="contentTrackingRatingScoreTwo" Content="2" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
-                                <RadioButton x:Name="contentTrackingRatingScoreThree" Content="3" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
-                                <RadioButton x:Name="contentTrackingRatingScoreFour" Content="4" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
-                                <RadioButton x:Name="contentTrackingRatingScoreFive" Content="5" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
-                            </StackPanel>
-                            
-                            <!--Button Send-->
-                            <Button HorizontalAlignment="Left"
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Vertical" Grid.Column="0">
+                                <TextBlock Text="Rating" FontSize="18" Foreground="White" FontWeight="Bold"/>
+                                <!--Order ID-->
+                                <TextBlock Text="Order ID" FontSize="15" Foreground="White" Margin="0,15,0,0" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Margin="-11,0,0,0">
+                                        <Grid>
+                                            <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingOrderID" Margin="5"/>
+                                            <TextBlock IsHitTestVisible="False" FontSize="10" Text="Your Order ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=ratingOrderID}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label>
+                                    <Button Content="Search Products"
+                                            Height="30" Width="100"
+                                            Click="searchProductOfOrder_Click"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <!--Product ID-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Product ID" FontSize="15" Foreground="White" Margin="0,5,0,0" />
+                                        <Label Margin="-11,0,0,0">
+                                            <Grid>
+                                                <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingProductID" Margin="5"/>
+                                                <TextBlock IsHitTestVisible="False" FontSize="10" Text="Product ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=ratingProductID}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label>
+                                    </StackPanel>
+                                    <!--Rating Score-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Rating Score" FontSize="15" Foreground="White" Margin="0,5,0,0" />
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                            <RadioButton x:Name="contentTrackingRatingScoreOne" Content="1" Foreground="White" FontSize="15" FontWeight="Bold"/>
+                                            <RadioButton x:Name="contentTrackingRatingScoreTwo" Content="2" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
+                                            <RadioButton x:Name="contentTrackingRatingScoreThree" Content="3" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
+                                            <RadioButton x:Name="contentTrackingRatingScoreFour" Content="4" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
+                                            <RadioButton x:Name="contentTrackingRatingScoreFive" IsChecked="True" Content="5" Foreground="White" FontSize="15" FontWeight="Bold" Margin="10,0,10,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <!--Comment-->
+                                <TextBlock Text="Comment" FontSize="15" Foreground="White" Margin="0,5,0,0" />
+                                <Label Margin="-11,0,0,0">
+                                    <Grid>
+                                        <TextBox BorderThickness="2"  Width="250" Padding="5" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ratingOrderComment" Margin="5"/>
+                                        <TextBlock IsHitTestVisible="False" FontSize="10" Text="Your Comment" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=ratingOrderComment}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Label>
+                                
+                                
+
+                                <!--Button Send-->
+                                <Button HorizontalAlignment="Left"
                                         Click="contentTrackingRating_Click"
                                         Width="100"
                                         Padding="5,5,5,9"
@@ -604,8 +642,27 @@
                                         FontWeight="Bold"
                                         Content="Send"
                                         Margin="0,20,0,0">
-                            </Button>
-                        </StackPanel>
+                                </Button>
+                            </StackPanel>
+                            <DockPanel Grid.Column="2" LastChildFill="True">
+                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,5">
+                                    <TextBlock Text="Product Of OrderId: " FontSize="18" Foreground="White" FontWeight="Bold"/>
+                                    <TextBlock Name="productOfOrderId" FontSize="18" Foreground="White" FontWeight="Bold"/>
+                                </StackPanel>
+                                <DataGrid Grid.Row="0" Name="productOfOrder"
+                                  AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
+
+                                        <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding Name}"/>
+
+                                        <DataGridTextColumn Header="Quantity" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Quantity}"/>
+                                        <DataGridTextColumn Header="Total" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Total}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </DockPanel>
+                        </Grid>
+                        
                     </Grid>
                 </ContentControl>
             </Grid>

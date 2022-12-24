@@ -708,8 +708,93 @@ namespace OnlineSellingSystem.View
 
         }
 
+        ObservableCollection<Product> _subItemsProductOrderId = new ObservableCollection<Product>();
+        private void searchProductOfOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (ratingOrderID.Text != "")
+            {
+                int orderId = int.Parse(ratingOrderID.Text);
+                productOfOrderId.Text = orderId.ToString();
+
+                //Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                SqlCommand command = _connection.CreateCommand();
+                command.CommandText = "sp_ShowListAllProductOfOrder";
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(
+                        new SqlParameter
+                        {
+                            ParameterName = "@OrderId",
+                            SqlDbType = SqlDbType.Int,
+                            Value = orderId
+                        }
+                    );
+
+                var reader = command.ExecuteReader();
+
+                _subItemsProductOrderId.Clear();
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(reader.GetOrdinal("ProductId"));
+                    string name = reader.GetString(reader.GetOrdinal("ProductName"));
+                    SqlMoney total = reader.GetSqlMoney(reader.GetOrdinal("Total"));
+                    int quantity = reader.GetInt32(reader.GetOrdinal("Quantity"));
+
+                    var _product = new Product { Id = id, Name = name, Total = total, Quantity = quantity };
+                    _subItemsProductOrderId.Add(_product);
+                }
+
+                productOfOrder.ItemsSource = _subItemsProductOrderId;
+            }
+            else
+            {
+                //Do nothing
+            }
+        }
+
         private void contentTrackingRating_Click(object sender, RoutedEventArgs e)
         {
+            if(ratingProductID.Text == "")
+            {
+                //Do nothing
+            }
+            else
+            {
+                int customerId = LoginWindow.Person.Id;
+                int productId = int.Parse(ratingProductID.Text);
+
+                int ratingStar = 5;
+                if (contentTrackingRatingScoreOne.IsChecked == true)
+                    ratingStar = 1;
+                else if (contentTrackingRatingScoreTwo.IsChecked == true)
+                    ratingStar = 2;
+                else if (contentTrackingRatingScoreThree.IsChecked == true)
+                    ratingStar = 3;
+                else if (contentTrackingRatingScoreFour.IsChecked == true)
+                    ratingStar = 4;
+
+                string comment = ratingOrderComment.Text;
+
+                //Connect Database
+                SqlConnection _connection = new SqlConnection("server=.; database=OnlineSellingDatabase;Trusted_Connection=yes");
+                _connection.Open();
+
+                string sql =
+                    $"""
+                    INSERT Rating (CustomerID,RatingStar,RatingComment,RatingTime,ProductID)
+                    VALUES ({customerId}, {ratingStar},N'{comment}', getdate(), {productId})
+                """;
+
+                var command = new SqlCommand(sql, _connection);
+                int isSuccess = command.ExecuteNonQuery();
+                if (isSuccess == 1)
+                {
+                    MessageBox.Show("Sent Rating & Comment");
+                }
+                else MessageBox.Show("Can not send");
+            }
 
         }
 
