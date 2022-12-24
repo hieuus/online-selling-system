@@ -445,7 +445,7 @@
 
         <!--Tracking-->
         <Border Name="contentTracking"
-                Visibility="Collapsed"
+                Visibility="Visible"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >

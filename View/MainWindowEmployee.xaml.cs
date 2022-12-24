@@ -807,6 +807,8 @@ namespace OnlineSellingSystem.View
                 {
                     MessageBox.Show($"Sent A Notification To Partner With ID: {partnerID}");
                     sendNotiContractID.Text = "";
+
+
                 }
                 else
                 {

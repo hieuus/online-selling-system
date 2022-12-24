@@ -793,8 +793,15 @@ namespace OnlineSellingSystem.View
                 if (isSuccess == 1)
                 {
                     MessageBox.Show("Sent Rating & Comment");
+                    ratingProductID.Text = "";
+                    ratingOrderComment.Text = "";
                 }
-                else MessageBox.Show("Can not send");
+                else
+                {
+                    MessageBox.Show("Can not send");
+                    ratingProductID.Text = "";
+                    ratingOrderComment.Text = "";
+                }
             }
 
         }
