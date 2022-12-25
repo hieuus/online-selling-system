@@ -132,7 +132,7 @@
         
         <!--Main Section: Shop Management-->
         <Border Name="contentShopManagement"
-                Visibility="Collapsed"
+                Visibility="Visible"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -180,12 +180,13 @@
                                    Foreground="#A3C7D6"/>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="/Binding Shop Name/"
-                                       FontSize="20"
-                                       FontWeight="Bold"
-                                       Foreground="White"
-                                       Margin="0,10,0,0"/>
-                                <Image Source="/Images/edit.png"
+                                <TextBlock x:Name="shopName"
+                                           Text="/Binding Shop Name/"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           Margin="0,10,0,0"/>
+                                <Image Name="contentShopNameEdit" Source="/Images/edit.png"
                                    Height="20"
                                    Margin="20,0,0,0"
                                    MouseDown="contentShopnameEdit"/>
@@ -261,7 +262,7 @@
                             <Label Margin="30,0,0,0">
                                 <Grid>
                                     <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="openTime" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="16" Text="binding open time here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBlock Name="placeholderOpenTime" IsHitTestVisible="False" FontSize="16" Text="binding open time here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -294,7 +295,7 @@
                             <Label Margin="30,0,0,0">
                                 <Grid>
                                     <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="closeTime" Margin="5"/>
-                                    <TextBlock IsHitTestVisible="False" FontSize="16" Text="binding close time here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBlock x:Name="placeholderCloseTime" IsHitTestVisible="False" FontSize="16" Text="binding close time here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -316,61 +317,63 @@
                                     Click="updateCloseTime"/>
                         </StackPanel>
 
-                        <!--Contract-->
-                        <TextBlock Text="Contract"
+                        <StackPanel Visibility="Collapsed" Orientation="Vertical">
+                            <!--Contract-->
+                            <TextBlock Text="Contract"
                                    FontSize="18"
                                    FontWeight="Bold"
                                    Foreground="#A3C7D6"
                                    Margin="0,40,0,0"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <TextBlock Text="Contrac Day: "
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="Contrac Day: "
                                       FontSize="20"
                                       FontWeight="Bold"
                                       Foreground="White"
                                       VerticalAlignment="Top"/>
-                            <StackPanel Orientation="Vertical"
+                                <StackPanel Orientation="Vertical"
                                         VerticalAlignment="Top">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Binding contract date "
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Binding contract date "
                                           FontSize="20"
                                           FontWeight="Normal"
                                           Foreground="White"
                                           Margin="20,0,20,0"
                                           VerticalAlignment="Center"/>
-                                    <Image Source="/Images/edit.png"
+                                        <Image Source="/Images/edit.png"
                                            Height="20"
                                            Margin="20,0,0,0"
                                            MouseDown="showRenewContract"/>
-                                </StackPanel>
-                                
-                                <StackPanel Name="renewContractView"
+                                    </StackPanel>
+
+                                    <StackPanel Name="renewContractView"
                                             Visibility="Collapsed"
                                             Orientation="Horizontal" Margin="0,5,0,0">
-                                    <Label>
-                                        <Grid>
-                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="newContract" Margin="5"/>
-                                            <TextBlock IsHitTestVisible="False" FontSize="16" Text="New Date" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=newContract}" Value="">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Label>
-                                    <Button Content="Renew"
+                                        <Label>
+                                            <Grid>
+                                                <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="newContract" Margin="5"/>
+                                                <TextBlock IsHitTestVisible="False" FontSize="16" Text="New Date" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=newContract}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label>
+                                        <Button Content="Renew"
                                         Height="40"
                                         Width="60"
                                         Foreground="White" FontWeight="Bold"
                                         Click="renewContractButton"/>
+                                    </StackPanel>
                                 </StackPanel>
+
                             </StackPanel>
-                            
                         </StackPanel>
                         
                     </StackPanel>
@@ -382,7 +385,7 @@
 
         <!--Main Section: Menu-->
         <Border Name="contentMenus"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -416,7 +419,7 @@
                 </DockPanel>
                 <!--Content Section-->
                 <ContentControl Grid.Row="1"
-                                Margin="50,30,0,0">
+                                Margin="50,0,0,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"/>
@@ -424,23 +427,28 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <!--Data menu-->
-                        <DataGrid Grid.Row="0" Name="contentMenuDataGridProduct"
+                        <!--Products List-->
+                        <DockPanel Grid.Row="0" LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Top" Text="Products List" FontSize="18" Foreground="White" FontWeight="Medium" Margin="0,0,0,5"/>
+                            <DataGrid  Name="contentMenuDataGridProduct"
                                   AutoGenerateColumns="False">
-                            <DataGrid.Columns>
+                                <DataGrid.Columns>
 
-                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Name}"/>
 
-                                <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
+                                    <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
 
-                                <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Price}"/>
+                                    <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Price}"/>
 
-                                <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Status}"/>
+                                    <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Status}"/>
 
-                                
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <!--Pagination-->
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <!--Pagination-->
+                        </DockPanel>
+                        
                         <Border Grid.Row="1"
                                 HorizontalAlignment="Right"
                                 BorderBrush="#dee4ec" BorderThickness="1"
