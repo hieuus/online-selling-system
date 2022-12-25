@@ -252,6 +252,7 @@
                                 BorderThickness="0"
                                 BorderBrush="Transparent"
                                 Cursor="Hand"
+                                Click="customerSignUpButton_Click"
                                 Margin="10,20,0,0"/>
                     </StackPanel>
 
