@@ -132,7 +132,7 @@
         
         <!--Main Section: Shop Management-->
         <Border Name="contentShopManagement"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -435,7 +435,7 @@
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
-                                    <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding Name}"/>
 
                                     <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
 
@@ -466,9 +466,9 @@
                                     </Button.Content>
                                 </Button>
                                 <TextBlock Name="pagingInfo" Margin="10">
-                                            <Run Text="{Binding CurrentPage}" d:Text="3"/>
+                                            <Run Name="productCurrentPage" d:Text="3"/>
                                             / 
-                                            <Run Text="{Binding TotalPages}" d:Text="100"/>
+                                            <Run Name="productTotalPage" Text="{Binding TotalPages}" d:Text="100"/>
                                 </TextBlock>
                                 <Button x:Name="contentMenuNextButton"
                                         Width="25" Height="25"
@@ -552,7 +552,20 @@
                             <StackPanel Orientation="Vertical" Grid.Column="2"
                                         Name="contentAddProduct" Visibility="Collapsed">
                                 <TextBlock Text="Add A Product" FontSize="18" Foreground="White" FontWeight="Medium" Margin="0,10,0,5"/>
+                               
                                 <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical" Margin="0,0,11,0">
+                                        <TextBlock Text="Product Type" Foreground="White" FontSize="15" FontWeight="Medium" Margin="0,0,0,10"/>
+                                        <ComboBox Name="comboBoxProductType" 
+                                          Width="200" Background="White" Foreground="Black"
+                                          HorizontalAlignment="Left" Height="28">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
                                      <!--Name-->
                                      <StackPanel Orientation="Vertical">
                                     <TextBlock Text="Name" Foreground="White" FontSize="15" FontWeight="Medium"
@@ -575,6 +588,31 @@
                                         </Grid>
                                     </Label>
                                 </StackPanel>
+                                    
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <!--Description-->
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Description" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                                        <Label Margin="-10,0,0,0">
+                                            <Grid>
+                                                <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="addProductDescription" Margin="5"/>
+                                                <TextBlock IsHitTestVisible="False" FontSize="8" Text="Cacao nóng/ lạnh tùy ý" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=addProductDescription}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label>
+                                    </StackPanel>
                                     <!--Price-->
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="Price" Foreground="White" FontSize="15" FontWeight="Medium"
@@ -597,28 +635,6 @@
                                             </Grid>
                                         </Label>
                                     </StackPanel>
-                                </StackPanel>
-                                <!--Description-->
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="Description" Foreground="White" FontSize="15" FontWeight="Medium"
-                                       VerticalAlignment="Center"/>
-                                    <Label Margin="-10,0,0,0">
-                                        <Grid>
-                                            <TextBox BorderThickness="2"  Width="410" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="addProductDescription" Margin="5"/>
-                                            <TextBlock IsHitTestVisible="False" FontSize="8" Text="Cacao nóng/ lạnh tùy ý" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=addProductDescription}" Value="">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Label>
                                 </StackPanel>
                                 <!--Add Done Button-->
                                 <Button HorizontalAlignment="Left"
@@ -708,7 +724,7 @@
                                     </Label>
                                     <Button Name="updateAdminIdButton" Content="Search ID" Height="28" Width="100"
                                         Margin="20 0 0 0"
-                                        Click="updateProductButton_Click"/>
+                                        Click="updateProductSearchIdButton_Click"/>
                                 </StackPanel>
                                 <!--Name And Price-->
                                 <StackPanel Orientation="Horizontal">
@@ -778,23 +794,17 @@
                                     <!--Status-->
                                     <TextBlock Text="Status   " Foreground="White" FontSize="15" FontWeight="Medium"
                                        VerticalAlignment="Center" Margin="14,0,0,0"/>
-                                    <Label>
-                                        <Grid>
-                                            <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="updateProductStatus" Margin="5"/>
-                                            <TextBlock Name="placeholderUpdateProductStatus" IsHitTestVisible="False" FontSize="8" Text="Biding Status" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=updateProductStatus}" Value="">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Label>
+                                    <ComboBox Name="productStatus" Width="200" Height="28" Margin="11,0,0,0">
+                                        <ComboBoxItem>
+                                            <TextBlock Text="Hết hàng"/>
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            <TextBlock Text="Ngưng phục vụ"/>
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            <TextBlock Text="Còn hàng"/>
+                                        </ComboBoxItem>
+                                    </ComboBox>
                                 </StackPanel>
                                 <!--Add Done Button-->
                                 <Button HorizontalAlignment="Left"
@@ -837,6 +847,9 @@
                     <RowDefinition Height="35"/>
                     <!--Content Section-->
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="55"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="55"/>
                 </Grid.RowDefinitions>
                 <!--Header/Caption-->
                 <Grid Grid.Row="0">
@@ -860,37 +873,172 @@
                 </Grid>
 
                 <!--Content Section-->
-                <ContentControl Grid.Row="1"
-                                Margin="50,30,40,20">
+                <!--Approved Orders-->
+                <DockPanel Grid.Row="1" LastChildFill="True">
+                    <TextBlock DockPanel.Dock="Top" Text="Approved Orders List" FontSize="15" Foreground="White" FontWeight="Medium" Margin="0,0,0,5"/>
                     <DataGrid Name="contentOrdersListView" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="35" Binding="{Binding id}"/>
-                            <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding date}"/>
-                            <DataGridTextColumn Header="Total" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding total}"/>
-                            <DataGridTextColumn Header="Customer" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding customerName}"/>
-                            <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding status}"/>
-                            <DataGridTemplateColumn Header="Operation" IsReadOnly="True" CanUserResize="False" Width="auto">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="/Images/pencil.png"
-                                                           Width="13" Margin="10,0,5,0"
-                                                           MouseDown="contentOrdersEditButton"/>
-                                                <Image Source="/Images/remove.png"
-                                                           Width="13" Margin="10,0,0,0"
-                                                           MouseDown="contentOrdersRemoveButton"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="70" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding Date}"/>
+                            <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding Price}"/>
+                            <DataGridTextColumn Header="Customer" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerName}"/>
+                            <DataGridTextColumn Header="Driver" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DriverName}"/>
+                            <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="250" Binding="{Binding Status}"/>
                         </DataGrid.Columns>
-                        
                     </DataGrid>
-                </ContentControl>
+                </DockPanel>
 
+                <!--Pagination Approved Orders-->
+                <Grid Grid.Row="2">
+                    <!--Pagination of partner list-->
+                    <Border 
+                                HorizontalAlignment="Right"
+                                BorderBrush="#dee4ec" BorderThickness="1"
+                                CornerRadius="5" Padding="5" Background="White"
+                                Margin="0,10,0,0">
+                        <StackPanel Orientation="Horizontal" Height="35">
+                            <Button x:Name="contentaApprovedOrdersListPreviousButton"
+                                        Width="25" Height="25"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Click="contentApprovedOrdersListPreviousButton_Click">
+                                <Button.Content>
+                                    <Image Source="/Images/previous.png" Height="16"/>
+                                </Button.Content>
+                            </Button>
+                            <TextBlock Name="contentApprovedOrdersListPaginInfo" Margin="10">
+                                            <Run Name="approvedOrdersCurrentPage" d:Text="3"/>
+                                            / 
+                                            <Run Name="approvedOrdersTotalPage"  d:Text="100"/>
+                            </TextBlock>
+                            <Button x:Name="contentApprovedOrdersListNextButton"
+                                        Width="25" Height="25"
+                                        Click="contentApprovedOrdersListNextButton_Click"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent">
+                                <Button.Content>
+                                    <Image Source="/Images/next.png"
+                                           Height="16"/>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </Border>
 
+                </Grid>
+
+                <!--UnApproved Orders-->
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Unapproved List-->
+                    <DockPanel Grid.Column="0" LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Top" Text="Unapproved Orders List" FontSize="15" Foreground="White" FontWeight="Medium" Margin="0,0,0,5"/>
+                        <DataGrid Name="contentUnapprovedOrdersListView" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="70" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="150" Binding="{Binding Date}"/>
+                                <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="150" Binding="{Binding Price}"/>
+                                <DataGridTextColumn Header="Customer" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerName}"/>
+                                <DataGridTextColumn Header="Customer Phone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerPhone}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                    
+                    <!--Accept Order-->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Accept Orders" FontSize="15" Foreground="White" FontWeight="Medium" Margin="0,0,0,5"/>
+                        
+                        <TextBlock Text="Order ID" Foreground="White" FontSize="15" FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                        <Label Margin="-10,0,0,0">
+                            <Grid>
+                                <TextBox BorderThickness="2"  Width="200" Padding="5" FontSize="10" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="acceptOrderId" Margin="5"/>
+                                <TextBlock IsHitTestVisible="False" FontSize="8" Text="Order ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=acceptOrderId}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Label>
+                        <!--Remove Done Button-->
+                        <Button HorizontalAlignment="Left"
+                                        Click="acceptOrder_Click"
+                                        Width="100"
+                                        Padding="5,10,5,10"
+                                        Background="#023047"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Cursor="Hand"
+                                        Margin="0,20,0,0">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Images/add.png"  Height="15" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Accept" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <!--Pagin UnApproved Orders-->
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Border 
+                                HorizontalAlignment="Right"
+                                BorderBrush="#dee4ec" BorderThickness="1"
+                                CornerRadius="5" Padding="5" Background="White"
+                                Margin="0,10,0,0">
+                            <StackPanel Orientation="Horizontal" Height="35">
+                                <Button x:Name="contentUnapprovedOrdersListPreviousButton"
+                                        Width="25" Height="25"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        Click="contentUnapprovedOrdersListPreviousButton_Click">
+                                    <Button.Content>
+                                        <Image Source="/Images/previous.png" Height="16"/>
+                                    </Button.Content>
+                                </Button>
+                                <TextBlock Name="contentUnapprovedOrdersListPagingInfo" Margin="10">
+                                            <Run Name="unapprovedOrdersListCurrentPage" d:Text="3"/>
+                                            / 
+                                            <Run Name="unapprovedOrdersListTotalPage"  d:Text="100"/>
+                                </TextBlock>
+                                <Button x:Name="contentUnapprovedOrdersListNextButton"
+                                        Width="25" Height="25"
+                                        Click="contentUnapprovedOrdersListNextButton_Click"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent">
+                                    <Button.Content>
+                                        <Image Source="/Images/next.png"
+                                           Height="16"/>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
+                </Grid>
+                
+                
             </Grid>
         </Border>
 
@@ -928,6 +1076,8 @@
                                    Foreground="White"
                                    FontWeight="Bold"
                                    Margin="10,0,0,0"/>
+                        <DatePicker Name="staticsticsDatePicker"
+                                    VerticalAlignment="Center" Margin="20,0,0,0"/>
                     </StackPanel>
 
                 </Grid>
@@ -937,9 +1087,8 @@
                                 Margin="50,30,40,0">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="5*"/>
-                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         
                         <!--Reveneu-->
@@ -961,21 +1110,32 @@
                                     </Border.Background>
                                     <!--Day Revenue-->
                                     <StackPanel Orientation="Vertical">
-                                        <DockPanel LastChildFill="False">
-                                            <TextBlock Text="Day Revenue"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       VerticalAlignment="Center"
-                                                       Margin="20"/>
-                                            <DatePicker DockPanel.Dock="Right"
-                                                        Margin="0,0,20,0"
-                                                        BorderBrush="Transparent"
-                                                        VerticalAlignment="Center"></DatePicker>
-                                        </DockPanel>
+                                        <TextBlock Text="Day"
+                                                    FontSize="25" FontWeight="Medium" Foreground="White"
+                                                    VerticalAlignment="Center" Margin="20,10,0,0"/>
+
+                                        <TextBlock Text="Revenue"
+                                                    FontSize="18" FontWeight="Medium" Foreground="White"
+                                                    VerticalAlignment="Center"
+                                                    Margin="20,20,0,10"/>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="$"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                            <TextBlock Text="1.000.000"
+                                            <TextBlock Text="0"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="0,0,10,0"/>
+                                        </StackPanel>
+
+                                        <TextBlock Text="Orders"
+                                                    FontSize="18" FontWeight="Medium" Foreground="White"
+                                                    VerticalAlignment="Center"
+                                                    Margin="20,20,20,10"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="#"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="20, 0, 10, 10"/>
+                                            <TextBlock Text="0"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                         </StackPanel>
@@ -990,21 +1150,32 @@
                                     </Border.Background>
                                     <!--Week Revenue-->
                                     <StackPanel Orientation="Vertical">
-                                        <DockPanel LastChildFill="False">
-                                            <TextBlock Text="Week Revenue"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       VerticalAlignment="Center"
-                                                       Margin="20"/>
-                                            <DatePicker DockPanel.Dock="Right"
-                                                        BorderBrush="Transparent"
-                                                        Margin="0,0,20,0"
-                                                        VerticalAlignment="Center"></DatePicker>
-                                        </DockPanel>
+                                        <TextBlock Text="Week"
+                                                    FontSize="25" FontWeight="Medium" Foreground="White"
+                                                    VerticalAlignment="Center" Margin="20,10,0,0"/>
+
+                                        <TextBlock Text="Revenue"
+                                                    FontSize="18" FontWeight="Medium" Foreground="White"
+                                                    VerticalAlignment="Center"
+                                                    Margin="20,20,0,10"/>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="$"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                            <TextBlock Text="5.555.555"
+                                            <TextBlock Text="0"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="0,0,10,0"/>
+                                        </StackPanel>
+
+                                        <TextBlock Text="Orders"
+                                                    FontSize="18" FontWeight="Medium" Foreground="White"
+                                                    VerticalAlignment="Center"
+                                                    Margin="20,20,20,10"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="#"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="20, 0, 10, 10"/>
+                                            <TextBlock Text="0"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                         </StackPanel>
@@ -1019,21 +1190,32 @@
                                     </Border.Background>
                                     <!--Month Revenue-->
                                     <StackPanel Orientation="Vertical">
-                                        <DockPanel LastChildFill="False">
-                                            <TextBlock Text="Month Revenue"
-                                                       FontSize="18" FontWeight="Medium" Foreground="White"
-                                                       VerticalAlignment="Center"
-                                                       Margin="20"/>
-                                            <DatePicker DockPanel.Dock="Right"
-                                                        Margin="0,0,20,0"
-                                                        BorderBrush="Transparent"
-                                                        VerticalAlignment="Center"></DatePicker>
-                                        </DockPanel>
+                                        <TextBlock Text="Month"
+                                                    FontSize="25" FontWeight="Medium" Foreground="White"
+                                                    VerticalAlignment="Center" Margin="20,10,0,0"/>
+
+                                        <TextBlock Text="Revenue"
+                                                    FontSize="18" FontWeight="Medium" Foreground="White"
+                                                    VerticalAlignment="Center"
+                                                    Margin="20,20,0,10"/>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="$"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
-                                            <TextBlock Text="9.999.999"
+                                            <TextBlock Text="0"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="0,0,10,0"/>
+                                        </StackPanel>
+
+                                        <TextBlock Text="Orders"
+                                                    FontSize="18" FontWeight="Medium" Foreground="White"
+                                                    VerticalAlignment="Center"
+                                                    Margin="20,20,20,10"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="#"
+                                                       FontSize="25" FontWeight="Medium" Foreground="White"
+                                                       Margin="20, 0, 10, 10"/>
+                                            <TextBlock Text="0"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                         </StackPanel>
@@ -1041,144 +1223,28 @@
                                 </Border>
                             </Grid>
                         </StackPanel>
-                        
-                        <!--Total orders-->
-                        <Grid Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0"
-                                       Text="Total orders"
-                                       FontSize="18" FontWeight="Medium" Foreground="White"/>
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <!--Chart Daily-->
-                                <DockPanel Grid.Column="0" LastChildFill="true">
-                                    <DockPanel  DockPanel.Dock="Top"
-                                                LastChildFill="False">
-                                        <TextBlock Text="Daily (Select month)"
-                                                   FontSize="15" Foreground="White"/>
-                                        <DatePicker DockPanel.Dock="Right"></DatePicker>
-                                    </DockPanel>
-
-                                    <lvc:CartesianChart LegendLocation="None" Margin="0 10 0 0">
-                                        <lvc:CartesianChart.DataTooltip>
-                                            <lvc:DefaultTooltip Background="#24336a" Foreground="#d5e2ff"/>
-                                        </lvc:CartesianChart.DataTooltip>
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Foreground="White" ShowLabels="True"
-                                                      Labels="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20">
-                                                <lvc:Axis.Separator>
-                                                    <lvc:Separator StrokeThickness="0" Step="1"/>
-                                                    
-                                                </lvc:Axis.Separator>
-                                            </lvc:Axis>
-                                        </lvc:CartesianChart.AxisX>
-                                        <lvc:CartesianChart.AxisY>
-                                            <lvc:Axis Foreground="White" ShowLabels="True"
-                                                      MinValue="0" MaxValue="1000">
-                                                <lvc:Axis.Separator>
-                                                    <lvc:Separator StrokeThickness="0" Step="100"/>
-                                                </lvc:Axis.Separator>
-                                            </lvc:Axis>
-                                        </lvc:CartesianChart.AxisY>
-                                        <lvc:CartesianChart.Series>
-                                            <lvc:StackedColumnSeries Fill="#023047" MaxColumnWidth="15"
-                                                                     Values="100,200,700,444,515,853,758,530,344,121,888,543,654,234,542
-                                                                                ,435,765,666,423,675"/>
-                                        </lvc:CartesianChart.Series>
-                                    </lvc:CartesianChart>
-                                </DockPanel>
-                                <!--Chart Monthly-->
-                                <DockPanel Grid.Column="2" LastChildFill="true">
-                                    <DockPanel  DockPanel.Dock="Top"
-                                                LastChildFill="False">
-                                        <TextBlock Text="Monthly (Select year)"
-                                                   FontSize="15" Foreground="White"/>
-                                        <DatePicker DockPanel.Dock="Right"></DatePicker>
-                                    </DockPanel>
-                                    <lvc:CartesianChart LegendLocation="None" Margin="0 10 0 0">
-                                        <lvc:CartesianChart.DataTooltip>
-                                            <lvc:DefaultTooltip Background="#24336a" Foreground="#d5e2ff"/>
-                                        </lvc:CartesianChart.DataTooltip>
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Foreground="White" ShowLabels="True"
-                                                      Labels="1,2,3,4,5,6,7,8,9,10,11,12">
-                                                <lvc:Axis.Separator>
-                                                    <lvc:Separator StrokeThickness="0" Step="1"/>
-
-                                                </lvc:Axis.Separator>
-                                            </lvc:Axis>
-                                        </lvc:CartesianChart.AxisX>
-                                        <lvc:CartesianChart.AxisY>
-                                            <lvc:Axis Foreground="White" ShowLabels="True"
-                                                      MinValue="0" MaxValue="10000">
-                                                <lvc:Axis.Separator>
-                                                    <lvc:Separator StrokeThickness="0" Step="1000"/>
-                                                </lvc:Axis.Separator>
-                                            </lvc:Axis>
-                                        </lvc:CartesianChart.AxisY>
-                                        <lvc:CartesianChart.Series>
-                                            <lvc:StackedColumnSeries Fill="#fb8500" MaxColumnWidth="15" Values="1600,2060,7600,4484,5159,8653,7578,5350,3444,1231,8788,5432"/>
-                                        </lvc:CartesianChart.Series>
-                                    </lvc:CartesianChart>
-                                </DockPanel>
-                            </Grid>
-                        </Grid>
-
                         <!--Top sell-->
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <!--Best Selling-->
-                            <Grid Grid.Column="0">
-                                <TextBlock Text="Best Selling"
-                                           FontSize="15" Foreground="White"/>
-                                <ListView x:Name="contentStatisticBestSelling"
-                                          Background="Transparent" BorderThickness="0" BorderBrush="Transparent"
-                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                    <ListViewItem BorderThickness="0 1 0 0" BorderBrush="#2c3a54"
-                                                  Padding="0 10">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="3*"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            
-                                        </Grid>
-                                    </ListViewItem>
-                                </ListView>
-                            </Grid>
+                        <DockPanel LastChildFill="True" Grid.Row="2">
+                            <TextBlock Text="Top Sales" DockPanel.Dock="Top"
+                                        FontSize="18" FontWeight="Medium" Foreground="White" Margin="0,0,0,5"/>
+                            <DataGrid  Name="topSalesDataGridProduct"
+                                  AutoGenerateColumns="False">
+                                <DataGrid.Columns>
 
-                            <!--Least Selling-->
-                            <Grid Grid.Column="1">
-                                <TextBlock Text="Least Selling"
-                                           FontSize="15" Foreground="White"/>
-                                <ListView x:Name="contentStatisticLeastSelling"
-                                          Background="Transparent" BorderThickness="0" BorderBrush="Transparent"
-                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                    <ListViewItem BorderThickness="0 1 0 0" BorderBrush="#2c3a54"
-                                                  Padding="0 10">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="3*"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
+                                    <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="Name" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding Name}"/>
 
-                                        </Grid>
-                                    </ListViewItem>
-                                </ListView>
-                            </Grid>
-                        </Grid>
+                                    <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
+
+                                    <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Price}"/>
+
+                                    <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Status}"/>
+                                    <DataGridTextColumn Header="Sold" IsReadOnly="True" CanUserResize="False" Width="100" Binding="{Binding Sold}"/>
+
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
                     </Grid>
                 </ContentControl>
 

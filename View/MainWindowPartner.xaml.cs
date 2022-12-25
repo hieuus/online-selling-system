@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineSellingSystem.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
 using MessageBox = System.Windows.Forms.MessageBox;
 using Window = System.Windows.Window;
 
@@ -232,6 +234,66 @@ namespace OnlineSellingSystem.View
             command.ExecuteNonQuery();
         }
 
+        private int NumberOfItems(string sqlQueryTotalItems)
+        {
+            //Connect Database
+            ConnectDatabase();
+
+            //Count number of person: admin/employee/customer/driver/partner
+            var command = new SqlCommand(sqlQueryTotalItems, _connection);
+            int count = (int)command.ExecuteScalar();
+
+            return count;
+        }
+
+        private void SubItemsProduct()
+        {
+            int partnerId = LoginWindow.Person.Id;
+
+            //Connect Database
+            ConnectDatabase();
+
+            int offset = (CurrentPageProduct - 1) * RowsPerPage;
+            int fetch = RowsPerPage;
+
+            string sqlSelect =
+                $"""
+                    SELECT [Product].ProductId AS ProductId, [Product].ProductName AS ProductName, [Product].ProductPrice AS ProductPrice, [Product].ProductDescription AS ProductDescription, [Product].StatusId AS StatusId
+                    FROM [Partner] INNER JOIN [Contract] ON [Partner].PartnerId = {partnerId} AND [Partner].PartnerId = [Contract].PartnerId
+                				INNER JOIN [Branch] ON [Contract].ContractId = [Branch].ContractId
+                				INNER JOIN [BranchProductType] ON [Branch].BranchId = [BranchProductType].BranchId
+                				INNER JOIN [Product] ON [BranchProductType].BranchProductTypeId = [Product].BranchProductTypeId
+                    ORDER BY ProductId OFFSET {offset} ROWS FETCH NEXT {fetch} ROWS ONLY
+                """;
+            var command = new SqlCommand(sqlSelect, _connection);
+            var reader = command.ExecuteReader();
+
+            _subItemsProduct.Clear();
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(reader.GetOrdinal("ProductId"));
+                string name = reader.GetString(reader.GetOrdinal("ProductName"));
+                SqlMoney price = reader.GetSqlMoney(reader.GetOrdinal("ProductPrice"));
+                string desc = reader.GetString(reader.GetOrdinal("ProductDescription"));
+                int status = reader.GetInt32(reader.GetOrdinal("StatusId"));
+
+                string str_status = "";
+                if (status == -1)
+                    str_status = "Lỗi";
+                else if (status == 3)
+                    str_status = "Hết hàng";
+                else if (status == 4)
+                    str_status = "Ngưng phục vụ";
+                else if (status == 6)
+                    str_status = "Còn hàng";
+
+                var _product = new Product {Id=id, Name=name, Price=price, Description=desc, Status = str_status};
+                _subItemsProduct.Add(_product);
+            }
+
+            contentMenuDataGridProduct.ItemsSource = _subItemsProduct;
+        }
+
         //Window Loaded
         private void MainWindowPartnerLoaded(object sender, RoutedEventArgs e)
         {
@@ -304,6 +366,14 @@ namespace OnlineSellingSystem.View
             placeholderCloseTime.Text = closeTime;
         }
 
+        //Menu Loaded
+        ObservableCollection<Product> _subItemsProduct = new ObservableCollection<Product>();
+
+        public int RowsPerPage { get; set; } = 30;
+        public int TotalPagesProduct { get; set; } = 0;
+        public int CurrentPageProduct { get; set; } = 1;
+        public int TotalItemsProduct { get; set; } = 0;
+
         private void btnMenuChecked(object sender, RoutedEventArgs e)
         {
             contentShopManagement.Visibility = Visibility.Collapsed;
@@ -313,6 +383,33 @@ namespace OnlineSellingSystem.View
 
             btnMenu.IsChecked = true;
             contentMenus.Visibility = Visibility.Visible;
+
+            int partnerId = LoginWindow.Person.Id;
+
+            string sqlTotalProduct =
+                $"""
+                    SELECT COUNT(*)
+                    FROM [Partner] INNER JOIN [Contract] ON [Partner].PartnerId = {partnerId} AND [Partner].PartnerId = [Contract].PartnerId
+                				INNER JOIN [Branch] ON [Contract].ContractId = [Branch].ContractId
+                				INNER JOIN [BranchProductType] ON [Branch].BranchId = [BranchProductType].BranchId
+                				INNER JOIN [Product] ON [BranchProductType].BranchProductTypeId = [Product].BranchProductTypeId
+                """;
+            TotalItemsProduct = NumberOfItems(sqlTotalProduct);
+
+            int isDivisibleProduct = TotalItemsProduct % RowsPerPage;
+            if (isDivisibleProduct != 0)
+            {
+                TotalPagesProduct = TotalItemsProduct / RowsPerPage + 1;
+            }
+            else
+            {
+                TotalPagesProduct = TotalItemsProduct / RowsPerPage;
+            }
+
+            productCurrentPage.Text = CurrentPageProduct.ToString();
+            productTotalPage.Text = TotalPagesProduct.ToString();
+
+            SubItemsProduct();
         }
 
         private void btnOrdersChecked(object sender, RoutedEventArgs e)
@@ -346,6 +443,8 @@ namespace OnlineSellingSystem.View
 
             btnWallet.IsChecked = true;
             contentWallet.Visibility = Visibility.Visible;
+
+
         }
 
         private void contentShopnameEdit(object sender, MouseButtonEventArgs e)
@@ -524,40 +623,34 @@ namespace OnlineSellingSystem.View
         {
 
         }
-        //================================Content Shop Management End================================
+//================================Content Shop Management End================================
 
 
-        //================================Content Menu Begin=========================================
-        
-        private void contentMenuAddNewProduct(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void contentMenuEditButton(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void contentMenuRemoveButton(object sender, MouseButtonEventArgs e)
-        {
-                
-        }
-
-        private void previousButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void nextButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        //================================Content Menu End=========================================
+//================================Content Menu Begin=========================================
         private void addProductButton_Click(object sender, RoutedEventArgs e)
         {
             contentAddProduct.Visibility = Visibility.Visible;
             contentUpdateProduct.Visibility = Visibility.Collapsed;
             contentRemoveProduct.Visibility = Visibility.Collapsed;
+
+            ObservableCollection<ProductType> _productTypes = new ObservableCollection<ProductType>();
+            _productTypes.Add(new ProductType() { Id = 1, Name = "Cơm" });
+            _productTypes.Add(new ProductType() { Id = 2, Name = "Bún" });
+            _productTypes.Add(new ProductType() { Id = 3, Name = "Bánh mì" });
+            _productTypes.Add(new ProductType() { Id = 4, Name = "Thức ăn nhanh" });
+            _productTypes.Add(new ProductType() { Id = 5, Name = "Món nướng" });
+            _productTypes.Add(new ProductType() { Id = 6, Name = "Món chiên" });
+            _productTypes.Add(new ProductType() { Id = 7, Name = "Món chay" });
+            _productTypes.Add(new ProductType() { Id = 8, Name = "Trà sữa" });
+            _productTypes.Add(new ProductType() { Id = 9, Name = "Cafe" });
+            _productTypes.Add(new ProductType() { Id = 10, Name = "Sinh tố" });
+            _productTypes.Add(new ProductType() { Id = 11, Name = "Đá xay" });
+            _productTypes.Add(new ProductType() { Id = 12, Name = "Nước ép hoa quả" });
+            _productTypes.Add(new ProductType() { Id = 13, Name = "Kem" });
+            _productTypes.Add(new ProductType() { Id = 14, Name = "Yogurt" });
+
+            comboBoxProductType.ItemsSource = _productTypes;
+
         }
 
         private void removeProductButton_Click(object sender, RoutedEventArgs e)
@@ -576,26 +669,299 @@ namespace OnlineSellingSystem.View
 
         private void addProductDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            //Branch Id
+            int partnerId = LoginWindow.Person.Id;
+            int branchId = GetBranchIdFromDatabase(partnerId);
 
+            //Parameters
+            int id = 1;
+            id = comboBoxProductType.SelectedIndex + 1;
+            string name = addProductName.Text;
+            string desc = addProductDescription.Text;
+            string price = addProductPrice.Text;
+
+            //Connect DB
+            ConnectDatabase();
+
+            //Proc Add
+            string sp_AddProduct = "sp_InsertProduct_Branch";
+            var command = new SqlCommand(sp_AddProduct, _connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@BranchId",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Value = branchId
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProductTypeId",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Value = id
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProductName",
+                SqlDbType = System.Data.SqlDbType.NChar,
+                Value = name
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProductDescription",
+                SqlDbType = System.Data.SqlDbType.NVarChar,
+                Value = desc
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProductPrice",
+                SqlDbType = System.Data.SqlDbType.Money,
+                Value = price
+            });
+
+            int isSuccess = command.ExecuteNonQuery();
+            if (isSuccess == 1)
+            {
+                MessageBox.Show("Added A Product");
+
+                addProductDescription.Text = "";
+                addProductName.Text = "";
+                addProductPrice.Text = "";
+
+                SubItemsProduct();
+            }
+            else
+            {
+                MessageBox.Show("Error");
+
+                addProductDescription.Text = "";
+                addProductName.Text = "";
+                addProductPrice.Text = "";
+            }
+
+
+        }
+
+        private void updateProductSearchIdButton_Click(object sender, RoutedEventArgs e)
+        {
+            string productId = updateProductID.Text;
+
+            //Connect Database
+            ConnectDatabase();
+
+            string sql =
+                $"""
+                    select ProductName, ProductDescription, ProductPrice, Status.StatusId AS Status
+                    from Product, Status
+                    where Product.ProductId = {productId} and Status.StatusId = Product.StatusId
+                """;
+
+            var command = new SqlCommand(sql, _connection);
+            var reader = command.ExecuteReader();
+
+            int status = 0;
+            while (reader.Read())
+            {
+                placeholderUpdateProductName.Text = reader.GetString(reader.GetOrdinal("ProductName"));
+                placeholderUpdateProductDesc.Text = reader.GetString(reader.GetOrdinal("ProductDescription"));
+                placeholderUpdateProductPrice.Text = reader.GetSqlMoney(reader.GetOrdinal("ProductPrice")).ToString();
+                status = reader.GetInt32(reader.GetOrdinal("Status"));
+            }
+
+            if (status == 3)
+                productStatus.SelectedIndex = 0;
+            else if (status == 4)
+                productStatus.SelectedIndex = 1;
+            else if (status == 6)
+                productStatus.SelectedIndex = 2;
+            
         }
 
         private void removeProductDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            string productId = removeProductId.Text;
+
+            //Connect DB
+            ConnectDatabase();
+
+            //Proc Add
+            string sp_RemoveProduct = "sp_DeleteProduct";
+
+            var command = new SqlCommand(sp_RemoveProduct, _connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProductId",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Value = productId
+            });
+            int isSuccess = command.ExecuteNonQuery();
+            if (isSuccess == 1)
+            {
+                MessageBox.Show("Removed");
+
+                removeProductId.Text = "";
+                SubItemsProduct();
+            }
+            else
+            {
+                MessageBox.Show("Error");
+                removeProductId.Text = "";
+            }
+
 
         }
 
         private void contentProductUpdateDoneButton_Click(object sender, RoutedEventArgs e)
         {
+            //Parameters
+            int partnerId = LoginWindow.Person.Id;
+            int branchId = GetBranchIdFromDatabase(partnerId);
 
+            string productId = updateProductID.Text;
+
+            string name = placeholderUpdateProductName.Text;
+            string desc = placeholderUpdateProductDesc.Text;
+            string price = placeholderUpdateProductPrice.Text;
+
+            int statusId = productStatus.SelectedIndex;
+            if (statusId == 0)
+                statusId = 3;
+            else if (statusId == 1)
+                statusId = 4;
+            else if (statusId == 2)
+                statusId = 6;
+
+
+            if(updateProductName.Text != "")
+                name = updateProductName.Text;
+            if(updateProductDesc.Text != "")
+                desc = updateProductDesc.Text;
+            if(updateProductPrice.Text != "")
+                price = updateProductPrice.Text;
+
+
+            //Connect database
+            ConnectDatabase();
+
+            //Proc UPdate
+            string sp_UpdateProduct = "sp_UpdateProduct_Branch";
+            var command = new SqlCommand(sp_UpdateProduct, _connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@BranchId",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Value = branchId
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProductId",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Value = productId
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProductName",
+                SqlDbType = System.Data.SqlDbType.NChar,
+                Value = name
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProductPrice",
+                SqlDbType = System.Data.SqlDbType.Money,
+                Value = price
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProductDescription",
+                SqlDbType = System.Data.SqlDbType.NVarChar,
+                Value = desc
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@StatusId",
+                SqlDbType = System.Data.SqlDbType.Int,
+                Value = statusId
+            });
+
+
+            int isSuccess = command.ExecuteNonQuery();
+            if (isSuccess == 1)
+            {
+                MessageBox.Show("Updated");
+
+                updateProductSearchIdButton_Click(sender, e);
+                updateProductID.Text = "";
+                updateProductName.Text = "";
+                updateProductDesc.Text = "";
+                updateProductPrice.Text = "";
+
+                SubItemsProduct();
+            }
+            else
+            {
+                MessageBox.Show("Error");
+                updateProductID.Text = "";
+                updateProductName.Text = "";
+                updateProductDesc.Text = "";
+                updateProductPrice.Text = "";
+            }
         }
-        //================================Content Orders Begin=========================================
-        
-        private void contentOrdersEditButton(object sender, MouseButtonEventArgs e)
+
+        private void previousButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(CurrentPageProduct <= 1)
+            {
+                //DO nothing
+            }
+            else
+            {
+                _subItemsProduct.Clear();
+                CurrentPageProduct--;
+                productCurrentPage.Text = CurrentPageProduct.ToString();
+                SubItemsProduct();
+            }
+        }
+
+        private void nextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(CurrentPageProduct >= TotalPagesProduct)
+            {
+                //Do nothing
+            }
+            else
+            {
+                _subItemsProduct.Clear();
+                CurrentPageProduct++;
+                productCurrentPage.Text = CurrentPageProduct.ToString();
+                SubItemsProduct();
+            }
+        }
+//================================Content Menu End=========================================
+
+//================================Content Orders Begin=========================================
+
+        private void contentUnapprovedOrdersListPreviousButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void contentOrdersRemoveButton(object sender, MouseButtonEventArgs e)
+        private void contentUnapprovedOrdersListNextButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void contentApprovedOrdersListPreviousButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void contentApprovedOrdersListNextButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void acceptOrder_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -630,6 +996,12 @@ namespace OnlineSellingSystem.View
         }
 
        
+
+
+
+
+
+
 
 
         //================================Content Wallet End=========================================
