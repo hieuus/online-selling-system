@@ -14,6 +14,7 @@ namespace OnlineSellingSystem.Model
         public string Fullname { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+        public int WalletId { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

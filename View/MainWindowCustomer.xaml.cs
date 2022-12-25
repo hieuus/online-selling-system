@@ -195,7 +195,7 @@ namespace OnlineSellingSystem.View
                 else if (status == 6)
                     str_status = "Đang giao";
 
-                var _order = new Order { Id = id, DateTime = dateTime, Total = total, Status = str_status};
+                var _order = new Order { Id = id, Date = dateTime, Total = total, Status = str_status};
                 _subItemsOrder.Add(_order);
             }
 

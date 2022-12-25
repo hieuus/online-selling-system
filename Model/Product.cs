@@ -16,5 +16,6 @@ namespace OnlineSellingSystem.Model
         public int Quantity { get; set; }
         public SqlInt32 Sold { get; set; }
         public SqlMoney Total { get; set; }
+        public string Status { get; set; }
     }
 }
