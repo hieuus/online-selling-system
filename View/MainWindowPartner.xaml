@@ -1061,10 +1061,6 @@
                 </Grid.RowDefinitions>
                 <!--Header/Caption-->
                 <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
                     <!--Caption-->
                     <StackPanel Grid.Column="0"
                                 Orientation="Horizontal"
@@ -1078,6 +1074,10 @@
                                    Margin="10,0,0,0"/>
                         <DatePicker Name="staticsticsDatePicker"
                                     VerticalAlignment="Center" Margin="20,0,0,0"/>
+                        <Button Click="partnerSeeStaticstics_Click"
+                                Content="See Staticstics"
+                                Width="100"
+                                Height="30" Margin="20,0,0,0"/>
                     </StackPanel>
 
                 </Grid>
@@ -1123,6 +1123,7 @@
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
                                             <TextBlock Text="0"
+                                                       Name="tbl_revenueDay"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0,0,10,0"/>
                                         </StackPanel>
@@ -1136,6 +1137,7 @@
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
                                             <TextBlock Text="0"
+                                                       Name="tbl_orderDay"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                         </StackPanel>
@@ -1163,6 +1165,7 @@
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
                                             <TextBlock Text="0"
+                                                       Name="tbl_revenueWeek"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0,0,10,0"/>
                                         </StackPanel>
@@ -1176,6 +1179,7 @@
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
                                             <TextBlock Text="0"
+                                                       Name="tbl_orderWeek"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                         </StackPanel>
@@ -1203,6 +1207,7 @@
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
                                             <TextBlock Text="0"
+                                                       Name="tbl_revenueMonth"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0,0,10,0"/>
                                         </StackPanel>
@@ -1216,6 +1221,7 @@
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
                                             <TextBlock Text="0"
+                                                       Name="tbl_orderMonth"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                         </StackPanel>
@@ -1254,7 +1260,7 @@
 
         <!--Main Section: Wallet-->
         <Border Name="contentWallet"
-                Visibility="Collapsed"
+                Visibility="Visible"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -1453,6 +1459,7 @@
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="20, 0, 10, 10"/>
                                         <TextBlock Text="9.999.999"
+                                                   Name="deposite"
                                                        FontSize="25" FontWeight="Medium" Foreground="White"
                                                        Margin="0, 0, 10, 30"/>
                                     </StackPanel>
