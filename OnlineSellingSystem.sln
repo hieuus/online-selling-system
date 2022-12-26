@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineSellingSystem", "OnlineSellingSystem.csproj", "{59501A00-9A4D-4138-8065-7F8A263B3350}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineSellingSystem", "OnlineSellingSystem.csproj", "{59501A00-9A4D-4138-8065-7F8A263B3350}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "..\Setup\Setup.vdproj", "{60C15CAE-5D1D-4050-A92A-F690C605B06E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,8 @@ Global
 		{59501A00-9A4D-4138-8065-7F8A263B3350}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59501A00-9A4D-4138-8065-7F8A263B3350}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59501A00-9A4D-4138-8065-7F8A263B3350}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60C15CAE-5D1D-4050-A92A-F690C605B06E}.Debug|Any CPU.ActiveCfg = Debug
+		{60C15CAE-5D1D-4050-A92A-F690C605B06E}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

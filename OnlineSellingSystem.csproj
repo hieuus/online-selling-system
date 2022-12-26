@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -50,6 +51,13 @@
     <None Remove="Images\update.png" />
     <None Remove="Images\wallet.png" />
     <None Remove="Images\wallet_white.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\InputImages\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

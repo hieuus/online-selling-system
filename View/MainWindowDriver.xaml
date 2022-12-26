@@ -90,7 +90,7 @@
         <!--Content-->
         <!--Select orders content-->
         <Border Name="contentSelectOrders"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >

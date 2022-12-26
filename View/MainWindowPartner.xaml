@@ -880,7 +880,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="70" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding Date}"/>
-                            <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding Price}"/>
+                            <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding Total}"/>
                             <DataGridTextColumn Header="Customer" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerName}"/>
                             <DataGridTextColumn Header="Driver" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding DriverName}"/>
                             <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="250" Binding="{Binding Status}"/>
@@ -942,7 +942,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="70" Binding="{Binding Id}"/>
                                 <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="150" Binding="{Binding Date}"/>
-                                <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="150" Binding="{Binding Price}"/>
+                                <DataGridTextColumn Header="Price" IsReadOnly="True" CanUserResize="False" Width="150" Binding="{Binding Total}"/>
                                 <DataGridTextColumn Header="Customer" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerName}"/>
                                 <DataGridTextColumn Header="Customer Phone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding CustomerPhone}"/>
                             </DataGrid.Columns>
@@ -1260,7 +1260,7 @@
 
         <!--Main Section: Wallet-->
         <Border Name="contentWallet"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >

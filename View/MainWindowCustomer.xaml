@@ -445,7 +445,7 @@
 
         <!--Tracking-->
         <Border Name="contentTracking"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Grid.Column="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" >
@@ -497,7 +497,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                                    <DataGridTextColumn Header="Date Time" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding DateTime}"/>
+                                    <DataGridTextColumn Header="Date Time" IsReadOnly="True" CanUserResize="False" Width="200" Binding="{Binding Date}"/>
 
                                     <DataGridTextColumn Header="Total" IsReadOnly="True" CanUserResize="False" Width="150" Binding="{Binding Total}"/>
                                     <DataGridTextColumn Header="Status" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Status}"/>
