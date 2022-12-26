@@ -123,7 +123,6 @@ namespace OnlineSellingSystem.View
             if(isSuccess == 1)
             {
                 MessageBox.Show($"Success! You can log in with your phone: {cusPhone} and default password: 123456");
-                move_to_signin(sender, e);
             }
             else
             {

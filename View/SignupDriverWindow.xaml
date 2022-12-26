@@ -126,7 +126,25 @@
                                     </TextBlock>
                                 </Grid>
                             </Label>
-
+                            <!--Cityzenid-->
+                            <TextBlock Text="Cityzen Id" FontSize="15" Margin="10,0,0,0"/>
+                            <Label Margin="0,0,0,10">
+                                <Grid>
+                                    <TextBox BorderThickness="2"  Width="500" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="cityzenId" Margin="5"/>
+                                    <TextBlock IsHitTestVisible="False" FontSize="16" Text="Your Cityzen Id" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=cityzenId}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Label>
                             <!--Address-->
                             <TextBlock Text="Address" Margin="10,10,0,0" FontSize="15" FontWeight="Bold"/>
                             <WrapPanel Orientation="Horizontal">
@@ -249,13 +267,13 @@
                                     <TextBlock Text="District" FontSize="15" Margin="10,10,0,0"/>
                                     <Label Margin="0,0,0,10">
                                         <Grid>
-                                            <TextBox BorderThickness="2"  Width="240" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="shipWard" Margin="5"/>
+                                            <TextBox BorderThickness="2"  Width="240" Padding="5" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="shipDistrict" Margin="5"/>
                                             <TextBlock IsHitTestVisible="False" FontSize="16" Text="Ex: Tan Binh" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="14,0,0,0" Foreground="DarkGray">
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=shipWard}" Value="">
+                                                            <DataTrigger Binding="{Binding Text, ElementName=shipDistrict}" Value="">
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -389,6 +407,7 @@
                                 BorderThickness="0"
                                 BorderBrush="Transparent"
                                 Cursor="Hand"
+                                Click="DriverSignUpButton_Click"
                                 Margin="10,20,0,0"/>
                     </StackPanel>
 
